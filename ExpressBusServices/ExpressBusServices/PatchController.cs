@@ -36,11 +36,13 @@ namespace ExpressBusServices
         public static void Activate()
         {
             GetHarmonyInstance().PatchAll(Assembly.GetExecutingAssembly());
+            BusPickDropLookupTable.EnsureTableExists();
         }
 
         public static void Deactivate()
         {
             GetHarmonyInstance().UnpatchAll(HarmonyModID);
+            BusPickDropLookupTable.WipeTable();
         }
     }
 }

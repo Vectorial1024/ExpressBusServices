@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using ColossalFramework;
+using HarmonyLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,17 +13,44 @@ namespace ExpressBusServices
     public class Patch_BusAiCorrector
     {
         [HarmonyPostfix]
-        public static void PostFix(ref bool __result, ref Vehicle vehicleData)
+        public static void PostFix(ref bool __result, ushort vehicleID, ref Vehicle vehicleData)
         {
             /*
-             * m_transferSize, in the context of bus routes, represents the number of passengers alighting + boarding the bus at a bus stop.
-             * For example, if, at a stop, 1 alighted and 1 boarded, m_transferSize becomes 1 + 1 = 2.
-             * This value is recalculated whenver the bus arrives at a bus stop.
+             * After reconsidering how everything works, I've decided to make use of 
+             * one large static dictionary to store info of alight+board for each bus UID.
+             * 
+             * Previously it was found that simply reading the vehicle info is not enough to
+             * determine alight+board count because alighting uses another variable.
+             * Eventually I made use of two Harmony patches to read the alight+board info
+             * and write it to the static dictionary.
+             * 
+             * The logic is now sth like this:
+             * 
+             * When bus arrives at stop:
+             * Write down alighting+boarding count
+             * Determine if the bus can leave now given the alighting, boarding, and n-th stop info
+             * 
+             * It is also determined that storing stop UID is not necessary because
+             * each bus can only stop at one stop at any given point in time.
+             * Stopping at a new stop will simply invalidate the previous stop info.
+             * 
+             * This entire system has a nice property that no save-file access is needed.
              */
-            // Skips stops whenever there is no one alighting AND boarding.
-            if (vehicleData.m_transferSize == 0)
+            TransportManager instance = Singleton<TransportManager>.instance;
+            ushort transportLineID = vehicleData.m_transportLine;
+            ushort firstStop = instance.m_lines.m_buffer[transportLineID].GetStop(1);
+            ushort currentStop = vehicleData.m_targetBuilding;
+            if (currentStop != firstStop)
             {
-                __result = true;
+                // midway bus stop; implement logic here
+                VehicleBAInfo info = BusPickDropLookupTable.GetInfoForBus(vehicleID);
+                if ((info != null && info.Alighted + info.Boarded == 0) || vehicleData.m_waitCounter >= 12)
+                {
+                    // this bus did not get any alight or board, or
+                    // this bus has alight+board but has waited enough to qualify departure
+                    // then depart now
+                    __result = true;
+                }
             }
         }
     }

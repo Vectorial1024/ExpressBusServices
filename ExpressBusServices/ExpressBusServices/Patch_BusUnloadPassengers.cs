@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using HarmonyLib;
+
+namespace ExpressBusServices
+{
+    [HarmonyPatch(typeof(BusAI))]
+    [HarmonyPatch("TransportArriveAtTarget", MethodType.Normal)]
+    public class Patch_BusUnloadPassengers
+    {
+        [HarmonyPostfix]
+        public static void HandleBusArrivedAtTarget(ushort vehicleID, ref Vehicle data, ref int serviceCounter)
+        {
+            BusPickDropLookupTable.Notify_PassengersAlightedFromBus(vehicleID, data.m_transferSize, serviceCounter);
+        }
+    }
+}

@@ -20,7 +20,7 @@ namespace ExpressBusServices
         {
             get
             {
-                return "Buses skip stops whenever possible.";
+                return "Unlock the peak efficiency of buses.";
             }
         }
 

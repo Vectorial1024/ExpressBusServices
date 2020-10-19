@@ -1,5 +1,3 @@
-Express Bus Services
-
 Unlock the peak efficiency of buses.
 
 中文名：特快巴士服務
@@ -18,10 +16,8 @@ Based on my IRL experience in Hong Kong, I find that buses in Cities Skylines ar
 
 Here I address the two main problems with CSL buses being underrated and being borderline unusable:
 
-1. Buses always stop at every stop
-
+[h1]1. Buses always stop at every stop[/h1]
 This greatly reduces efficiency of buses (and probably made them unusable) in the following cases:
-
 [list]
 [*]Buses stop at bus stops when it is full, the stop has passengers waiting, but no one alights the bus (especially when used with Real Time mod, during the rush hours)
 [*]Buses stop at bus stops when it is empty, the stop has no one, and no one alights the bus (e.g. in night-time)
@@ -31,8 +27,7 @@ To address this, I borrow the concept of "bus bells" and "wave hand" from Hong K
 
 In this mod the above mode of operation is implemented as "buses depart the stop immediately if no one alight from the bus + if no one boards the bus". Buses still need to stop at stops to see if there are passengers wanting to alight the bus, but this is already a huge improvement.
 
-2. Buses unbunch at every stop
-
+[h1]2. Buses unbunch at every stop[/h1]
 Jesus Christ. If it were in Hong Kong the driver would have been berated to death by passengers. We don't do that there.
 
 Essentially, this mod restores the pre-vanilla unbunching update bus behaviors that, after boarding and alighting, buses depart the stops immediately.
@@ -41,10 +36,8 @@ Knowing that this will easily result in multiple buses arriving at the same stop
 
 This is especially helpful especially when you are using the Real Time mod and the Transport Line Manager mod at the same time and set the line budget during rush hour to e.g. 150% or 200%; in vanilla unbunching, the buses would simply wait at stops to unbunch forever because of the increased amounts of buses often overlapping each other in unbunching distance.
 
-What you can do with this mod
-
+[h1]What you can do with this mod[/h1]
 With this mod enabled, you can do the following:
-
 [list]
 [*]Long stretch of roads but too tight for metro/tramway? Use buses instead.
 [*]Sparse, fast metros with parallel-running feeder bus routes? Sure.
@@ -52,9 +45,7 @@ With this mod enabled, you can do the following:
 [*]Long-distance, high-frequency bus routes/shuttles? No longer a dream.
 [*]Earn profit from bus routes on a per-line basis (upkeep for depots etc still has to be sourced elsewhere)
 [/list]
-
-GitHub Repo
-
+[h1]GitHub Repo[/h1]
 This mod is open-sourced, and the repo is available here: https://github.com/Vectorial1024/ExpressBusServices
 
 And that's all!

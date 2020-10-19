@@ -11,7 +11,6 @@ Unlock the peak efficiency of buses.
 {*]巴士終於識得飛站
 [*]除總站外，上落客後，毋須等待，即時開出
 [/list]
-
 Based on my IRL experience in Hong Kong, I find that buses in Cities Skylines are utterly underrated and perhaps a bit unrealistic. As such, I made this mod in the hopes of introducing another way to view public transport in Cities Skylines other than the existing "bus is feeder" view, which is limited and less-intersting.
 
 Here I address the two main problems with CSL buses being underrated and being borderline unusable:
@@ -22,7 +21,6 @@ This greatly reduces efficiency of buses (and probably made them unusable) in th
 [*]Buses stop at bus stops when it is full, the stop has passengers waiting, but no one alights the bus (especially when used with Real Time mod, during the rush hours)
 [*]Buses stop at bus stops when it is empty, the stop has no one, and no one alights the bus (e.g. in night-time)
 [/list]
-
 To address this, I borrow the concept of "bus bells" and "wave hand" from Hong Kong. When passengers want to alight the bus, they ring the bus bells (now electrified) to signal the driver to let them off at the next stop. At bus stops, passengers wanting to board buses wave their hands to signal the driver to stop at the stop. When no one signals the bus driver, the driver may simply omit the stop and proceed to the next one (they still need to travel along the predefined route though).
 
 In this mod the above mode of operation is implemented as "buses depart the stop immediately if no one alight from the bus + if no one boards the bus". Buses still need to stop at stops to see if there are passengers wanting to alight the bus, but this is already a huge improvement.

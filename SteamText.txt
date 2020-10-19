@@ -1,0 +1,60 @@
+Express Bus Services
+
+Unlock the peak efficiency of buses.
+
+中文名：特快巴士服務
+
+[h1]Quick info[/h1]
+[list]
+[*]Requires Harmony
+[*]Does NOT work with Improved Public Transport 2
+[*]Buses will skip stops whenever possible
+[*]Buses will mostly no longer unbunch
+{*]巴士終於識得飛站
+[*]除總站外，上落客後，毋須等待，即時開出
+[/list]
+
+Based on my IRL experience in Hong Kong, I find that buses in Cities Skylines are utterly underrated and perhaps a bit unrealistic. As such, I made this mod in the hopes of introducing another way to view public transport in Cities Skylines other than the existing "bus is feeder" view, which is limited and less-intersting.
+
+Here I address the two main problems with CSL buses being underrated and being borderline unusable:
+
+1. Buses always stop at every stop
+
+This greatly reduces efficiency of buses (and probably made them unusable) in the following cases:
+
+[list]
+[*]Buses stop at bus stops when it is full, the stop has passengers waiting, but no one alights the bus (especially when used with Real Time mod, during the rush hours)
+[*]Buses stop at bus stops when it is empty, the stop has no one, and no one alights the bus (e.g. in night-time)
+[/list]
+
+To address this, I borrow the concept of "bus bells" and "wave hand" from Hong Kong. When passengers want to alight the bus, they ring the bus bells (now electrified) to signal the driver to let them off at the next stop. At bus stops, passengers wanting to board buses wave their hands to signal the driver to stop at the stop. When no one signals the bus driver, the driver may simply omit the stop and proceed to the next one (they still need to travel along the predefined route though).
+
+In this mod the above mode of operation is implemented as "buses depart the stop immediately if no one alight from the bus + if no one boards the bus". Buses still need to stop at stops to see if there are passengers wanting to alight the bus, but this is already a huge improvement.
+
+2. Buses unbunch at every stop
+
+Jesus Christ. If it were in Hong Kong the driver would have been berated to death by passengers. We don't do that there.
+
+Essentially, this mod restores the pre-vanilla unbunching update bus behaviors that, after boarding and alighting, buses depart the stops immediately.
+
+Knowing that this will easily result in multiple buses arriving at the same stop at the same time when enough time passes, I add in a restriction that buses still use the vanilla unbunching feature when they are at the first stop of the route. Plan your bus termini wisely!
+
+This is especially helpful especially when you are using the Real Time mod and the Transport Line Manager mod at the same time and set the line budget during rush hour to e.g. 150% or 200%; in vanilla unbunching, the buses would simply wait at stops to unbunch forever because of the increased amounts of buses often overlapping each other in unbunching distance.
+
+What you can do with this mod
+
+With this mod enabled, you can do the following:
+
+[list]
+[*]Long stretch of roads but too tight for metro/tramway? Use buses instead.
+[*]Sparse, fast metros with parallel-running feeder bus routes? Sure.
+[*]150% rush-hour bus budget with Real Time + Transport Lines Manager? Why not.
+[*]Long-distance, high-frequency bus routes/shuttles? No longer a dream.
+[*]Earn profit from bus routes on a per-line basis (upkeep for depots etc still has to be sourced elsewhere)
+[/list]
+
+GitHub Repo
+
+This mod is open-sourced, and the repo is available here: https://github.com/Vectorial1024/ExpressBusServices
+
+And that's all!

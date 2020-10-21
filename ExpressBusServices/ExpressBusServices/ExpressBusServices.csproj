@@ -67,7 +67,6 @@
     <Compile Include="Patch_IPT2_BusLoadsPassengers.cs" />
     <Compile Include="Patch_BusLoadsPassengers.cs" />
     <Compile Include="Patch_BusUnloadPassengers.cs" />
-    <Compile Include="PerStopBoardAlightInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VehicleBAInfo.cs" />
   </ItemGroup>

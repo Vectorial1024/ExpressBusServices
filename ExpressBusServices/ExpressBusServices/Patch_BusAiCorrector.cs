@@ -54,21 +54,4 @@ namespace ExpressBusServices
             }
         }
     }
-
-    /*
-    [HarmonyPatch]
-    public class Patch_BusAiCorrector_ForIPT2
-    {
-        // TODO make a separate mod for IPT2
-        public static MethodBase TargetMethod()
-        {
-            return AccessTools.Method("ImprovedPublicTransport2.Detour.Vehicles.BusAIDetour:CanLeave");
-        }
-
-        public static bool Prepare()
-        {
-            return false;
-        }
-    }
-    */
 }

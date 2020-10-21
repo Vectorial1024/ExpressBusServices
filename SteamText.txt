@@ -15,7 +15,7 @@ Based on my IRL experience in Hong Kong, I find that buses in Cities Skylines ar
 
 Here I address the two main problems with CSL buses being underrated and being borderline unusable:
 
-[h1]1. Buses always stop at every stop[/h1]
+[h1]Problem 1: Buses always stop at every stop[/h1]
 This greatly reduces efficiency of buses (and probably made them unusable) in the following cases:
 [list]
 [*]Buses stop at bus stops when it is full, the stop has passengers waiting, but no one alights the bus (especially when used with Real Time mod, during the rush hours)
@@ -25,7 +25,7 @@ To address this, I borrow the concept of "bus bells" and "wave hand" from Hong K
 
 In this mod the above mode of operation is implemented as "buses depart the stop immediately if no one alight from the bus + if no one boards the bus". Buses still need to stop at stops to see if there are passengers wanting to alight the bus, but this is already a huge improvement.
 
-[h1]2. Buses unbunch at every stop[/h1]
+[h1]Problem 2: Buses unbunch at every stop[/h1]
 Jesus Christ. If it were in Hong Kong the driver would have been berated to death by passengers. We don't do that there.
 
 Essentially, this mod restores the pre-vanilla unbunching update bus behaviors that, after boarding and alighting, buses depart the stops immediately.

@@ -5,7 +5,7 @@ Unlock the peak efficiency of buses.
 [h1]Quick info[/h1]
 [list]
 [*]Requires Harmony
-[*]Does NOT work with Improved Public Transport 2
+[*]Works with Improved Public Transport 2 (integrated support)
 [*]Buses will skip stops whenever possible
 [*]Buses will mostly no longer unbunch
 [*]巴士終於識得飛站

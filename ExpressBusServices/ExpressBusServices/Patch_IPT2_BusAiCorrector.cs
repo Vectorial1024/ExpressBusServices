@@ -26,7 +26,7 @@ namespace ExpressBusServices
             /*
              * Refer to the main class Patch_BusAiCorrector for more details.
              * Changes to this class should be made to the main class first and then mirrored here
-             * because the two classes are essentially the same.
+             * because the two classes are essentially checking the same thing in two different places.
              */
             TransportManager instance = Singleton<TransportManager>.instance;
             ushort transportLineID = vehicleData.m_transportLine;
@@ -35,7 +35,11 @@ namespace ExpressBusServices
             if (currentStop != firstStop)
             {
                 VehicleBAInfo info = BusPickDropLookupTable.GetInfoForBus(vehicleID);
-                if ((info != null && info.Alighted + info.Boarded == 0) || vehicleData.m_waitCounter >= 12)
+                if (info != null && info.Alighted + info.Boarded == 0)
+                {
+                    __result = true;
+                }
+                else if (vehicleData.m_waitCounter >= 12 && ReversePatch_VehicleAI_CanLeave.BaseVehicleAI_CanLeave(null, vehicleID, ref vehicleData))
                 {
                     __result = true;
                 }

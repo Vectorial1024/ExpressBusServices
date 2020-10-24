@@ -39,11 +39,17 @@ namespace ExpressBusServices
             {
                 // midway bus stop; implement logic here
                 VehicleBAInfo info = BusPickDropLookupTable.GetInfoForBus(vehicleID);
-                if ((info != null && info.Alighted + info.Boarded == 0) || vehicleData.m_waitCounter >= 12)
+                if (info != null && info.Alighted + info.Boarded == 0)
                 {
-                    // this bus did not get any alight or board, or
-                    // this bus has alight+board but has waited enough to qualify departure
+                    // this bus did not get any alight or board
                     // then depart now
+                    __result = true;
+                }
+                else if (vehicleData.m_waitCounter >= 12 && ReversePatch_VehicleAI_CanLeave.BaseVehicleAI_CanLeave(null, vehicleID, ref vehicleData))
+                {
+                    // this bus has alight+board but has waited enough to qualify departure AND all citizens are boarded
+                    // then depart now
+                    // (the "all citizens boarded" part is more obvious when e.g. Realistic Walking Speed mod is used)
                     __result = true;
                 }
             }

@@ -25,7 +25,9 @@ This mod uses Harmony to modify ("patch") the CSL code to achieve the effect.
 
 The integrated compatibility to IPT2 is achieved by utilizing Harmony's ability to detect other mods in runtime and selectively apply patches. See the source code for more details.
 
-As pointed out in #1, the general procedure of this mod is something like this:
+The ability for this mod to determine whether a certain vehicle has loaded all loadable CIMs is powered by Harmony's "reverse-patching" feature available since Harmony v2. See the source code for a working example of reverse-patching.
+
+Expanding on my answer on #1, the general procedure of this mod is something like this:
 
 0. General event occurs: bus arrives at bus stop
 1. Bus AI tries to unload passengers
@@ -33,6 +35,10 @@ As pointed out in #1, the general procedure of this mod is something like this:
 3. Bus AI tries to load passengers
 4. I count how many is loaded
 5. Enter loop:
-6. If non-first bus stop & loaded + unloaded = 0 then depart immediately, else (other waiting conditions)
+6. If non-first bus stop:
+   1. If unloaded + unloaded = 0 then depart immediately, exit loop
+   2. If some CIMs boarded/alighted & waited enough time at stop & all boarding CIMs boarded then depart immediately, exit loop
+   3. Else wait for next loop
+999. Return control to game
 
 No data is written to the save-game because instant-departures are, well, instant. It is very unlikely that the arrival state persists at the moment a save occurs. (Well, unbunching right after loading a save game shouldn't be too severe.) Moreover, I can determine whether the bus is at the first bus stop of the line just from vanilla CSL data structures. There is no need to save any data.

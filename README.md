@@ -11,6 +11,38 @@ Unlock the peak efficiency of buses:
 
 Because this mod is very small and simple, I am open-sourcing this to everyone out there.
 
+## Types of Transportation Covered
+
+These transportation types are currently covered by this mod:
+
+- Buses; as a result of game mechanics, the following transportation types are also covered:
+  - Evacuation buses
+  - Tourism buses
+  - Intercity buses
+
+These transportation types will NEVER be covered by this mod because it will not make sense:
+
+- Cruisers
+- Airplanes
+- Cable cars
+- Ferries
+
+These transpotation types will not be covered by this mod because they will become unrealistic:
+
+- Metros
+- Trains
+- Blimps
+- Monorails
+- Helicopters
+
+These transportation types will be likely to be covered in the future:
+
+- Trolleybuses
+
+These transportation types are asking very good questions:
+
+- Trams
+
 # Motivation
 
 This mod aims to salvage vanilla CSL buses from being borderline unusable to being competitive against metro and tram lines.

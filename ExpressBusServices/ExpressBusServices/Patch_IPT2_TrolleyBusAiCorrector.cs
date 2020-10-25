@@ -5,12 +5,12 @@ namespace ExpressBusServices
 {
     [HarmonyPatch]
     [HarmonyPriority(Priority.High)]
-    public class Patch_IPT2_BusAiCorrector
+    public class Patch_IPT2_TrolleyBusAiCorrector
     {
         [HarmonyTargetMethod]
         public static MethodBase TargetRelevantIPT2Method()
         {
-            return AccessTools.Method("ImprovedPublicTransport2.Detour.Vehicles.BusAIDetour:CanLeave");
+            return AccessTools.Method("ImprovedPublicTransport2.Detour.Vehicles.TrolleybusAIDetour:CanLeave");
         }
 
         [HarmonyPrepare]

@@ -19,6 +19,7 @@ These transportation types are currently covered by this mod:
   - Evacuation buses
   - Tourism buses
   - Intercity buses
+- Trolleybuses
 
 These transportation types will NEVER be covered by this mod because it will not make sense:
 
@@ -34,10 +35,6 @@ These transpotation types will not be covered by this mod because they will beco
 - Blimps
 - Monorails
 - Helicopters
-
-These transportation types will be likely to be covered in the future:
-
-- Trolleybuses
 
 These transportation types are asking very good questions:
 

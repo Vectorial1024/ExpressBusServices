@@ -2,9 +2,9 @@
 
 namespace ExpressBusServices
 {
-    [HarmonyPatch(typeof(BusAI))]
+    [HarmonyPatch(typeof(TrolleybusAI))]
     [HarmonyPatch("CanLeave", MethodType.Normal)]
-    public class Patch_BusAiCorrector
+    public class Patch_TrolleyBusAiCorrector
     {
         [HarmonyPostfix]
         public static void PostFix(ref bool __result, ushort vehicleID, ref Vehicle vehicleData)

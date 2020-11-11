@@ -1,7 +1,7 @@
 # Express Bus Services
 Unlock the peak efficiency of buses:
 
-1. Buses skips stops whenever possible
+1. Buses skip stops whenever possible
 2. Buses do not unbunch (except when at first stop of line)
 
 # Mod Status

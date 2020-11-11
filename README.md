@@ -65,7 +65,7 @@ Expanding on my answer on #1, the general procedure of this mod is something lik
 4. I count how many is loaded
 5. Enter loop:
 6. If non-first bus stop:
-   1. If unloaded + unloaded = 0 then depart immediately, exit loop
+   1. If unloaded + loaded = 0 then depart immediately, exit loop
    2. If some CIMs boarded/alighted & waited enough time at stop & all boarding CIMs boarded then depart immediately, exit loop
    3. Else wait for next loop
 999. Return control to game

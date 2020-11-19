@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using ColossalFramework;
+using UnityEngine;
 
 namespace ExpressBusServices
 {
@@ -75,11 +77,7 @@ namespace ExpressBusServices
              * 
              * This entire system has a nice property that no save-file access is needed.
              */
-            TransportManager instance = Singleton<TransportManager>.instance;
-            ushort transportLineID = vehicleData.m_transportLine;
-            ushort firstStop = instance.m_lines.m_buffer[transportLineID].GetStop(1);
-            ushort currentStop = vehicleData.m_targetBuilding;
-            if (currentStop != firstStop)
+            if (DepartureChecker.NowIsEligibleForInstantDeparture(vehicleID, ref vehicleData))
             {
                 // midway bus stop; implement logic here
                 VehicleBAInfo info = GetInfoForBus(vehicleID);
@@ -95,6 +93,16 @@ namespace ExpressBusServices
                     // then depart now
                     // (the "all citizens boarded" part is more obvious when e.g. Realistic Walking Speed mod is used)
                     __result = true;
+                }
+            }
+            if (__result == false && vehicleData.m_waitCounter > 12 && !ReversePatch_VehicleAI_CanLeave.BaseVehicleAI_CanLeave(null, vehicleID, ref vehicleData))
+            {
+                // I can't depart because some CIMs have reserved us but run away.
+                // We should correct those bugged CIMs.
+                if (vehicleData.m_waitCounter % 4 == 0)
+                {
+                    // Don't check too frequently to reduce CPU stress.
+                    CitizenRunawayTable.FixInvalidPublicTransitPassengers(vehicleID, ref vehicleData);
                 }
             }
         }

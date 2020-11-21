@@ -8,6 +8,8 @@ Unlock the peak efficiency of buses:
 
 - Compatible with Transport Line Manager (natural compatibility)
 - Compatible with Improved Public Transport 2 (implemented compatibility; IPT2 would override things otherwise)
+- Mods available for this mod (yes, mod-ception):
+  - Express Bus Services (IPT2 Plug-In) https://github.com/Vectorial1024/ExpressBusServices_IPT2
 
 Because this mod is very small and simple, I am open-sourcing this to everyone out there.
 

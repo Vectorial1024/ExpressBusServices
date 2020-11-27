@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace ExpressBusServices
 {
@@ -40,15 +42,35 @@ namespace ExpressBusServices
 
         public static bool RecordForBusExists(ushort vehicleID) => busPickDropTable?.ContainsKey(vehicleID) ?? false;
 
-        public static void Notify_PassengersAlightedFromBus(ushort vehicleID, ushort transferSize, int serviceCounter)
+        public static void Notify_PassengersAlightedFromBus(ushort vehicleID, int alightedCount)
         {
-            int actualAlighted = transferSize + serviceCounter;
-            GetInfoForBus(vehicleID, true).Alighted = actualAlighted;
+            // Debug.Log($"Vehicle ID: {vehicleID}, alighted: {alightedCount}");
+            GetInfoForBus(vehicleID, true).Alighted = alightedCount;
         }
 
+        [Obsolete("Use Notify_PassengersAlightedFromBus(2) instead.")]
+        public static void Notify_PassengersAlightedFromBus(ushort vehicleID, ushort transferSize, int serviceCounter)
+        {
+            // NOTE: serviceCounter is the real "alighted count"; the transferSize is simply hinting how many remains on the vehicle, and is not useful.
+            // Debug.Log($"Vehicle ID: {vehicleID}, alighted: {serviceCounter}");
+            GetInfoForBus(vehicleID, true).Alighted = serviceCounter;
+        }
+
+        [Obsolete("Use Notify_PassengersAboutToBoardOntoBus and Notify_PassengersAlreadyBoardedOntoBus instead.")]
         public static void Notify_PassengersBoardedOntoBus(ushort vehicleID, ushort transferSize)
         {
+            // Debug.Log($"Vehicle ID: {vehicleID}, boarded: {transferSize}");
             GetInfoForBus(vehicleID, true).Boarded = transferSize;
+        }
+
+        public static void Notify_PassengersAboutToBoardOntoBus(ushort vehicleID, ref Vehicle data)
+        {
+            GetInfoForBus(vehicleID, true).PassengersBeforeBoarding = data.m_transferSize;
+        }
+
+        public static void Notify_PassengersAlreadyBoardedOntoBus(ushort vehicleID, ref Vehicle data)
+        {
+            GetInfoForBus(vehicleID, true).PassengersAfterBoarding = data.m_transferSize;
         }
 
         public static void DetermineIfBusShouldDepart(ref bool __result, ushort vehicleID, ref Vehicle vehicleData)
@@ -78,7 +100,7 @@ namespace ExpressBusServices
             {
                 // midway bus stop; implement logic here
                 VehicleBAInfo info = GetInfoForBus(vehicleID);
-                if (info != null && info.Alighted + info.Boarded == 0)
+                if (info != null && info.Alighted + info.ActualBoarded == 0)
                 {
                     // this bus did not get any alight or board
                     // then depart now

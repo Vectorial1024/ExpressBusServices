@@ -6,10 +6,16 @@ namespace ExpressBusServices
     [HarmonyPatch("LoadPassengers", MethodType.Normal)]
     public class Patch_TrolleyBusLoadsPassengers
     {
-        [HarmonyPostfix]
-        public static void HandleBusArrivedAtTarget(ushort vehicleID, ref Vehicle data)
+        [HarmonyPrefix]
+        public static void HandleBusAboutToLoadPassengers(ushort vehicleID, ref Vehicle data)
         {
-            BusPickDropLookupTable.Notify_PassengersBoardedOntoBus(vehicleID, data.m_transferSize);
+            BusPickDropLookupTable.Notify_PassengersAboutToBoardOntoBus(vehicleID, ref data);
+        }
+
+        [HarmonyPostfix]
+        public static void HandleBusAlreadyLoadedPassengers(ushort vehicleID, ref Vehicle data)
+        {
+            BusPickDropLookupTable.Notify_PassengersAlreadyBoardedOntoBus(vehicleID, ref data);
         }
     }
 }

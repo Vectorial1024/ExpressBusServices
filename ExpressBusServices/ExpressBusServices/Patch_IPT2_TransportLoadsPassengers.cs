@@ -19,13 +19,19 @@ namespace ExpressBusServices
             return TargetRelevantIPT2Method() != null;
         }
 
-        [HarmonyPostfix]
-        public static void HandleBusArrivedAtTarget(ushort vehicleID)
+        // thanks to IPT, I have to do things in a very roundabout way.
+        // but, in another perspective, this covers all the transport types that IPT can cover
+        // will still need to handle vehicles with trailers, but bruh, it works for now.
+        [HarmonyPrefix]
+        public static void HandleTransportAboutToLoadPassengers(ushort vehicleID, ref Vehicle data)
         {
-            // thanks to IPT, I have to do things in a very roundabout way.
-            // but, in another perspective, this covers all the transport types that IPT can cover
-            Vehicle data = VehicleManager.instance.m_vehicles.m_buffer[vehicleID];
-            BusPickDropLookupTable.Notify_PassengersBoardedOntoBus(vehicleID, data.m_transferSize);
+            BusPickDropLookupTable.Notify_PassengersAboutToBoardOntoBus(vehicleID, ref data);
+        }
+
+        [HarmonyPostfix]
+        public static void HandleTransportAlreadyLoadedPassengers(ushort vehicleID, ref Vehicle data)
+        {
+            BusPickDropLookupTable.Notify_PassengersAlreadyBoardedOntoBus(vehicleID, ref data);
         }
     }
 }

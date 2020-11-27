@@ -9,7 +9,7 @@ namespace ExpressBusServices
         [HarmonyPostfix]
         public static void HandleBusArrivedAtTarget(ushort vehicleID, ref Vehicle data, ref int serviceCounter)
         {
-            BusPickDropLookupTable.Notify_PassengersAlightedFromBus(vehicleID, data.m_transferSize, serviceCounter);
+            BusPickDropLookupTable.Notify_PassengersAlightedFromBus(vehicleID, serviceCounter);
         }
     }
 }

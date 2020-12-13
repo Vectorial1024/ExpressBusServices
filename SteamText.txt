@@ -8,9 +8,11 @@ Unlock the peak efficiency of buses.
 [*]Works with Improved Public Transport 2 (integrated support)
 [*]Buses will skip stops whenever possible
 [*]Buses will mostly no longer unbunch
-[*]巴士終於識得飛站
+[*]巴士終於識得飛站; 其他交通工具(例如: 地鐵)維持現狀 (站站停, 冇飛站)
 [*]除總站外，上落客後，毋須等待，即時開出
+[*]本mod已經有TLM以及IPT2嘅support
 [*]Sister mod for IPT2 available: [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2296003260]Express Bus Services (IPT2 Plugin)[/url]
+[*]IPT2玩家可以考慮同時安裝姊妹mod獲得更好嘅IPT2體驗: [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2296003260]Express Bus Services (IPT2 Plugin)[/url]
 [/list]
 Based on my IRL experience in Hong Kong, I find that buses in Cities Skylines are utterly underrated and perhaps a bit unrealistic. As such, I made this mod in the hopes of introducing another way to view public transport in Cities Skylines other than the existing "bus is feeder" view, which is limited and less-intersting.
 

@@ -14,6 +14,9 @@ Unlock the peak efficiency of buses.
 [*]Sister mod for IPT2 available: [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2296003260]Express Bus Services (IPT2 Plugin)[/url]
 [*]IPT2玩家可以考慮同時安裝姊妹mod獲得更好嘅IPT2體驗: [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2296003260]Express Bus Services (IPT2 Plugin)[/url]
 [/list]
+外部參考：香港巴士大典 - 飛站 // External Link: Encyclopedia of Bus Transport in Hong Kong - Stop-Skipping [Chinese only]
+https://hkbus.fandom.com/wiki/%E9%A3%9B%E7%AB%99
+
 Based on my IRL experience in Hong Kong, I find that buses in Cities Skylines are utterly underrated and perhaps a bit unrealistic. As such, I made this mod in the hopes of introducing another way to view public transport in Cities Skylines other than the existing "bus is feeder" view, which is limited and less-intersting.
 
 Here I address the two main problems with CSL buses being underrated and being borderline unusable:

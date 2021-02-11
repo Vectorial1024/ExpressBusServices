@@ -1,4 +1,5 @@
-﻿using ICities;
+﻿using CitiesHarmony.API;
+using ICities;
 
 namespace ExpressBusServices
 {
@@ -44,6 +45,7 @@ namespace ExpressBusServices
                     return;
             }
 
+            UnifyHarmonyVersions();
             PatchController.Activate();
         }
 
@@ -53,7 +55,20 @@ namespace ExpressBusServices
         /// </summary>
         public override void OnLevelUnloading()
         {
+            UnifyHarmonyVersions();
             PatchController.Deactivate();
+        }
+
+        private void UnifyHarmonyVersions()
+        {
+            if (HarmonyHelper.IsHarmonyInstalled)
+            {
+                // this code will redirect our Harmony 2.x version to the authoritative version stipulated by CitiesHarmony
+                // I will make it such that the game will throw hard error if Harmony is not found,
+                // as per my usual software deployment style
+                // the user will have to subscribe to Harmony by themselves. I am not their parent anyways.
+                // so this block will have to be empty.
+            }
         }
     }
 }

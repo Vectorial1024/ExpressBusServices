@@ -10,7 +10,7 @@ namespace ExpressBusServices
         [HarmonyTargetMethod]
         public static MethodBase TargetRelevantIPT2Method()
         {
-            return AccessTools.Method("ImprovedPublicTransport2.Detour.Vehicles.BusAIDetour:CanLeave");
+            return AccessTools.TypeByName("ImprovedPublicTransport2.Detour.Vehicles.BusAIDetour")?.GetMethod("CanLeave") ?? null;
         }
 
         [HarmonyPrepare]

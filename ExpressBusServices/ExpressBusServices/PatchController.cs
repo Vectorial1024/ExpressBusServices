@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace ExpressBusServices
 {
-    public class PatchController
+    internal class PatchController
     {
         public static string HarmonyModID
         {

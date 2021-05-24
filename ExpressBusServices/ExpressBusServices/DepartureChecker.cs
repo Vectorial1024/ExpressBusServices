@@ -13,8 +13,9 @@ namespace ExpressBusServices
         {
             TransportManager instance = Singleton<TransportManager>.instance;
             ushort transportLineID = vehicleData.m_transportLine;
-            ushort firstStop = instance.m_lines.m_buffer[transportLineID].GetStop(1);
-            ushort currentStop = vehicleData.m_targetBuilding;
+            // the semantics! they must be clear! dont try to cheat with "first is index=1 and current=next" again! it hurts devops!
+            ushort firstStop = instance.m_lines.m_buffer[transportLineID].GetStop(0);
+            ushort currentStop = TransportLine.GetPrevStop(vehicleData.m_targetBuilding);
 
             // note:
             // if I somehow cannot determine where I am at or where the first stop is at, always unbunch.

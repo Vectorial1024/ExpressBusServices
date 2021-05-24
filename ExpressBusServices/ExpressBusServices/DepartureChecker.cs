@@ -14,7 +14,7 @@ namespace ExpressBusServices
             TransportManager instance = Singleton<TransportManager>.instance;
             ushort transportLineID = vehicleData.m_transportLine;
             ushort firstStop = instance.m_lines.m_buffer[transportLineID].GetStop(1);
-            ushort currentStop = vehicleData.m_targetBuilding;
+            ushort currentStop = TransportLine.GetPrevStop(vehicleData.m_targetBuilding);
 
             // note:
             // if I somehow cannot determine where I am at or where the first stop is at, always unbunch.

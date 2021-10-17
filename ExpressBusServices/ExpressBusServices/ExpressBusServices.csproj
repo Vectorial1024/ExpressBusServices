@@ -57,10 +57,6 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="TransportLinesManager">
-      <HintPath>..\..\..\..\..\..\SteamLibrary\steamapps\workshop\content\255710\1312767991\TransportLinesManager.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\..\..\..\SteamLibrary\steamapps\common\Cities_Skylines\Cities_Data\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
@@ -72,7 +68,6 @@
     <Compile Include="DepartureChecker.cs" />
     <Compile Include="ExpressBusServices.cs" />
     <Compile Include="PatchController.cs" />
-    <Compile Include="Patch_DepartureChecker_ForTLM.cs" />
     <Compile Include="Patch_IPT2_TrolleyBusAiCorrector.cs" />
     <Compile Include="Patch_TrolleyBusUnloadPassengers.cs" />
     <Compile Include="Patch_TrolleyBusLoadsPassengers.cs" />

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ColossalFramework;
-using Klyte.TransportLinesManager.Extensions;
 
 namespace ExpressBusServices
 {
@@ -27,7 +26,8 @@ namespace ExpressBusServices
 
         public static bool StopIsTerminus(ushort stop)
         {
-            return TLMStopDataContainer.Instance.SafeGet(stop).IsTerminal;
+            // none are terminus; however this will be overridden by the TLM extension mod
+            return false;
         }
     }
 }

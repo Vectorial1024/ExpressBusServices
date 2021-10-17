@@ -13,6 +13,8 @@ Unlock the peak efficiency of buses.
 [*]本mod已經有TLM以及IPT2嘅support
 [*]Sister mod for IPT2 available for even better compatibility with IPT2: [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2296003260]Express Bus Services (IPT2 Plugin)[/url]
 [*]IPT2玩家可以考慮同時安裝姊妹mod獲得更好嘅IPT2體驗: [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2296003260]Express Bus Services (IPT2 Plugin)[/url]
+[*]Sister mod for TLM available for even better compatibility with TLM:[url=https://steamcommunity.com/sharedfiles/filedetails/?id=2630529375]Express Bus Services (TLM Plugin)[/url]
+[*]IPT2玩家可以考慮同時安裝姊妹mod獲得更好嘅TLM體驗: [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2630529375]Express Bus Services (TLM Plugin)[/url]
 [/list]
 外部參考：香港巴士大典 - 飛站 // External Link: Encyclopedia of Bus Transport in Hong Kong - Stop-Skipping [Chinese only]
 https://hkbus.fandom.com/wiki/%E9%A3%9B%E7%AB%99

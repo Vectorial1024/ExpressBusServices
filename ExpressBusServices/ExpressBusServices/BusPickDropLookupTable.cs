@@ -113,11 +113,15 @@ namespace ExpressBusServices
                     // (the "all citizens boarded" part is more obvious when e.g. Realistic Walking Speed mod is used)
                     __result = true;
                 }
+                // apply the "runaway citizen check" here; it seems previously we have applied the fix at a wrong place.
             }
+            // we are now at the point where we want to check whether to fix "runaway citizen".
             if (__result == false && vehicleData.m_waitCounter > 12 && !ReversePatch_VehicleAI_CanLeave.BaseVehicleAI_CanLeave(null, vehicleID, ref vehicleData))
             {
-                // I can't depart because some CIMs have reserved us but run away.
+                // at midway bus stop
                 // We should correct those bugged CIMs.
+                // again, what we do here is simply "request recheck", but not to decide anything.
+                // let the game decide things
                 if (vehicleData.m_waitCounter % 4 == 0)
                 {
                     // Don't check too frequently to reduce CPU stress.

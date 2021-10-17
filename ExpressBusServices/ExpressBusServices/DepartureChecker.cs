@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ColossalFramework;
+using Klyte.TransportLinesManager.Extensions;
 
 namespace ExpressBusServices
 {
@@ -21,7 +22,12 @@ namespace ExpressBusServices
             // if I somehow cannot determine where I am at or where the first stop is at, always unbunch.
             // this may be related to some random errors that I get about "vehicles not leaving stop",
             // where perhaps some vehicle states messed up.
-            return currentStop == 0 || firstStop == 0 || currentStop != firstStop;
+            return currentStop == 0 || firstStop == 0 || (currentStop != firstStop && !StopIsTerminus(currentStop));
+        }
+
+        public static bool StopIsTerminus(ushort stop)
+        {
+            return TLMStopDataContainer.Instance.SafeGet(stop).IsTerminal;
         }
     }
 }

@@ -1,13 +1,26 @@
 ﻿using HarmonyLib;
 using System;
+using System.Reflection;
 
 namespace ExpressBusServices
 {
-    [HarmonyPatch(typeof(BusAI))]
-    [HarmonyPatch("StartPathFind", MethodType.Normal)]
-    [HarmonyPatch(new Type[] { typeof(ushort), typeof(Vehicle) })]
+    [HarmonyPatch]
     public class ReversePatch_BusAI_StartPathFind
     {
+
+        [HarmonyTargetMethod]
+        public static MethodBase TargetRelevantMethod()
+        {
+            return AccessTools.TypeByName("BusAI")?.GetMethod("StartPathFind", new Type[] { typeof(ushort), typeof(Vehicle).MakeByRefType() }) ?? null;
+        }
+
+        [HarmonyPrepare]
+        public static bool DetermineIfShouldPatch()
+        {
+            // this method should exist
+            return true;
+        }
+
         [HarmonyReversePatch]
         public static bool BusAI_StartPathFind(object __instance, ushort vehicleID, ref Vehicle vehicleData)
         {

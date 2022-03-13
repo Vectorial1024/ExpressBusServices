@@ -5,6 +5,7 @@ namespace ExpressBusServices
 {
     [HarmonyPatch(typeof(TrolleybusAI))]
     [HarmonyPatch("StartPathFind", MethodType.Normal)]
+    [HarmonyPatch(new Type[] { typeof(ushort), typeof(Vehicle) })]
     public class ReversePatch_TrolleybusAI_StartPathFind
     {
         [HarmonyReversePatch]

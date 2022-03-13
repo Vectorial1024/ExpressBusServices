@@ -80,8 +80,9 @@ namespace ExpressBusServices
                 vehicleData = (Vehicle)pathfindParams[1];
                 // I think this is to let it iterate their stuff
                 ReversePatch_TrolleybusAI_UnloadPassengers.TrolleybusAI_UnloadPassengers(trolleyAi, vehicleID, ref vehicleData, currentStop, nextStop);
-
             }
+
+            return false;
         }
     }
 }

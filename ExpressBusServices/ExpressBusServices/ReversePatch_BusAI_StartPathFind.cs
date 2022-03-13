@@ -11,7 +11,7 @@ namespace ExpressBusServices
         [HarmonyTargetMethod]
         public static MethodBase TargetRelevantMethod()
         {
-            return AccessTools.TypeByName("BusAI")?.GetMethod("StartPathFind", new Type[] { typeof(ushort), typeof(Vehicle).MakeByRefType() }) ?? null;
+            return AccessTools.Method(typeof(BusAI), "StartPathFind", new Type[] { typeof(ushort), typeof(Vehicle).MakeByRefType() });
         }
 
         [HarmonyPrepare]

@@ -95,6 +95,12 @@ namespace ExpressBusServices
                 return true;
             }
 
+            // get next path
+            if (vehicleData.m_path == 0 && (vehicleData.m_flags & Vehicle.Flags.WaitingPath) != 0)
+            {
+                vehicleData.m_flags &= ~Vehicle.Flags.WaitingPath;
+                vehicleData.Info.m_vehicleAI.SetTransportLine(vehicleID, ref vehicleData, 0);
+            }
             return false;
         }
     }

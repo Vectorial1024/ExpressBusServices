@@ -27,7 +27,7 @@ namespace ExpressBusServices
         }
 
         [HarmonyPrefix]
-        public static bool PreFix(VehicleAI __instance, ushort vehicleID, ref Vehicle vehicleData)
+        public static bool ExtraSkippingLogic(VehicleAI __instance, ushort vehicleID, ref Vehicle vehicleData)
         {
             if (!(__instance is BusAI || __instance is TrolleybusAI))
             {

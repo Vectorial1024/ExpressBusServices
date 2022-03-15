@@ -78,7 +78,7 @@ namespace ExpressBusServices
             } 
             else if (__instance is TrolleybusAI trolleyAi)
             {
-                if (!(bool) AccessTools.Method(typeof(TrolleybusAI, "StartPathfind", new Type[] { typeof(ushort), typeof(Vehicle).MakeByRefType() }).Invoke(trolleyAi, pathfindParams))))
+                if (!(bool) AccessTools.Method(typeof(TrolleybusAI), "StartPathfind", new Type[] { typeof(ushort), typeof(Vehicle).MakeByRefType() }).Invoke(trolleyAi, pathfindParams))
                 {
                     // something bad happened; cancel
                     vehicleData.m_targetBuilding = currentStop;

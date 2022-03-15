@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace ExpressBusServices
@@ -61,9 +62,10 @@ namespace ExpressBusServices
             ushort nextStop = TransportLine.GetNextStop(currentStop);
             vehicleData.m_targetBuilding = nextStop;
             var pathfindParams = new object[] { vehicleID, vehicleData };
+            var unloadParams = new object[] { vehicleID, vehicleData, currentStop, nextStop };
             if (__instance is BusAI busAi)
             {
-                if (!ReversePatch_BusAI_StartPathFind.BusAI_StartPathFind(__instance, vehicleID, ref vehicleData))
+                if (!(bool) AccessTools.Method(typeof(BusAI), "StartPathFind", new Type[] { typeof(ushort), typeof(Vehicle).MakeByRefType() }).Invoke(busAi, pathfindParams))
                 {
                     // something bad happened; cancel
                     vehicleData.m_targetBuilding = currentStop;
@@ -72,11 +74,11 @@ namespace ExpressBusServices
 
                 vehicleData = (Vehicle)pathfindParams[1];
                 // I think this is to let it iterate their stuff
-                ReversePatch_BusAI_UnloadPassengers.BusAI_UnloadPassengers(busAi, vehicleID, ref vehicleData, currentStop, nextStop);
+                AccessTools.Method(typeof(BusAI), "UnloadPassengers").Invoke(busAi, unloadParams);
             } 
             else if (__instance is TrolleybusAI trolleyAi)
             {
-                if (!ReversePatch_TrolleybusAI_StartPathFind.TrolleybusAI_StartPathFind(__instance, vehicleID, ref vehicleData))
+                if (!(bool) AccessTools.Method(typeof(TrolleybusAI, "StartPathfind", new Type[] { typeof(ushort), typeof(Vehicle).MakeByRefType() }).Invoke(trolleyAi, pathfindParams))))
                 {
                     // something bad happened; cancel
                     vehicleData.m_targetBuilding = currentStop;
@@ -85,7 +87,7 @@ namespace ExpressBusServices
 
                 vehicleData = (Vehicle)pathfindParams[1];
                 // I think this is to let it iterate their stuff
-                ReversePatch_TrolleybusAI_UnloadPassengers.TrolleybusAI_UnloadPassengers(trolleyAi, vehicleID, ref vehicleData, currentStop, nextStop);
+                AccessTools.Method(typeof(TrolleybusAI), "UnloadPassengers").Invoke(trolleyAi, unloadParams);
             }
 
             return false;

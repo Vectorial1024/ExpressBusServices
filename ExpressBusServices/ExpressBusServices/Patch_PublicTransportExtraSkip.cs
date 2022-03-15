@@ -88,6 +88,11 @@ namespace ExpressBusServices
                 vehicleData = (Vehicle)pathfindParams[1];
                 // I think this is to let it iterate their stuff
                 AccessTools.Method(typeof(TrolleybusAI), "UnloadPassengers").Invoke(trolleyAi, unloadParams);
+            } 
+            else
+            {
+                // we should have already filtered this...?
+                return true;
             }
 
             return false;

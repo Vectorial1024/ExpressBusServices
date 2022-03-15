@@ -67,10 +67,7 @@
     <Compile Include="BusPickDropLookupTable.cs" />
     <Compile Include="CitizenRunawayTable.cs" />
     <Compile Include="ModDetector.cs" />
-    <Compile Include="ReversePatch_TrolleyBusAI_UnloadPassengers.cs" />
-    <Compile Include="ReversePatch_TrolleybusAI_StartPathFind.cs" />
-    <Compile Include="ReversePatch_BusAI_StartPathFind.cs" />
-    <Compile Include="ReversePatch_BusAI_UnloadPassengers.cs" />
+    <Compile Include="Patch_VehicleAI_SimulationStep.cs" />
     <Compile Include="TransportLineUtil.cs" />
     <Compile Include="DepartureChecker.cs" />
     <Compile Include="ExpressBusServices.cs" />

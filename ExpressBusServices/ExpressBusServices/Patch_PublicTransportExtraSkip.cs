@@ -6,13 +6,18 @@ using System.Text;
 
 namespace ExpressBusServices
 {
-    [HarmonyPatch(typeof(BusAI))]
-    [HarmonyPatch("CanLeave", MethodType.Normal)]
+    [HarmonyPatch]
     public class Patch_PublicTransportExtraSkip
     {
         /*
          * Special thanks to klyte45 from TLM for letting me use this logic.
          */
+
+        [HarmonyTargetMethod]
+        public static MethodBase TargetRelevantMethod()
+        {
+            return AccessTools.Method(typeof(VehicleAI), "ArrivingToDestination");
+        }
 
         [HarmonyPrepare]
         public static bool DetermineIfShouldPatch()

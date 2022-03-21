@@ -11,6 +11,7 @@ namespace ExpressBusServices
     public class ModSettingController
     {
         public static readonly string pathToConfigXml = "ExpressBusServices_Config.xml";
+        public static readonly string rootNodeName = "ExpressBusServices_Config";
 
         public static void Touch()
         {
@@ -33,7 +34,7 @@ namespace ExpressBusServices
                     for (int i = 0; i < document.ChildNodes.Count; i++)
                     {
                         XmlNode root = document.ChildNodes[i];
-                        if (root.Name == "ExpressBusServices_Config")
+                        if (root.Name == rootNodeName)
                         {
                             for (int j = 0; j < root.ChildNodes.Count; j++)
                             {
@@ -61,6 +62,7 @@ namespace ExpressBusServices
 
         public static void WriteSettings()
         {
+            var expressBusMode = EBSModConfig.CurrentExpressBusMode;
             // var interpretation = IPT2UnbunchingRuleReader.CurrentRuleInterpretation;
             try
             {
@@ -72,10 +74,10 @@ namespace ExpressBusServices
                 XmlWriter writer = XmlWriter.Create(pathToConfigXml, settings);
 
                 writer.WriteStartDocument();
-                writer.WriteStartElement("ExpressBusServices_IPT2_Config");
+                writer.WriteStartElement(rootNodeName);
 
-                writer.WriteStartElement("SelectedIndex");
-                //writer.WriteString(((int)interpretation).ToString());
+                writer.WriteStartElement("ExpressBuses_SelectedIndex");
+                writer.WriteString(((int)expressBusMode).ToString());
                 //Debug.Log($"Write {((int)interpretation).ToString()} to config file.");
                 writer.WriteEndElement();
 

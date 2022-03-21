@@ -90,7 +90,7 @@ namespace ExpressBusServices
                 (index) => {
                     EBSModConfig.CurrentExpressBusMode = (EBSModConfig.ExpressMode)index;
                     Debug.Log($"Express Bus Services: (express bus) received index {index}");
-                    //ModSettingController.WriteSettings();
+                    ModSettingController.WriteSettings();
                 });
             UIDropDown properDropdownObject = dropdown as UIDropDown;
             if (properDropdownObject != null)

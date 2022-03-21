@@ -7,7 +7,9 @@ using System.Text;
 
 namespace ExpressBusServices
 {
+    // set priority such that IPT2 can execute first; essentially this should execute last
     [HarmonyPatch]
+    [HarmonyPriority(Priority.LowerThanNormal)]
     public class Patch_PublicTransportExtraSkip
     {
         /*
@@ -71,6 +73,7 @@ namespace ExpressBusServices
             // okay can do
             ushort nextStop = TransportLine.GetNextStop(currentStop);
             vehicleData.m_targetBuilding = nextStop;
+            BusStopSkippingLookupTable.Notify_BusShouldSkipLoading(vehicleID);
             var pathfindParams = new object[] { vehicleID, vehicleData };
             var unloadParams = new object[] { vehicleID, vehicleData, currentStop, nextStop };
             if (__instance is BusAI busAi)
@@ -85,6 +88,7 @@ namespace ExpressBusServices
                 vehicleData = (Vehicle)pathfindParams[1];
                 // I think this is to let it iterate their stuff
                 AccessTools.Method(typeof(BusAI), "UnloadPassengers").Invoke(busAi, unloadParams);
+                AccessTools.Method(typeof(BusAI), "LoadPassengers").Invoke(busAi, unloadParams);
             } 
             else if (__instance is TrolleybusAI trolleyAi)
             {
@@ -98,6 +102,7 @@ namespace ExpressBusServices
                 vehicleData = (Vehicle)pathfindParams[1];
                 // I think this is to let it iterate their stuff
                 AccessTools.Method(typeof(TrolleybusAI), "UnloadPassengers").Invoke(trolleyAi, unloadParams);
+                AccessTools.Method(typeof(TrolleybusAI), "LoadPassengers").Invoke(trolleyAi, unloadParams);
             } 
             else
             {

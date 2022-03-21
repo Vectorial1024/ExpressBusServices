@@ -23,7 +23,7 @@ namespace ExpressBusServices
         private static bool VerifyModEnabled(ulong modId)
         {
             PluginManager.PluginInfo pluginInfo = Singleton<PluginManager>.instance.GetPluginsInfo().FirstOrDefault((PluginManager.PluginInfo pi) => pi.publishedFileID.AsUInt64 == modId);
-            return !(pluginInfo == null || !pluginInfo.isEnabled);
+            return pluginInfo != null && pluginInfo.isEnabled && pluginInfo.overrideState == PluginManager.OverrideState.Enabled;
         }
     }
 }

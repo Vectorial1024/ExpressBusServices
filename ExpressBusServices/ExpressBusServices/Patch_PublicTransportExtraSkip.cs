@@ -24,12 +24,17 @@ namespace ExpressBusServices
         public static bool DetermineIfShouldPatch()
         {
             // dont do it if TLM is detected
-            return !ModDetector.TransportLinesManagerIsLoaded();
+            // however, it seems that we can only detect whether the files of TLM exists;
+            // we cant actually detect whether they are enabled, so this is modified to be "always true".
+            // FileLog.Log($"TLM exists? {ModDetector.TransportLinesManagerIsLoaded()}");
+            // return !ModDetector.TransportLinesManagerIsLoaded();
+            return true;
         }
 
         [HarmonyPrefix]
         public static bool ExtraSkippingLogic(VehicleAI __instance, ushort vehicleID, ref Vehicle vehicleData)
         {
+            FileLog.Log($"Current Express Mode: {EBSModConfig.CurrentExpressBusMode}; Do Extra Skip? ${(int)EBSModConfig.CurrentExpressBusMode < (int)EBSModConfig.ExpressMode.AGGRESSIVE}");
             if ((int) EBSModConfig.CurrentExpressBusMode < (int) EBSModConfig.ExpressMode.AGGRESSIVE)
             {
                 // settings not enabled; no

@@ -53,7 +53,7 @@ namespace ExpressBusServices
 
             ushort currentStop = vehicleData.m_targetBuilding;
             ref TransportLine line = ref TransportManager.instance.m_lines.m_buffer[vehicleData.m_transportLine];
-            if (!DepartureChecker.NowIsEligibleForInstantDeparture(vehicleID, ref vehicleData))
+            if (!DepartureChecker.CanSkipNextStop(vehicleID, ref vehicleData))
             {
                 // is arriving at terminus; dont do this!
                 return true;

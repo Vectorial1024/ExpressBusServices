@@ -1,5 +1,5 @@
 pending changelog
 
 - aggressive express bus
+- express minibus (?)
 - fix bug: fails to unbunch at terminus (brief-stops at 2nd stop instead)
-- 

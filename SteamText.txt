@@ -19,11 +19,9 @@ Unlock the peak efficiency of buses.
 外部參考：香港巴士大典 - 飛站 // External Link: Encyclopedia of Bus Transport in Hong Kong - Stop-Skipping [Chinese only]
 https://hkbus.fandom.com/wiki/%E9%A3%9B%E7%AB%99
 
-Based on my IRL experience in Hong Kong, I find that buses in Cities Skylines are utterly underrated and perhaps a bit unrealistic. As such, I made this mod in the hopes of introducing another way to view public transport in Cities Skylines other than the existing "bus is feeder" view, which is limited and less-intersting.
+Based on my IRL experience in Hong Kong, I can notice 2 differences between HK-IRL and CSL bus operations, and these 2 differences became the 2 problems that motivated me to make this mod.
 
-Here I address the two main problems with CSL buses being underrated and being borderline unusable:
-
-[h1]Problem 1: Buses always stop at every stop[/h1]
+[h1]Difference/Problem 1: Buses always stop at every stop[/h1]
 This greatly reduces efficiency of buses (and probably made them unusable) in the following cases:
 [list]
 [*]Buses stop at bus stops when it is full, the stop has passengers waiting, but no one alights the bus (especially when used with Real Time mod, during the rush hours)
@@ -33,7 +31,9 @@ To address this, I borrow the concept of "bus bells" and "wave hand" from Hong K
 
 In this mod the above mode of operation is implemented as "buses depart the stop immediately if no one alight from the bus + if no one boards the bus". Buses still need to stop at stops to see if there are passengers wanting to alight the bus, but this is already a huge improvement.
 
-[h1]Problem 2: Buses unbunch at every stop[/h1]
+New: it is now possible to choose other modes of stop-skipping so that the efficiency boost is stronger. However, do note that the Experimental mode is only for trying out latest things and may be unstable.
+
+[h1]Difference/Problem 2: Buses unbunch at every stop[/h1]
 Jesus Christ. If it were in Hong Kong the driver would have been berated to death by passengers. We don't do that there.
 
 Essentially, this mod restores the pre-vanilla unbunching update bus behaviors that, after boarding and alighting, buses depart the stops immediately.
@@ -55,3 +55,28 @@ With this mod enabled, you can do the following:
 This mod is open-sourced, and the repo is available here: https://github.com/Vectorial1024/ExpressBusServices
 
 And that's all!
+
+------
+
+基於我自己喺香港嘅經歷，以及對本game(CSL)觀察所得嘅兩大問題，我有兩大原因去整呢個mod：
+
+[h1]問題/原因1：CSL巴士須每站停車[/h1]
+我將佢改做：除指定車站外(例如總站)，如無乘客上落車，巴士須立即開車。
+
+最新消息：依家可以揀其他飛站模式，例如係「Aggressive模式」直接飛站。另外留意，「Experimental模式」係試新嘢專用，有機會令飛站出現問題。
+
+[h1]問題/原因2：CSL巴士有"防拖卡政策"[/h1]
+首先介紹吓"防拖卡政策"：巴士須於車站停留，使得前車與後車之間能保持一定距離。
+
+我將佢改做：取消此政策。
+
+[h1]有何好處?[/h1]
+你可以順利模擬部分香港交通形勢：
+[list]
+[*]大埔公路/青山公路：飛走荒蕪車站
+[*]港島線+電車：一快一慢，平排競爭
+[*]
+[/list]
+
+最後，歡迎各位加入香港Cities Skylines Discord群組：
+https://discord.gg/KeSDDydjSB

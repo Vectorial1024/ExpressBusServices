@@ -1,5 +1,7 @@
 ﻿using CitiesHarmony.API;
+using ColossalFramework.UI;
 using ICities;
+using UnityEngine;
 
 namespace ExpressBusServices
 {
@@ -68,6 +70,32 @@ namespace ExpressBusServices
                 // as per my usual software deployment style
                 // the user will have to subscribe to Harmony by themselves. I am not their parent anyways.
                 // so this block will have to be empty.
+            }
+        }
+
+        // It seems they will dynamically find whether a certain method that matches some criteria
+        // exists, and then apply UI settings to it.
+        // This is kinda like an in-house Harmony Lib except it targets some very specific areas.
+        public void OnSettingsUI(UIHelperBase helper)
+        {
+            UIHelperBase group = helper.AddGroup("Express Bus Services: Settings");
+            ModSettingController.Touch();
+            //int selectedIndex = (int)IPT2UnbunchingRuleReader.CurrentRuleInterpretation;
+            var dropdown = group.AddDropdown("EBS Unbunching Mode",
+                new string[] {
+                    "Prudential (Legacy)",
+                    "Aggressive",
+                    "(-)" },
+                0,
+                (index) => {
+                    //IPT2UnbunchingRuleReader.CurrentRuleInterpretation = (IPT2UnbunchingRuleReader.InterpretationMode)index;
+                    Debug.Log($"Express Bus Services IPT2 Plugin: received index {index}");
+                    //ModSettingController.WriteSettings();
+                });
+            UIDropDown properDropdownObject = dropdown as UIDropDown;
+            if (properDropdownObject != null)
+            {
+                //properDropdownObject.selectedIndex = selectedIndex;
             }
         }
     }

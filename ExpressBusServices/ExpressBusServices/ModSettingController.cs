@@ -38,12 +38,13 @@ namespace ExpressBusServices
                             for (int j = 0; j < root.ChildNodes.Count; j++)
                             {
                                 XmlNode currentConfigNode = root.ChildNodes[j];
-                                if (currentConfigNode.Name == "SelectedIndex")
+
+                                if (currentConfigNode.Name == "ExpressBuses_SelectedIndex")
                                 {
                                     string tempIndex = currentConfigNode.InnerText;
                                     int selectedIndex = Convert.ToInt32(tempIndex);
-                                    // interpretation = (IPT2UnbunchingRuleReader.InterpretationMode)selectedIndex;
-                                    // Debug.Log($"Read {interpretation} from settings file.");
+                                    EBSModConfig.CurrentExpressBusMode = (EBSModConfig.ExpressMode)selectedIndex;
+                                    // Debug.Log($"Read {EBSModConfig.CurrentExpressBusMode} from settings file.");
                                 }
                             }
                         }
@@ -54,8 +55,6 @@ namespace ExpressBusServices
                     Debug.Log($"Could not load config file: {x}");
                 }
             }
-
-            // IPT2UnbunchingRuleReader.CurrentRuleInterpretation = interpretation;
         }
 
         public static void WriteSettings()

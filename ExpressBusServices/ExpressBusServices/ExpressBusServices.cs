@@ -80,22 +80,22 @@ namespace ExpressBusServices
         {
             UIHelperBase group = helper.AddGroup("Express Bus Services: Settings");
             ModSettingController.Touch();
-            //int selectedIndex = (int)IPT2UnbunchingRuleReader.CurrentRuleInterpretation;
+            int selectedIndex_ExpressBus = (int)EBSModConfig.CurrentExpressBusMode;
             var dropdown = group.AddDropdown("EBS Unbunching Mode",
                 new string[] {
                     "Prudential (Legacy)",
                     "Aggressive",
-                    "(-)" },
+                    "Experimental" },
                 0,
                 (index) => {
-                    //IPT2UnbunchingRuleReader.CurrentRuleInterpretation = (IPT2UnbunchingRuleReader.InterpretationMode)index;
-                    Debug.Log($"Express Bus Services IPT2 Plugin: received index {index}");
+                    EBSModConfig.CurrentExpressBusMode = (EBSModConfig.ExpressMode)index;
+                    Debug.Log($"Express Bus Services: (express bus) received index {index}");
                     //ModSettingController.WriteSettings();
                 });
             UIDropDown properDropdownObject = dropdown as UIDropDown;
             if (properDropdownObject != null)
             {
-                //properDropdownObject.selectedIndex = selectedIndex;
+                properDropdownObject.selectedIndex = selectedIndex_ExpressBus;
             }
         }
     }

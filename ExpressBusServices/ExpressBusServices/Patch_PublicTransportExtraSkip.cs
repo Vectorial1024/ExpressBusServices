@@ -30,6 +30,11 @@ namespace ExpressBusServices
         [HarmonyPrefix]
         public static bool ExtraSkippingLogic(VehicleAI __instance, ushort vehicleID, ref Vehicle vehicleData)
         {
+            if (EBSModConfig.CurrentExpressBusMode < EBSModConfig.ExpressMode.AGGRESSIVE)
+            {
+                // settings not enabled; no
+                return false;
+            }
             if (!(__instance is BusAI || __instance is TrolleybusAI))
             {
                 // not bus or trolleybus; no

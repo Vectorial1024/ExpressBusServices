@@ -4,10 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using UnityEngine;
 
 namespace ExpressBusServices
 {
-    public class ModSettingsController
+    public class ModSettingController
     {
         public static readonly string pathToConfigXml = "ExpressBusServices_Config.xml";
 

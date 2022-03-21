@@ -31,14 +31,14 @@ namespace ExpressBusServices
             TransportManager transportManager = Singleton<TransportManager>.instance;
             ushort transportLineID = vehicleData.m_transportLine;
             // the semantics! they must be clear! dont try to cheat with "first is index=1 and current=next" again! it hurts devops!
-            ushort currentStop = vehicleData.m_targetBuilding;
             ushort firstStop = transportManager.m_lines.m_buffer[transportLineID].GetLastStop();
+            ushort approachingStop = vehicleData.m_targetBuilding;
 
             // note:
             // if I somehow cannot determine where I am at or where the first stop is at, always unbunch.
             // this may be related to some random errors that I get about "vehicles not leaving stop",
             // where perhaps some vehicle states messed up.
-            return currentStop == 0 || firstStop == 0 || (currentStop != firstStop && !StopIsTerminus(currentStop));
+            return approachingStop == 0 || firstStop == 0 || (approachingStop != firstStop && !StopIsTerminus(approachingStop));
         }
 
         public static bool StopIsTerminus(ushort stop)

@@ -21,8 +21,8 @@ namespace ExpressBusServices
 
         public static void ReadSettings()
         {
-            // default interpretation is first principles, but try to see if we have any config files around.
-            // IPT2UnbunchingRuleReader.InterpretationMode interpretation = IPT2UnbunchingRuleReader.InterpretationMode.FIRST_PRINCIPLES;
+            // default values
+            EBSModConfig.ExpressMode expressBusMode = EBSModConfig.ExpressMode.PRUDENTIAL;
 
             if (File.Exists(pathToConfigXml))
             {
@@ -43,7 +43,7 @@ namespace ExpressBusServices
                                 {
                                     string tempIndex = currentConfigNode.InnerText;
                                     int selectedIndex = Convert.ToInt32(tempIndex);
-                                    EBSModConfig.CurrentExpressBusMode = (EBSModConfig.ExpressMode)selectedIndex;
+                                    expressBusMode = (EBSModConfig.ExpressMode)selectedIndex;
                                     // Debug.Log($"Read {EBSModConfig.CurrentExpressBusMode} from settings file.");
                                 }
                             }
@@ -55,6 +55,8 @@ namespace ExpressBusServices
                     Debug.Log($"Could not load config file: {x}");
                 }
             }
+
+            EBSModConfig.CurrentExpressBusMode = expressBusMode;
         }
 
         public static void WriteSettings()

@@ -14,6 +14,7 @@ namespace ExpressBusServices
             TransportManager instance = Singleton<TransportManager>.instance;
             ushort transportLineID = vehicleData.m_transportLine;
             // the semantics! they must be clear! dont try to cheat with "first is index=1 and current=next" again! it hurts devops!
+            // paradoxically, the game stores the first stop as "the last stop", drawing reference how the "first stop" is selected again when the line is completed
             ushort firstStop = instance.m_lines.m_buffer[transportLineID].GetLastStop();
             ushort currentStop = TransportLine.GetPrevStop(vehicleData.m_targetBuilding);
 
@@ -31,6 +32,7 @@ namespace ExpressBusServices
             TransportManager transportManager = Singleton<TransportManager>.instance;
             ushort transportLineID = vehicleData.m_transportLine;
             // the semantics! they must be clear! dont try to cheat with "first is index=1 and current=next" again! it hurts devops!
+            // paradoxically, the game stores the first stop as "the last stop", drawing reference how the "first stop" is selected again when the line is completed
             ushort firstStop = transportManager.m_lines.m_buffer[transportLineID].GetLastStop();
             ushort approachingStop = vehicleData.m_targetBuilding;
 

@@ -37,20 +37,15 @@ namespace ExpressBusServices
         public static bool ExtraSkippingLogic(VehicleAI __instance, ushort vehicleID, ref Vehicle vehicleData)
         {
             // FileLog.Log($"Current Express Mode: {EBSModConfig.CurrentExpressBusMode}; Do Extra Skip? ${(int)EBSModConfig.CurrentExpressBusMode < (int)EBSModConfig.ExpressMode.AGGRESSIVE}");
-            if ((int) EBSModConfig.CurrentExpressBusMode < (int) EBSModConfig.ExpressMode.AGGRESSIVE)
-            {
-                // settings not enabled; no
-                return false;
-            }
             if (!(__instance is BusAI || __instance is TrolleybusAI))
             {
                 // not bus or trolleybus; no
                 return true;
             }
-            if (false)
+            if ((int)EBSModConfig.CurrentExpressBusMode < (int)EBSModConfig.ExpressMode.AGGRESSIVE)
             {
-                // read the config: dont do it
-                return true;
+                // settings not enabled; no
+                return false;
             }
 
             ushort currentStop = vehicleData.m_targetBuilding;

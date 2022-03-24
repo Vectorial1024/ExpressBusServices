@@ -43,6 +43,12 @@ These transportation types are asking very good questions:
 
 - Trams
 
+## Modes of Stop-Skipping
+
+- Prudential (Legacy): buses etc still stop at stops, but will depart immediately when the stop-skipping criteria is met
+- Aggressive: buses etc will try to predict whether it needs to stop at non-terminus stops, and will literally skip the stop if the prediction passed. Not available for trams.
+- Experimental: a stronger version of Aggressive Mode. WIP.
+
 # Motivation
 
 This mod aims to salvage vanilla CSL buses from being borderline unusable to being competitive against metro and tram lines.

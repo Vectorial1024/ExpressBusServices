@@ -11,6 +11,7 @@ Unlock the peak efficiency of buses:
 - Mods available for this mod (yes, mod-ception):
   - Express Bus Services (IPT2 Plug-In) https://github.com/Vectorial1024/ExpressBusServices_IPT2
   - Express Bus Services (TLM Plug-In) https://github.com/Vectorial1024/ExpressBusServices_TLM
+- Special thanks to Klyte45 from TLM for letting me implement their "Express Bus" mode code on this side
 
 Because this mod is very small and simple, I am open-sourcing this to everyone out there.
 

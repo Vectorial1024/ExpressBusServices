@@ -19,6 +19,8 @@ Unlock the peak efficiency of buses.
 外部參考：香港巴士大典 - 飛站 // External Link: Encyclopedia of Bus Transport in Hong Kong - Stop-Skipping [Chinese only]
 https://hkbus.fandom.com/wiki/%E9%A3%9B%E7%AB%99
 
+Special thanks to Klyte45 from TLM for inspiration of the Aggressive Mode stop-skipping, and for permission for this mod to utilize it. 特別鳴謝TLM嘅Klyte45，佢當初研發出「真．飛站」，本mod獲同意加以利用，而加入「進取模式」。
+
 Based on my IRL experience in Hong Kong, I can notice 2 differences between HK-IRL and CSL bus operations, and these 2 differences became the 2 problems that motivated me to make this mod.
 
 [h1]Difference/Problem 1: Buses always stop at every stop[/h1]

@@ -6,7 +6,7 @@ Unlock the peak efficiency of buses.
 [list]
 [*]Requires Harmony
 [*]Works with Improved Public Transport 2 (integrated support)
-[*]Buses will skip stops whenever possible
+[*]Buses will skip stops whenever possible (NEW: can choose between different stop-skipping modes)
 [*]Buses will mostly no longer unbunch
 [*]巴士終於識得飛站; 其他交通工具(例如: 地鐵)維持現狀 (站站停, 冇飛站)
 [*]除總站外，上落客後，毋須等待，即時開出

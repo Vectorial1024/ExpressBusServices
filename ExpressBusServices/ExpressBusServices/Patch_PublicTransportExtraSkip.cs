@@ -45,7 +45,7 @@ namespace ExpressBusServices
             if ((int)EBSModConfig.CurrentExpressBusMode < (int)EBSModConfig.ExpressMode.AGGRESSIVE)
             {
                 // settings not enabled; no
-                return false;
+                return true;
             }
 
             ushort currentStop = vehicleData.m_targetBuilding;

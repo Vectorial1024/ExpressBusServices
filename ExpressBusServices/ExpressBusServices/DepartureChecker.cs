@@ -14,7 +14,7 @@ namespace ExpressBusServices
             ushort transportLineID = vehicleData.m_transportLine;
             ushort currentStop = TransportLine.GetPrevStop(vehicleData.m_targetBuilding);
 
-            return !StopIsConsideredAsTerminus(vehicleID, ref vehicleData, currentStop, transportLineID);
+            return !StopIsConsideredAsTerminus(currentStop, transportLineID);
         }
 
         // if true, then this mod will instruct buses to skip the stop
@@ -24,7 +24,7 @@ namespace ExpressBusServices
             ushort transportLineID = vehicleData.m_transportLine;
             ushort approachingStop = vehicleData.m_targetBuilding;
 
-            return !StopIsConsideredAsTerminus(vehicleID, ref vehicleData, approachingStop, transportLineID);
+            return !StopIsConsideredAsTerminus(approachingStop, transportLineID);
         }
 
         [Obsolete("Pleasse refactor to use StopIsConsideredTerminus instead.")]
@@ -34,7 +34,7 @@ namespace ExpressBusServices
             return false;
         }
 
-        public static bool StopIsConsideredAsTerminus(ushort vehicleID, ref Vehicle vehicleData, ushort stopID, ushort transportLineID)
+        public static bool StopIsConsideredAsTerminus(ushort stopID, ushort transportLineID)
         {
             // both IPT2 and TLM will override this, to make the things more streamlined
             // return true if this should be considered a terminus

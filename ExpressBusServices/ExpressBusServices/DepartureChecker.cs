@@ -58,7 +58,7 @@ namespace ExpressBusServices
 
             TransportManager transportManager = Singleton<TransportManager>.instance;
             ushort firstStopID = transportManager.m_lines.m_buffer[transportLineID].GetLastStop();
-            return stopID != firstStopID;
+            return stopID == firstStopID;
         }
     }
 }

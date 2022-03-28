@@ -22,7 +22,7 @@ namespace ExpressBusServices
             // if I somehow cannot determine where I am at or where the first stop is at, always unbunch.
             // this may be related to some random errors that I get about "vehicles not leaving stop",
             // where perhaps some vehicle states messed up.
-            return currentStop == 0 || firstStop == 0 || (currentStop != firstStop && !StopIsTerminus(currentStop));
+            return currentStop == 0 || firstStop == 0 || !StopIsConsideredAsTerminus(currentStop, transportLineID);
         }
 
         // if true, then this mod will instruct buses to skip the stop
@@ -40,13 +40,25 @@ namespace ExpressBusServices
             // if I somehow cannot determine where I am at or where the first stop is at, always unbunch.
             // this may be related to some random errors that I get about "vehicles not leaving stop",
             // where perhaps some vehicle states messed up.
-            return approachingStop == 0 || firstStop == 0 || (approachingStop != firstStop && !StopIsTerminus(approachingStop));
+            return approachingStop == 0 || firstStop == 0 || !StopIsConsideredAsTerminus(approachingStop, transportLineID);
         }
 
+        [Obsolete("Pleasse refactor to use StopIsConsideredTerminus instead.")]
         public static bool StopIsTerminus(ushort stop)
         {
             // none are terminus; however this will be overridden by the TLM extension mod
             return false;
+        }
+
+        public static bool StopIsConsideredAsTerminus(ushort stopID, ushort transportLineID)
+        {
+            // both IPT2 and TLM will override this, to make the things more streamlined
+            // return true if this should be considered a terminus
+            // buses will unbunch when at terminus
+
+            TransportManager transportManager = Singleton<TransportManager>.instance;
+            ushort firstStopID = transportManager.m_lines.m_buffer[transportLineID].GetLastStop();
+            return stopID != firstStopID;
         }
     }
 }

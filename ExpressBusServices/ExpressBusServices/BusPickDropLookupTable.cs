@@ -73,6 +73,12 @@ namespace ExpressBusServices
             GetInfoForBus(vehicleID, true).PassengersAfterBoarding = data.m_transferSize;
         }
 
+        public static bool BusIsIntercityBus(Vehicle vehicleData)
+        {
+            ItemClass itemClass = vehicleData.Info.m_class;
+            return TransportStationAI.IsIntercity(itemClass);
+        }
+
         public static void DetermineIfBusShouldDepart(ref bool __result, ushort vehicleID, ref Vehicle vehicleData)
         {
             /*
@@ -96,9 +102,10 @@ namespace ExpressBusServices
              * 
              * This entire system has a nice property that no save-file access is needed.
              */
-            if (DepartureChecker.NowIsEligibleForInstantDeparture(vehicleID, ref vehicleData))
+            if (DepartureChecker.NowIsEligibleForInstantDeparture(vehicleID, ref vehicleData) && !BusIsIntercityBus(vehicleData))
             {
                 // midway bus stop; implement logic here
+                // note: we disallow intercity buses from entering this segmentof code
                 VehicleBAInfo info = GetInfoForBus(vehicleID);
                 if (info != null && info.Alighted + info.ActualBoarded == 0)
                 {

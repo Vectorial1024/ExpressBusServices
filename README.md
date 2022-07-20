@@ -22,7 +22,7 @@ These transportation types are currently covered by this mod:
 - Buses; as a result of game mechanics, the following transportation types are also covered:
   - Evacuation buses
   - Tourism buses
-  - Intercity buses
+  - Intercity buses (to be disabled later; see https://github.com/Vectorial1024/ExpressBusServices/issues/15#issuecomment-1187672211 )
 - Trolleybuses
 
 These transportation types will NEVER be covered by this mod because it will not make sense:
@@ -49,6 +49,10 @@ These transportation types are asking very good questions:
 - Prudential (Legacy): buses etc still stop at stops, but will depart immediately when the stop-skipping criteria is met
 - Aggressive: buses etc will try to predict whether it needs to stop at non-terminus stops, and will literally skip the stop if the prediction passed. Not available for trams.
 - Experimental: a stronger version of Aggressive Mode. WIP.
+
+## Extra Stop-Skipping Options
+
+(WIP) When activated, buses will have a chance to immediately transfer themselves to the most in-demand section of the bus line, resuming from the relevant first-stop terminus, thereby skipping multiple stops at once (refer to #12 for more info); this will be helpful when commuting patterns are asymmetric.
 
 # Motivation
 

@@ -35,6 +35,7 @@ namespace ExpressBusServices
             BusPickDropLookupTable.EnsureTableExists();
             CitizenRunawayTable.EnsureTableExists();
             BusStopSkippingLookupTable.EnsureTableExists();
+            ServiceBalancerUtil.EnsureTableExists();
         }
 
         public static void Deactivate()
@@ -43,6 +44,7 @@ namespace ExpressBusServices
             BusPickDropLookupTable.WipeTable();
             CitizenRunawayTable.WipeTable();
             BusStopSkippingLookupTable.WipeTable();
+            ServiceBalancerUtil.ResetRedeploymentRecords();
         }
     }
 }

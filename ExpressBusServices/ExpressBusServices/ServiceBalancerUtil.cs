@@ -220,6 +220,15 @@ namespace ExpressBusServices
             return false;
         }
 
+        public static void EnsureTableExists()
+        {
+            // reset the dictionary or whatever data struct we decided to use
+            if (redeploymentInstructions == null)
+            {
+                redeploymentInstructions = new Dictionary<ushort, ushort>();
+            }
+        }
+
         public static void ResetRedeploymentRecords()
         {
             // reset the dictionary or whatever data struct we decided to use

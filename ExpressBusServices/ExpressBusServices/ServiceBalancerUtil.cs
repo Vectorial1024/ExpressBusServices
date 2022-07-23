@@ -56,7 +56,7 @@ namespace ExpressBusServices
                 float avePax = analysis.paxCount * 1.0f / analysis.stopCount;
                 otherAvePaxList.Add(avePax);
             }
-            if (OddsPermitRedeployment())
+            if (OddsPermitRedeployment(selfAvePax, otherAvePaxList))
             {
                 MarkRedeployToNewTerminus();
             }

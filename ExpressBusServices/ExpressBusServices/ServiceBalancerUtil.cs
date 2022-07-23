@@ -179,7 +179,8 @@ namespace ExpressBusServices
                 return false;
             }
             // finally, do a RNG with such probability * the global config prob value
-            float globalBalancerProbability = 0.5f;
+            // todo read from a config
+            float globalBalancerProbability = 1;
             float theProbability = probability * globalBalancerProbability;
             return UnityEngine.Random.Range(0, 1) <= theProbability;
         }

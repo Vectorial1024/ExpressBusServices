@@ -38,7 +38,9 @@ namespace ExpressBusServices
             TransportLineSegmentAnalysis selfAnalysis = analysisList[0];
             float selfAvePax = selfAnalysis.paxCount * 1.0f / selfAnalysis.stopCount;
             List<float> otherAvePaxList = new List<float>();
+            List<TransportLineSegmentAnalysis> acceptedList = new List<TransportLineSegmentAnalysis>(); 
             bool skipNext = true;
+            float summedTotal = 0;
             foreach (TransportLineSegmentAnalysis analysis in analysisList)
             {
                 if (skipNext)
@@ -55,10 +57,30 @@ namespace ExpressBusServices
                 }
                 float avePax = analysis.paxCount * 1.0f / analysis.stopCount;
                 otherAvePaxList.Add(avePax);
+                acceptedList.Add(analysis);
+                summedTotal += avePax;
             }
             if (OddsPermitRedeployment(selfAvePax, otherAvePaxList))
             {
+                // check against the many segments, and determine which one to go to
+                float nextInRangeRandNum = UnityEngine.Random.Range(0, summedTotal);
+                float currentCapValue = 0;
+                ushort loopingTerminusStopId = 0;
+                skipNext = true;
+                for (int i = 0; i < acceptedList.Count; i++)
+                {
+                    TransportLineSegmentAnalysis analysis = acceptedList[i];
+                    loopingTerminusStopId = analysis.leadingTerminusStopId;
+                    currentCapValue += otherAvePaxList[i];
+                    if (nextInRangeRandNum < currentCapValue)
+                    {
+                        // in this current segment
+                        break;
+                    }
+                }
+                terminusStopId = loopingTerminusStopId;
                 MarkRedeployToNewTerminus();
+                return true;
             }
             return false;
         }

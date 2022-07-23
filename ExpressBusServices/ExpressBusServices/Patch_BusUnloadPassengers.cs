@@ -6,6 +6,21 @@ namespace ExpressBusServices
     [HarmonyPatch("TransportArriveAtTarget", MethodType.Normal)]
     public class Patch_BusUnloadPassengers
     {
+        [HarmonyPrefix]
+        public static void CheckRedeployment(ushort vehicleID, ref Vehicle data)
+        {
+            ushort redeploymentTarget;
+            ushort transportLineId = data.m_transportLine;
+            ushort currentTerminusStopId = TransportLine.GetPrevStop(data.m_targetBuilding);
+            if (ServiceBalancerUtil.FindRedeployToTerminus(transportLineId, currentTerminusStopId, out redeploymentTarget))
+            {
+                // set destination to somewhere else
+                // it is basically a "super skip"
+                data.m_targetBuilding = redeploymentTarget;
+                BusStopSkippingLookupTable.Notify_BusShouldSkipLoading(vehicleID);
+            }
+        }
+
         [HarmonyPostfix]
         public static void HandleBusArrivedAtTarget(ushort vehicleID, ref Vehicle data, ref int serviceCounter)
         {

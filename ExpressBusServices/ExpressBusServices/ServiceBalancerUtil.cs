@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace ExpressBusServices
 {
@@ -125,14 +126,39 @@ namespace ExpressBusServices
             return analysisList;
         }
 
-        private static bool OddsPermitRedeployment()
+        private static bool OddsPermitRedeployment(float selfAvePaxCount, List<float> otherAvePaxCountList)
         {
             // using the analysis result, performs calculation and determines whether redeployment is allowed
-            /*
-             * var segmentCount;
-             * var currentSegmentWaitingPax;
-             */
-            return false;
+            if (otherAvePaxCountList.Count == 0)
+            {
+                // no one to transfer to
+                return false;
+            }
+            float properSelfValue = selfAvePaxCount * otherAvePaxCountList.Count;
+            float properOtherValue = 0;
+            foreach (float otherValue in otherAvePaxCountList)
+            {
+                properOtherValue += otherValue;
+            }
+            if (properOtherValue < properSelfValue)
+            {
+                // generally a better idea to stay at the current segment
+                return false;
+            }
+            // the odds of moving to any of the candidate segments
+            float oddsMove = properOtherValue / properSelfValue;
+            // we need to convert a exponential [0, inf) to a logistical [0, 1)
+            // we will use a simple exponential fraction function to convert things
+            // and the converted value can be directly used for RNG
+            float probability = 1 - 1 / (Mathf.Pow(2, oddsMove));
+            if (probability < 0)
+            {
+                return false;
+            }
+            // finally, do a RNG with such probability * the global config prob value
+            float globalBalancerProbability = 0.5f;
+            float theProbability = probability * globalBalancerProbability;
+            return UnityEngine.Random.Range(0, 1) <= theProbability;
         }
 
         private static void MarkRedeployToNewTerminus()

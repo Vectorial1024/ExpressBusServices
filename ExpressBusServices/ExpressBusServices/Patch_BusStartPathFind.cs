@@ -1,13 +1,17 @@
 ﻿using HarmonyLib;
 using System;
+using System.Reflection;
 
 namespace ExpressBusServices
 {
-    [HarmonyPatch(typeof(BusAI))]
-    [HarmonyPatch("StartPathFind", MethodType.Normal)]
-    [HarmonyPatch(new Type[] { typeof(ushort), typeof(Vehicle) })]
+    [HarmonyPatch]
     public class Patch_BusStartPathFind
     {
+        public static MethodBase TargetMethod()
+        {
+            return AccessTools.Method("BusAI:StartPathFind", new Type[] { typeof(ushort), typeof(Vehicle).MakeByRefType() });
+        }
+
         [HarmonyPrefix]
         public static void AdjustPathfindTargetForRedeployment(ushort vehicleID, ref Vehicle vehicleData)
         {

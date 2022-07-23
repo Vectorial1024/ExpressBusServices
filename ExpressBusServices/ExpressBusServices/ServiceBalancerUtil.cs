@@ -118,6 +118,8 @@ namespace ExpressBusServices
                 ushort nextStopId = TransportLine.GetNextStop(loopingStopID);
                 nextStopLink.Add(loopingStopID, nextStopId);
                 loopingStopID = nextStopId;
+
+                Debug.Log("Analyze iterating loop.");
             }
 
             // all information obtained; we are at the first stop of the line
@@ -143,6 +145,7 @@ namespace ExpressBusServices
                 analysis.segmentCanReceiveRedeployment |= paxCount[loopingStopID] > 30;
                 // move to next
                 loopingStopID = nextStopLink[startingTerminusStopId];
+                Debug.Log("Analyze gouping loop.");
             }
 
             // return the list

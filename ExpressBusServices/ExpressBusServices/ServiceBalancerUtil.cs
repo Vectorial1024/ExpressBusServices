@@ -171,6 +171,11 @@ namespace ExpressBusServices
                 // generally a better idea to stay at the current segment
                 return false;
             }
+            if (selfAvePaxCount == 0)
+            {
+                // to avoid div0 and because of sensibility, we will permit this
+                return true;
+            }
             // the odds of moving to any of the candidate segments
             float oddsMove = properOtherValue / properSelfValue;
             // we need to convert a exponential [0, inf) to a logistical [0, 1)

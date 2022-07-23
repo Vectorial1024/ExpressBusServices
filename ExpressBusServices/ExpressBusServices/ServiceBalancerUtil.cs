@@ -79,7 +79,7 @@ namespace ExpressBusServices
                 if (terminusCheck.ContainsKey(loopingStopID))
                 {
                     analysisList.Add(analysis);
-                    analysis = new TransportLineSegmentAnalysis(startingTerminusStopId, 0, 0, false);
+                    analysis = new TransportLineSegmentAnalysis(loopingStopID, 0, 0, false);
                 }
                 if (loopingStopID == startingTerminusStopId)
                 {

@@ -80,6 +80,7 @@ namespace ExpressBusServices
                 }
                 terminusStopId = loopingTerminusStopId;
                 MarkRedeployToNewTerminus();
+                Debug.Log("EBS determines that a bus needs to be redeployed.");
                 return true;
             }
             return false;

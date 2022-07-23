@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HarmonyLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -79,7 +80,6 @@ namespace ExpressBusServices
                     }
                 }
                 terminusStopId = loopingTerminusStopId;
-                MarkRedeployToNewTerminus();
                 Debug.Log("EBS determines that a bus needs to be redeployed.");
                 return true;
             }
@@ -193,9 +193,40 @@ namespace ExpressBusServices
             return UnityEngine.Random.Range(0, 1) <= theProbability;
         }
 
-        private static void MarkRedeployToNewTerminus()
+        public static void MarkRedeployToNewTerminus(VehicleAI aiInstance, ushort vehicleID, ref Vehicle vehicleData, ushort currentStopId, ushort targetStopId)
         {
-            //
+            vehicleData.m_targetBuilding = targetStopId;
+            BusStopSkippingLookupTable.Notify_BusShouldSkipLoading(vehicleID);
+            var pathfindParams = new object[] { vehicleID, vehicleData };
+            var unloadParams = new object[] { vehicleID, vehicleData, currentStopId, targetStopId };
+            if (aiInstance is BusAI busAi)
+            {
+                if (!(bool)AccessTools.Method(typeof(BusAI), "StartPathFind", new Type[] { typeof(ushort), typeof(Vehicle).MakeByRefType() }).Invoke(busAi, pathfindParams))
+                {
+                    // something bad happened; cancel
+                    vehicleData.m_targetBuilding = currentStopId;
+                    return;
+                }
+
+                vehicleData = (Vehicle)pathfindParams[1];
+                // I think this is to let it iterate their stuff
+                AccessTools.Method(typeof(BusAI), "UnloadPassengers").Invoke(busAi, unloadParams);
+                AccessTools.Method(typeof(BusAI), "LoadPassengers").Invoke(busAi, unloadParams);
+            }
+            else if (aiInstance is TrolleybusAI trolleyAi)
+            {
+                if (!(bool)AccessTools.Method(typeof(TrolleybusAI), "StartPathfind", new Type[] { typeof(ushort), typeof(Vehicle).MakeByRefType() }).Invoke(trolleyAi, pathfindParams))
+                {
+                    // something bad happened; cancel
+                    vehicleData.m_targetBuilding = currentStopId;
+                    return;
+                }
+
+                vehicleData = (Vehicle)pathfindParams[1];
+                // I think this is to let it iterate their stuff
+                AccessTools.Method(typeof(TrolleybusAI), "UnloadPassengers").Invoke(trolleyAi, unloadParams);
+                AccessTools.Method(typeof(TrolleybusAI), "LoadPassengers").Invoke(trolleyAi, unloadParams);
+            }
         }
 
         public static bool PopNeedsRedeployToTerminus()

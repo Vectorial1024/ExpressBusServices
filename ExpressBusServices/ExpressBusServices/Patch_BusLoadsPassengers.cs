@@ -10,12 +10,6 @@ namespace ExpressBusServices
         [HarmonyPriority(Priority.LowerThanNormal)]
         public static bool HandleBusAboutToLoadPassengers(ushort vehicleID, ref Vehicle data)
         {
-            if (ServiceBalancerUtil.PopRedeploymentInstructions(vehicleID, out ushort redeploymentTarget))
-            {
-                // we should immediately move to the designated redeployment target
-                data.m_targetBuilding = redeploymentTarget;
-                return false;
-            }
             if (BusStopSkippingLookupTable.BusShouldSkipPassengerLoading(vehicleID))
             {
                 return false;

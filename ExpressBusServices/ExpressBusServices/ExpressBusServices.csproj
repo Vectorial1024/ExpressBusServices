@@ -70,6 +70,7 @@
     <Compile Include="EBSModConfig.cs" />
     <Compile Include="ModDetector.cs" />
     <Compile Include="ModSettingController.cs" />
+    <Compile Include="Patch_BusStartPathFind.cs" />
     <Compile Include="Patch_VehicleAI_SimulationStep.cs" />
     <Compile Include="ServiceBalancerUtil.cs" />
     <Compile Include="TransportLineUtil.cs" />

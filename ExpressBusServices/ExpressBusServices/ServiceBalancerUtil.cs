@@ -184,13 +184,14 @@ namespace ExpressBusServices
             // we will use a simple exponential fraction function to convert things
             // and the converted value can be directly used for RNG
             float probability = 1 - 1 / (Mathf.Pow(2, oddsMove));
+            Debug.Log("Redeployment probability " + oddsMove + " -> " + probability);
             if (probability < 0)
             {
                 return false;
             }
             // finally, do a RNG with such probability * the global config prob value
             // todo read from a config
-            float globalBalancerProbability = 1;
+            float globalBalancerProbability = 0.5f;
             float theProbability = probability * globalBalancerProbability;
             return UnityEngine.Random.Range(0, 1) <= theProbability;
         }

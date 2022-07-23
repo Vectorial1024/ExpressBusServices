@@ -82,7 +82,7 @@ namespace ExpressBusServices
                     }
                 }
                 terminusStopId = loopingTerminusStopId;
-                Debug.Log("EBS determines that a bus needs to be redeployed: " + currentTerminusStopId + " -> " + terminusStopId);
+                // Debug.Log("EBS determines that a bus needs to be redeployed: " + currentTerminusStopId + " -> " + terminusStopId);
                 return true;
             }
             return false;
@@ -184,7 +184,7 @@ namespace ExpressBusServices
             // we will use a simple exponential fraction function to convert things
             // and the converted value can be directly used for RNG
             float probability = 1 - 1 / (Mathf.Pow(2, oddsMove));
-            Debug.Log("Redeployment probability " + oddsMove + " -> " + probability);
+            // Debug.Log("Redeployment probability " + oddsMove + " -> " + probability);
             if (probability < 0)
             {
                 return false;

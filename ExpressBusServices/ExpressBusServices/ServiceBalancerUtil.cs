@@ -80,7 +80,7 @@ namespace ExpressBusServices
                     }
                 }
                 terminusStopId = loopingTerminusStopId;
-                Debug.Log("EBS determines that a bus needs to be redeployed.");
+                Debug.Log("EBS determines that a bus needs to be redeployed: " + currentTerminusStopId + " -> " + terminusStopId);
                 return true;
             }
             return false;

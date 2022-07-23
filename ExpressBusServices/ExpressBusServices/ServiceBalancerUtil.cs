@@ -144,7 +144,7 @@ namespace ExpressBusServices
                 analysis.paxCount += paxCount[loopingStopID];
                 analysis.segmentCanReceiveRedeployment |= paxCount[loopingStopID] > 30;
                 // move to next
-                loopingStopID = nextStopLink[startingTerminusStopId];
+                loopingStopID = nextStopLink[loopingStopID];
                 Debug.Log("Analyze gouping loop.");
             }
 

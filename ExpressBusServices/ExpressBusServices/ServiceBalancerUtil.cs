@@ -42,7 +42,14 @@ namespace ExpressBusServices
             {
                 if (skipNext)
                 {
+                    // this is just to skip the 1st stop
                     skipNext = false;
+                    continue;
+                }
+                if (!analysis.segmentCanReceiveRedeployment)
+                {
+                    // non-self segment and cannot receive redeployment
+                    // we only want to see segments that can receive redeployment
                     continue;
                 }
                 float avePax = analysis.paxCount * 1.0f / analysis.stopCount;

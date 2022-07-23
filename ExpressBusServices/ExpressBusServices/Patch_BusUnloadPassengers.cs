@@ -11,7 +11,8 @@ namespace ExpressBusServices
         {
             ushort redeploymentTarget;
             ushort transportLineId = data.m_transportLine;
-            ushort currentTerminusStopId = TransportLine.GetPrevStop(data.m_targetBuilding);
+            // not yet target the next stop
+            ushort currentTerminusStopId = data.m_targetBuilding;
             if (ServiceBalancerUtil.FindRedeployToTerminus(transportLineId, currentTerminusStopId, out redeploymentTarget))
             {
                 // set destination to somewhere else

@@ -9,6 +9,8 @@ namespace ExpressBusServices
 {
     public class ServiceBalancerUtil
     {
+        private static Dictionary<ushort, ushort> redeploymentInstructions = new Dictionary<ushort, ushort>();
+
         private struct TransportLineSegmentAnalysis
         {
             public ushort leadingTerminusStopId;
@@ -195,6 +197,9 @@ namespace ExpressBusServices
 
         public static void MarkRedeployToNewTerminus(VehicleAI aiInstance, ushort vehicleID, ref Vehicle vehicleData, ushort currentStopId, ushort targetStopId)
         {
+            // mark it here, so that later we can correctly apply this
+            redeploymentInstructions[vehicleID] = targetStopId;
+
             vehicleData.m_targetBuilding = targetStopId;
             BusStopSkippingLookupTable.Notify_BusShouldSkipLoading(vehicleID);
             var pathfindParams = new object[] { vehicleID, vehicleData };
@@ -229,6 +234,19 @@ namespace ExpressBusServices
             }
         }
 
+        public static bool PopRedeploymentInstructions(ushort vehicleID, out ushort redeploymentTarget)
+        {
+            redeploymentTarget = 0;
+            if (!redeploymentInstructions.ContainsKey(vehicleID))
+            {
+                // no instructions
+                return false;
+            }
+            redeploymentTarget = redeploymentInstructions[vehicleID];
+            redeploymentInstructions.Remove(vehicleID);
+            return true;
+        }
+
         public static bool PopNeedsRedeployToTerminus()
         {
             return false;
@@ -237,6 +255,7 @@ namespace ExpressBusServices
         public static void ResetRedeploymentRecords()
         {
             // reset the dictionary or whatever data struct we decided to use
+            redeploymentInstructions.Clear();
         }
     }
 }

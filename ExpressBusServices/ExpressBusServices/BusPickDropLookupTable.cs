@@ -135,6 +135,12 @@ namespace ExpressBusServices
                     CitizenRunawayTable.FixInvalidPublicTransitPassengers(vehicleID, ref vehicleData);
                 }
             }
+            // remove the redeployment instructions to avoid contaminating with arriving at other stops
+            if (__result == true)
+            {
+                // can depart, remove redeployment instructions
+                ServiceBalancerUtil.ReadRedeploymentInstructions(vehicleID, out _, removeEntry: true);
+            }
         }
     }
 }

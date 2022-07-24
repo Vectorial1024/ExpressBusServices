@@ -38,6 +38,11 @@ namespace ExpressBusServices
                 // option not enabled; skip everything!
                 return false;
             }
+            if (!DepartureChecker.StopIsConsideredAsTerminus(currentTerminusStopId, transortLineID))
+            {
+                // not a terminus; check not allowed!
+                return false;
+            }
             List<TransportLineSegmentAnalysis> analysisList = AnalyzeTransportLinePopularity(transortLineID, currentTerminusStopId);
             if (analysisList.Count < 2)
             {

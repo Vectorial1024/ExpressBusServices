@@ -24,6 +24,7 @@ namespace ExpressBusServices
         {
             // default values
             EBSModConfig.ExpressMode expressBusMode = EBSModConfig.ExpressMode.PRUDENTIAL;
+            bool enableSelfBalancing = true;
 
             if (File.Exists(pathToConfigXml))
             {
@@ -47,6 +48,11 @@ namespace ExpressBusServices
                                     expressBusMode = (EBSModConfig.ExpressMode)selectedIndex;
                                     // Debug.Log($"Read {EBSModConfig.CurrentExpressBusMode} from settings file.");
                                 }
+                                if (currentConfigNode.Name == "ExpressBuses_ServiceSelfBalancing")
+                                {
+                                    string tempValue = currentConfigNode.InnerText;
+                                    enableSelfBalancing = Convert.ToBoolean(tempValue);
+                                }
                             }
                         }
                     }
@@ -58,11 +64,13 @@ namespace ExpressBusServices
             }
 
             EBSModConfig.CurrentExpressBusMode = expressBusMode;
+            EBSModConfig.UseServiceSelfBalancing = enableSelfBalancing;
         }
 
         public static void WriteSettings()
         {
             var expressBusMode = EBSModConfig.CurrentExpressBusMode;
+            var enableSelfBalancing = EBSModConfig.UseServiceSelfBalancing;
             // var interpretation = IPT2UnbunchingRuleReader.CurrentRuleInterpretation;
             try
             {
@@ -79,6 +87,10 @@ namespace ExpressBusServices
                 writer.WriteStartElement("ExpressBuses_SelectedIndex");
                 writer.WriteString(((int)expressBusMode).ToString());
                 //Debug.Log($"Write {((int)interpretation).ToString()} to config file.");
+                writer.WriteEndElement();
+
+                writer.WriteStartElement("ExpressBuses_ServiceSelfBalancing");
+                writer.WriteString(enableSelfBalancing.ToString());
                 writer.WriteEndElement();
 
                 writer.WriteEndElement();

@@ -11,5 +11,8 @@
 
         // this is mainly used to determine the kind of unbunching that should be enabled
         public static ExpressMode CurrentExpressBusMode { get; set; }
+
+        // this is used to determine whether service self-balancing is enabled
+        public static bool UseServiceSelfBalancing { get; set; }
     }
 }

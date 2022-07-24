@@ -81,6 +81,7 @@ namespace ExpressBusServices
             UIHelperBase group = helper.AddGroup("Express Bus Services: Settings");
             ModSettingController.Touch();
             int selectedIndex_ExpressBus = (int)EBSModConfig.CurrentExpressBusMode;
+            bool usesSelfBalancing = EBSModConfig.UseServiceSelfBalancing;
             var dropdown = group.AddDropdown("EBS Unbunching Mode",
                 new string[] {
                     "Prudential (Legacy)",
@@ -92,10 +93,21 @@ namespace ExpressBusServices
                     Debug.Log($"Express Bus Services: (express bus) received index {index}");
                     ModSettingController.WriteSettings();
                 });
+            var toggleSelfBalancing = group.AddCheckbox("Enable Service Self-Balancing", true, (newValue) =>
+            {
+                EBSModConfig.UseServiceSelfBalancing = newValue;
+                Debug.Log($"Express Bus Services: (self balancing) received value {newValue}");
+                ModSettingController.WriteSettings();
+            });
             UIDropDown properDropdownObject = dropdown as UIDropDown;
             if (properDropdownObject != null)
             {
                 properDropdownObject.selectedIndex = selectedIndex_ExpressBus;
+            }
+            UICheckBox toggleObjectSelfBalancing = toggleSelfBalancing as UICheckBox;
+            if (toggleObjectSelfBalancing != null)
+            {
+                toggleObjectSelfBalancing.isChecked = usesSelfBalancing;
             }
         }
     }

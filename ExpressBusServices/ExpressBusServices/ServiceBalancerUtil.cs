@@ -188,7 +188,7 @@ namespace ExpressBusServices
             if (selfAvePaxCount == 0)
             {
                 // to avoid div0 and because of sensibility, we will permit this
-                // Debug.Log("Redeployment true probability (hard) " + 0 + " -> " + 999);
+                Debug.Log("Redeployment true probability (hard) " + 0 + " -> " + 999);
                 return true;
             }
             // the odds of moving to any of the candidate segments
@@ -196,7 +196,7 @@ namespace ExpressBusServices
             // we need to convert a exponential [0, inf) to a logistical [0, 1)
             // we will use a simple exponential fraction function to convert things
             // and the converted value can be directly used for RNG
-            float probability = 1 - 1 / (Mathf.Pow(2, oddsMove));
+            float probability = 1 - 1 / (Mathf.Pow(2, oddsMove - 1));
             // Debug.Log("Redeployment probability " + oddsMove + " -> " + probability);
             if (probability < 0)
             {
@@ -204,11 +204,11 @@ namespace ExpressBusServices
             }
             // finally, do a RNG with such probability * the global config prob value
             // todo read from a config, or not
-            float globalBalancerProbability = 0.35f;
+            float globalBalancerProbability = 0.5f;
             float theProbability = probability * globalBalancerProbability;
             // Random.value gives a PseudoUniform(0, 1) random value
             float rngPick = UnityEngine.Random.value;
-            // Debug.Log("Redeployment true probability " + rngPick + " -> " + theProbability);
+            Debug.Log("Redeployment true probability " + rngPick + " -> " + theProbability);
             return rngPick <= theProbability;
         }
 

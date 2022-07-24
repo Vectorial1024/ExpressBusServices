@@ -217,7 +217,7 @@ namespace ExpressBusServices
             redeploymentInstructions[vehicleID] = targetStopId;
         }
 
-        public static bool PopRedeploymentInstructions(ushort vehicleID, out ushort redeploymentTarget)
+        public static bool ReadRedeploymentInstructions(ushort vehicleID, out ushort redeploymentTarget, bool removeEntry = false)
         {
             redeploymentTarget = 0;
             if (!redeploymentInstructions.ContainsKey(vehicleID))
@@ -226,7 +226,10 @@ namespace ExpressBusServices
                 return false;
             }
             redeploymentTarget = redeploymentInstructions[vehicleID];
-            redeploymentInstructions.Remove(vehicleID);
+            if (removeEntry)
+            {
+                redeploymentInstructions.Remove(vehicleID);
+            }
             return true;
         }
 

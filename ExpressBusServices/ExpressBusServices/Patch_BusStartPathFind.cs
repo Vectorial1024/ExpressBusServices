@@ -15,7 +15,7 @@ namespace ExpressBusServices
         [HarmonyPrefix]
         public static void AdjustPathfindTargetForRedeployment(ushort vehicleID, ref Vehicle vehicleData)
         {
-            if (ServiceBalancerUtil.PopRedeploymentInstructions(vehicleID, out ushort redeploymentTarget))
+            if (ServiceBalancerUtil.ReadRedeploymentInstructions(vehicleID, out ushort redeploymentTarget))
             {
                 vehicleData.m_targetBuilding = redeploymentTarget;
             }

@@ -10,11 +10,11 @@ namespace ExpressBusServices
         [HarmonyPriority(Priority.LowerThanNormal)]
         public static bool HandleBusAboutToLoadPassengers(ushort vehicleID, ref Vehicle data)
         {
+            BusPickDropLookupTable.Notify_PassengersAboutToBoardOntoBus(vehicleID, ref data);
             if (BusStopSkippingLookupTable.BusShouldSkipPassengerLoading(vehicleID))
             {
                 return false;
             }
-            BusPickDropLookupTable.Notify_PassengersAboutToBoardOntoBus(vehicleID, ref data);
             return true;
         }
 

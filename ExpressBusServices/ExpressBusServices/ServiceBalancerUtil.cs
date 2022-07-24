@@ -188,6 +188,7 @@ namespace ExpressBusServices
             if (selfAvePaxCount == 0)
             {
                 // to avoid div0 and because of sensibility, we will permit this
+                Debug.Log("Redeployment true probability (hard) " + 0 + " -> " + 999);
                 return true;
             }
             // the odds of moving to any of the candidate segments

@@ -11,6 +11,8 @@ namespace ExpressBusServices
     {
         private static Dictionary<ushort, ushort> redeploymentInstructions = new Dictionary<ushort, ushort>();
 
+        private static Dictionary<ushort, ushort> vehicleCurrentlyAtStop = new Dictionary<ushort, ushort>();
+
         private struct TransportLineSegmentAnalysis
         {
             public ushort leadingTerminusStopId;
@@ -223,6 +225,22 @@ namespace ExpressBusServices
             return true;
         }
 
+        public static void MarkVehicleIsAtStopId(ushort vehicleID, ushort stopId)
+        {
+            vehicleCurrentlyAtStop[vehicleID] = stopId;
+        }
+
+        public static bool ReadVehicleCurrentlyAtWhatStop(ushort vehicleID, out ushort stopId)
+        {
+            stopId = 0;
+            if (!vehicleCurrentlyAtStop.ContainsKey(vehicleID))
+            {
+                return false;
+            }
+            stopId = vehicleCurrentlyAtStop[vehicleID];
+            return true;
+        }
+
         public static bool PopNeedsRedeployToTerminus()
         {
             return false;
@@ -235,12 +253,17 @@ namespace ExpressBusServices
             {
                 redeploymentInstructions = new Dictionary<ushort, ushort>();
             }
+            if (vehicleCurrentlyAtStop == null)
+            {
+                vehicleCurrentlyAtStop = new Dictionary<ushort, ushort>();
+            }
         }
 
         public static void ResetRedeploymentRecords()
         {
             // reset the dictionary or whatever data struct we decided to use
             redeploymentInstructions.Clear();
+            vehicleCurrentlyAtStop.Clear();
         }
     }
 }

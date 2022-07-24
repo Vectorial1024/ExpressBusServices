@@ -18,7 +18,7 @@ namespace ExpressBusServices
             {
                 // set destination to somewhere else
                 // it is basically a "super skip"
-                ServiceBalancerUtil.MarkRedeployToNewTerminus(null, vehicleID, ref data, data.m_targetBuilding, redeploymentTarget);
+                ServiceBalancerUtil.MarkRedeployToNewTerminus(vehicleID, redeploymentTarget);
                 // data.m_targetBuilding = redeploymentTarget;
                 BusStopSkippingLookupTable.Notify_BusShouldSkipLoading(vehicleID);
             }

@@ -211,7 +211,7 @@ namespace ExpressBusServices
             return rngPick <= theProbability;
         }
 
-        public static void MarkRedeployToNewTerminus(VehicleAI aiInstance, ushort vehicleID, ref Vehicle vehicleData, ushort currentStopId, ushort targetStopId)
+        public static void MarkRedeployToNewTerminus(ushort vehicleID, ushort targetStopId)
         {
             // mark it here, so that later we can correctly apply this
             redeploymentInstructions[vehicleID] = targetStopId;

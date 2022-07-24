@@ -30,8 +30,13 @@ namespace ExpressBusServices
 
         public static bool FindRedeployToTerminus(ushort transortLineID, ushort currentTerminusStopId, out ushort terminusStopId)
         {
-            List<TransportLineSegmentAnalysis> analysisList = AnalyzeTransportLinePopularity(transortLineID, currentTerminusStopId);
             terminusStopId = 0;
+            if (!EBSModConfig.UseServiceSelfBalancing)
+            {
+                // option not enabled; skip everything!
+                return false;
+            }
+            List<TransportLineSegmentAnalysis> analysisList = AnalyzeTransportLinePopularity(transortLineID, currentTerminusStopId);
             if (analysisList.Count < 2)
             {
                 // less than 2 segments, this means it is circular, and is not eligible for super-skipping

@@ -198,6 +198,7 @@ namespace ExpressBusServices
             // todo read from a config
             float globalBalancerProbability = 0.5f;
             float theProbability = probability * globalBalancerProbability;
+            // Random.value gives a PseudoUniform(0, 1) random value
             float rngPick = UnityEngine.Random.value;
             Debug.Log("Redeployment true probability " + rngPick + " -> " + theProbability);
             return rngPick <= theProbability;

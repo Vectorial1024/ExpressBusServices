@@ -196,7 +196,7 @@ namespace ExpressBusServices
             }
             // finally, do a RNG with such probability * the global config prob value
             // todo read from a config
-            float globalBalancerProbability = 0.25f;
+            float globalBalancerProbability = 0.35f;
             float theProbability = probability * globalBalancerProbability;
             // Random.value gives a PseudoUniform(0, 1) random value
             float rngPick = UnityEngine.Random.value;

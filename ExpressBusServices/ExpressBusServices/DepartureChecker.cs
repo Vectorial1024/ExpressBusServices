@@ -11,6 +11,12 @@ namespace ExpressBusServices
         // if true, then this mod will intervene in handling instant departures etc.
         public static bool NowIsEligibleForInstantDeparture(ushort vehicleID, ref Vehicle vehicleData)
         {
+            // todo check some global flag to instant depart for select buses
+            if (ServiceBalancerUtil.ReadRedeploymentInstructions(vehicleID, out _))
+            {
+                // we have redeployment instructions, let's do it
+                return true;
+            }
             ushort transportLineID = vehicleData.m_transportLine;
             ushort currentStop = TransportLine.GetPrevStop(vehicleData.m_targetBuilding);
 

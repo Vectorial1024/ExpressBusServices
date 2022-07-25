@@ -7,7 +7,7 @@ namespace ExpressBusServices
     public class Patch_BusUnloadPassengers
     {
         [HarmonyPrefix]
-        public static void CheckRedeployment(ushort vehicleID, ref Vehicle data)
+        public static void CheckRedeployment(ushort vehicleID, ref Vehicle data, ref bool forceUnload)
         {
             ushort redeploymentTarget;
             ushort transportLineId = data.m_transportLine;
@@ -21,6 +21,8 @@ namespace ExpressBusServices
                 ServiceBalancerUtil.MarkRedeployToNewTerminus(vehicleID, redeploymentTarget);
                 // data.m_targetBuilding = redeploymentTarget;
                 BusStopSkippingLookupTable.Notify_BusShouldSkipLoading(vehicleID);
+                // force everyone to get dropped off for redeployment; they aren't supposed to travel around the bus line through termini anyways
+                forceUnload = true;
             }
         }
 

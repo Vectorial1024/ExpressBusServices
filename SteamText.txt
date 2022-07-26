@@ -8,8 +8,10 @@ Unlock the peak efficiency of buses.
 [*]Works with Improved Public Transport 2 (integrated support)
 [*]Buses will skip stops whenever possible (NEW: can choose between different stop-skipping modes)
 [*]Buses will mostly no longer unbunch
+[*]And some other niche features for buses!
 [*]巴士終於識得飛站; 其他交通工具(例如: 地鐵)維持現狀 (站站停, 冇飛站)
 [*]除總站外，上落客後，毋須等待，即時開出 (新功能：你可以選擇如何進行飛站，請參考上面gif)
+[*]以及一啲其他細碎、同巴士相關嘅功能
 [*]本mod已經有TLM以及IPT2嘅support
 [*]Sister mod for IPT2 available for even better compatibility with IPT2: [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2296003260]Express Bus Services (IPT2 Plugin)[/url]
 [*]IPT2玩家可以考慮同時安裝姊妹mod獲得更好嘅IPT2體驗: [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2296003260]Express Bus Services (IPT2 Plugin)[/url]
@@ -52,6 +54,7 @@ With this mod enabled, you can do the following:
 [*]150% rush-hour bus budget with Real Time + Transport Lines Manager? Why not.
 [*]Long-distance, high-frequency bus routes/shuttles? No longer a dream.
 [*]Earn profit from bus routes on a per-line basis (upkeep for depots etc still has to be sourced elsewhere)
+[*]New Feature: use the Service Self-Balancing feature to auto-adjust service along commuting direction (check the gifs for more info)
 [/list]
 [h1]GitHub Repo[/h1]
 This mod is open-sourced, and the repo is available here: https://github.com/Vectorial1024/ExpressBusServices
@@ -77,6 +80,7 @@ And that's all!
 [list]
 [*]大埔公路/青山公路：飛走荒蕪車站
 [*]港島線+電車：一快一慢，平排競爭
+[*]新功能：私牌回車：繁忙時間出城方向可獲得額外班次，但反方向收車 (詳情請參考樓上gif)
 [/list]
 
 最後，歡迎各位加入香港Cities Skylines Discord群組：

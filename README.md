@@ -23,8 +23,9 @@ These transportation types are currently covered by this mod:
 - Buses; as a result of game mechanics, the following transportation types are also covered:
   - Evacuation buses
   - Tourism buses
-  - Intercity buses (to be disabled later; see https://github.com/Vectorial1024/ExpressBusServices/issues/15#issuecomment-1187672211 )
 - Trolleybuses
+
+Note: Intercity buses were previously affected by this mod, which does not make much sense and might have caused some other problems (https://github.com/Vectorial1024/ExpressBusServices/issues/15#issuecomment-1187672211), and so they are now free and are not affected by this mod.
 
 These transportation types will NEVER be covered by this mod because it will not make sense:
 

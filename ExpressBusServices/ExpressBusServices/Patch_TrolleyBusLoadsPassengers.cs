@@ -7,9 +7,14 @@ namespace ExpressBusServices
     public class Patch_TrolleyBusLoadsPassengers
     {
         [HarmonyPrefix]
-        public static void HandleBusAboutToLoadPassengers(ushort vehicleID, ref Vehicle data)
+        public static bool HandleBusAboutToLoadPassengers(ushort vehicleID, ref Vehicle data)
         {
             BusPickDropLookupTable.Notify_PassengersAboutToBoardOntoBus(vehicleID, ref data);
+            if (BusStopSkippingLookupTable.BusShouldSkipPassengerLoading(vehicleID))
+            {
+                return false;
+            }
+            return true;
         }
 
         [HarmonyPostfix]

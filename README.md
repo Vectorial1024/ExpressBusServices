@@ -3,6 +3,7 @@ Unlock the peak efficiency of buses:
 
 1. Buses skip stops whenever possible
 2. Buses do not unbunch (except when at first stop of line)
+3. Niche: can choose to allow buses self-adjust their service levels to better meet commuting demand
 
 # Mod Status
 
@@ -50,9 +51,9 @@ These transportation types are asking very good questions:
 - Aggressive: buses etc will try to predict whether it needs to stop at non-terminus stops, and will literally skip the stop if the prediction passed. Not available for trams.
 - Experimental: a stronger version of Aggressive Mode. WIP.
 
-## Extra Stop-Skipping Options
+## Extra Stop-Skipping Options: Service Level Self-Balancing
 
-(WIP) When activated, buses will have a chance to immediately transfer themselves to the most in-demand section of the bus line, resuming from the relevant first-stop terminus, thereby skipping multiple stops at once (refer to #12 for more info); this will be helpful when commuting patterns are asymmetric.
+When activated, buses will have a chance to immediately transfer themselves to the most in-demand section of the bus line, resuming from the relevant first-stop terminus, thereby skipping multiple stops at once (refer to https://github.com/Vectorial1024/ExpressBusServices/issues/12 for more info); this will be helpful when commuting patterns are asymmetric.
 
 # Motivation
 

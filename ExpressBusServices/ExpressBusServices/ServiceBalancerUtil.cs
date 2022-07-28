@@ -188,7 +188,7 @@ namespace ExpressBusServices
             if (selfAvePaxCount == 0)
             {
                 // to avoid div0 and because of sensibility, we will permit this
-                Debug.Log("Redeployment true probability (hard) " + 0 + " -> " + 999);
+                // Debug.Log("Redeployment true probability (hard) " + 0 + " -> " + 999);
                 return true;
             }
             // the odds of moving to any of the candidate segments
@@ -208,7 +208,7 @@ namespace ExpressBusServices
             float theProbability = probability * globalBalancerProbability;
             // Random.value gives a PseudoUniform(0, 1) random value
             float rngPick = UnityEngine.Random.value;
-            Debug.Log("Redeployment true probability " + rngPick + " -> " + theProbability);
+            // Debug.Log("Redeployment true probability " + rngPick + " -> " + theProbability);
             return rngPick <= theProbability;
         }
 

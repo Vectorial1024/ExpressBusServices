@@ -122,12 +122,13 @@ namespace ExpressBusServices
 
             if (faultyCitizenCount > 0)
             {
+                // hopefully people are using Public Transport Unstucker so that there is no need to keep this section alive...
                 StringBuilder builder = new StringBuilder();
                 builder.AppendLine("Some CIMs ran away after reserving some public transport. Correcting...");
                 builder.AppendLine("");
                 builder.AppendLine($"Reporting vehicle ID: {vehicleID}");
                 builder.AppendLine($"Number of corrected CIMs: {faultyCitizenCount}");
-                Debug.Log(builder.ToString());
+                // Debug.Log(builder.ToString());
             }
         }
     }

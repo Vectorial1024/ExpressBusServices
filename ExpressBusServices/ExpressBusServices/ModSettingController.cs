@@ -59,7 +59,7 @@ namespace ExpressBusServices
                 }
                 catch (Exception x)
                 {
-                    Debug.Log($"Could not load config file: {x}");
+                    Debug.LogError($"Could not load config file: {x}");
                 }
             }
 
@@ -100,7 +100,7 @@ namespace ExpressBusServices
             }
             catch (Exception x)
             {
-                Debug.Log($"Could not write to config file: {x}");
+                Debug.LogError($"Could not write to config file: {x}");
             }
         }
     }

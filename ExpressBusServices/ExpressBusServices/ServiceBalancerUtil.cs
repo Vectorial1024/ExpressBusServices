@@ -166,6 +166,7 @@ namespace ExpressBusServices
             // create the list
             List<TransportLineSegmentAnalysis> analysisList = new List<TransportLineSegmentAnalysis>();
             TransportLineSegmentAnalysis analysis = new TransportLineSegmentAnalysis(startingTerminusStopId, 1, paxCount[startingTerminusStopId], paxCount[startingTerminusStopId] > 30);
+            analysis.CompareAndUpdateMostWaitingStop(startingTerminusStopId, paxCount[startingTerminusStopId]);
             loopingStopID = nextStopLink[startingTerminusStopId];
             while (true)
             {
@@ -182,6 +183,7 @@ namespace ExpressBusServices
                 // add info
                 analysis.stopCount++;
                 analysis.paxCount += paxCount[loopingStopID];
+                analysis.CompareAndUpdateMostWaitingStop(loopingStopID, paxCount[loopingStopID]);
                 analysis.segmentCanReceiveRedeployment |= paxCount[loopingStopID] > 30;
                 // move to next
                 loopingStopID = nextStopLink[loopingStopID];

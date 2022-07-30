@@ -14,5 +14,8 @@
 
         // this is used to determine whether service self-balancing is enabled
         public static bool UseServiceSelfBalancing { get; set; }
+
+        // this is used to determine whether service self-balancing can target middle stops
+        public static bool ServiceSelfBalancingCanDoMiddleStop { get; set; }
     }
 }

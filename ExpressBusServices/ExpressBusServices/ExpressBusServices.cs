@@ -82,6 +82,7 @@ namespace ExpressBusServices
             ModSettingController.Touch();
             int selectedIndex_ExpressBus = (int)EBSModConfig.CurrentExpressBusMode;
             bool usesSelfBalancing = EBSModConfig.UseServiceSelfBalancing;
+            bool selfBalCanTargetMiddle = EBSModConfig.ServiceSelfBalancingCanDoMiddleStop;
             var dropdown = group.AddDropdown("EBS Unbunching Mode",
                 new string[] {
                     "Prudential (Legacy)",
@@ -99,6 +100,12 @@ namespace ExpressBusServices
                 Debug.Log($"Express Bus Services: (self balancing) received value {newValue}");
                 ModSettingController.WriteSettings();
             });
+            var toggleSelfBalCanTargetMid = group.AddCheckbox("Service Self-Balancing can target most-pax middle-of-line stops", true, (newValue) =>
+            {
+                EBSModConfig.ServiceSelfBalancingCanDoMiddleStop = newValue;
+                Debug.Log($"Express Bus Services: (self balancing middle target) received value {newValue}");
+                ModSettingController.WriteSettings();
+            });
             UIDropDown properDropdownObject = dropdown as UIDropDown;
             if (properDropdownObject != null)
             {
@@ -108,6 +115,11 @@ namespace ExpressBusServices
             if (toggleObjectSelfBalancing != null)
             {
                 toggleObjectSelfBalancing.isChecked = usesSelfBalancing;
+            }
+            UICheckBox toggleObjectSelfBalCanTargetMid = toggleSelfBalCanTargetMid as UICheckBox;
+            if (toggleObjectSelfBalCanTargetMid != null)
+            {
+                toggleObjectSelfBalCanTargetMid.isChecked = selfBalCanTargetMiddle;
             }
         }
     }

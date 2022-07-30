@@ -25,6 +25,7 @@ namespace ExpressBusServices
             // default values
             EBSModConfig.ExpressMode expressBusMode = EBSModConfig.ExpressMode.PRUDENTIAL;
             bool enableSelfBalancing = true;
+            bool selfBalCanTargetMid = true;
 
             if (File.Exists(pathToConfigXml))
             {
@@ -53,6 +54,11 @@ namespace ExpressBusServices
                                     string tempValue = currentConfigNode.InnerText;
                                     enableSelfBalancing = Convert.ToBoolean(tempValue);
                                 }
+                                if (currentConfigNode.Name == "ExpressBuses_SSB_CanTargetMid")
+                                {
+                                    string tempValue = currentConfigNode.InnerText;
+                                    selfBalCanTargetMid = Convert.ToBoolean(tempValue);
+                                }
                             }
                         }
                     }
@@ -65,12 +71,14 @@ namespace ExpressBusServices
 
             EBSModConfig.CurrentExpressBusMode = expressBusMode;
             EBSModConfig.UseServiceSelfBalancing = enableSelfBalancing;
+            EBSModConfig.ServiceSelfBalancingCanDoMiddleStop = selfBalCanTargetMid;
         }
 
         public static void WriteSettings()
         {
             var expressBusMode = EBSModConfig.CurrentExpressBusMode;
             var enableSelfBalancing = EBSModConfig.UseServiceSelfBalancing;
+            var selfBalCanTargetMid = EBSModConfig.ServiceSelfBalancingCanDoMiddleStop;
             // var interpretation = IPT2UnbunchingRuleReader.CurrentRuleInterpretation;
             try
             {
@@ -91,6 +99,10 @@ namespace ExpressBusServices
 
                 writer.WriteStartElement("ExpressBuses_ServiceSelfBalancing");
                 writer.WriteString(enableSelfBalancing.ToString());
+                writer.WriteEndElement();
+
+                writer.WriteStartElement("ExpressBuses_SSB_CanTargetMid");
+                writer.WriteString(selfBalCanTargetMid.ToString());
                 writer.WriteEndElement();
 
                 writer.WriteEndElement();

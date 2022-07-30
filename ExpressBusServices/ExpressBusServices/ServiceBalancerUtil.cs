@@ -19,6 +19,9 @@ namespace ExpressBusServices
             public int stopCount;
             public int paxCount;
 
+            public ushort mostWaitingPaxStopId;
+            public int mostWaitingPaxCount;
+
             public bool segmentCanReceiveRedeployment;
 
             public TransportLineSegmentAnalysis(ushort leadingTerminusStopId, int stopCount, int paxCount, bool segmentCanReceiveRedeployment = false)
@@ -26,7 +29,18 @@ namespace ExpressBusServices
                 this.leadingTerminusStopId = leadingTerminusStopId;
                 this.stopCount = stopCount;
                 this.paxCount = paxCount;
+                this.mostWaitingPaxStopId = 0;
+                this.mostWaitingPaxCount = 0;
                 this.segmentCanReceiveRedeployment = segmentCanReceiveRedeployment;
+            }
+
+            public void CompareAndUpdateMostWaitingStop(ushort stopID, int waitingPax)
+            {
+                if (waitingPax > mostWaitingPaxCount)
+                {
+                    mostWaitingPaxStopId = stopID;
+                    mostWaitingPaxCount = waitingPax;
+                }
             }
         }
 
@@ -81,11 +95,13 @@ namespace ExpressBusServices
                 float nextInRangeRandNum = UnityEngine.Random.Range(0, summedTotal);
                 float currentCapValue = 0;
                 ushort loopingTerminusStopId = 0;
+                ushort loopingMiddleStopId = 0;
                 skipNext = true;
                 for (int i = 0; i < acceptedList.Count; i++)
                 {
                     TransportLineSegmentAnalysis analysis = acceptedList[i];
                     loopingTerminusStopId = analysis.leadingTerminusStopId;
+                    loopingMiddleStopId = analysis.mostWaitingPaxStopId;
                     currentCapValue += otherAvePaxList[i];
                     if (nextInRangeRandNum < currentCapValue)
                     {
@@ -93,7 +109,17 @@ namespace ExpressBusServices
                         break;
                     }
                 }
-                terminusStopId = loopingTerminusStopId;
+                // pick random 50% chance that it will go to a middle stop with the most passengers
+                if (UnityEngine.Random.value < 0.5f)
+                {
+                    // deploy to middle bus stop
+                    terminusStopId = loopingMiddleStopId;
+                }
+                else
+                {
+                    // deploy to terminus
+                    terminusStopId = loopingTerminusStopId;
+                }
                 // Debug.Log("EBS determines that a bus needs to be redeployed: " + currentTerminusStopId + " -> " + terminusStopId);
                 return true;
             }

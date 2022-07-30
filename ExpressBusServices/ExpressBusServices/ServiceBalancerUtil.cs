@@ -114,7 +114,7 @@ namespace ExpressBusServices
                     }
                 }
                 // pick random 50% chance that it will go to a middle stop with the most passengers
-                if (UnityEngine.Random.value < 0.5f && loopingMiddleStopPaxCount > STANDARD_BUS_PAX_THRESHOLD)
+                if (EBSModConfig.ServiceSelfBalancingCanDoMiddleStop && UnityEngine.Random.value < 0.5f && loopingMiddleStopPaxCount > STANDARD_BUS_PAX_THRESHOLD)
                 {
                     // must have enough pax waiting
                     // deploy to middle bus stop

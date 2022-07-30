@@ -96,12 +96,14 @@ namespace ExpressBusServices
                 float currentCapValue = 0;
                 ushort loopingTerminusStopId = 0;
                 ushort loopingMiddleStopId = 0;
+                int loopingMiddleStopPaxCount = 0;
                 skipNext = true;
                 for (int i = 0; i < acceptedList.Count; i++)
                 {
                     TransportLineSegmentAnalysis analysis = acceptedList[i];
                     loopingTerminusStopId = analysis.leadingTerminusStopId;
                     loopingMiddleStopId = analysis.mostWaitingPaxStopId;
+                    loopingMiddleStopPaxCount = analysis.mostWaitingPaxCount;
                     currentCapValue += otherAvePaxList[i];
                     if (nextInRangeRandNum < currentCapValue)
                     {
@@ -110,8 +112,9 @@ namespace ExpressBusServices
                     }
                 }
                 // pick random 50% chance that it will go to a middle stop with the most passengers
-                if (UnityEngine.Random.value < 0.5f)
+                if (UnityEngine.Random.value < 0.5f && loopingMiddleStopPaxCount > 30)
                 {
+                    // must have more than 30 pax waiting
                     // deploy to middle bus stop
                     terminusStopId = loopingMiddleStopId;
                 }

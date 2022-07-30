@@ -13,6 +13,8 @@ namespace ExpressBusServices
 
         private static Dictionary<ushort, ushort> vehicleCurrentlyAtStop = new Dictionary<ushort, ushort>();
 
+        private static readonly int STANDARD_BUS_PAX_THRESHOLD = 30;
+
         private struct TransportLineSegmentAnalysis
         {
             public ushort leadingTerminusStopId;
@@ -112,9 +114,9 @@ namespace ExpressBusServices
                     }
                 }
                 // pick random 50% chance that it will go to a middle stop with the most passengers
-                if (UnityEngine.Random.value < 0.5f && loopingMiddleStopPaxCount > 30)
+                if (UnityEngine.Random.value < 0.5f && loopingMiddleStopPaxCount > STANDARD_BUS_PAX_THRESHOLD)
                 {
-                    // must have more than 30 pax waiting
+                    // must have enough pax waiting
                     // deploy to middle bus stop
                     terminusStopId = loopingMiddleStopId;
                 }
@@ -168,7 +170,7 @@ namespace ExpressBusServices
             // all information obtained; we are at the first stop of the line
             // create the list
             List<TransportLineSegmentAnalysis> analysisList = new List<TransportLineSegmentAnalysis>();
-            TransportLineSegmentAnalysis analysis = new TransportLineSegmentAnalysis(startingTerminusStopId, 1, paxCount[startingTerminusStopId], paxCount[startingTerminusStopId] > 30);
+            TransportLineSegmentAnalysis analysis = new TransportLineSegmentAnalysis(startingTerminusStopId, 1, paxCount[startingTerminusStopId], paxCount[startingTerminusStopId] > STANDARD_BUS_PAX_THRESHOLD);
             analysis.CompareAndUpdateMostWaitingStop(startingTerminusStopId, paxCount[startingTerminusStopId]);
             loopingStopID = nextStopLink[startingTerminusStopId];
             while (true)
@@ -187,7 +189,7 @@ namespace ExpressBusServices
                 analysis.stopCount++;
                 analysis.paxCount += paxCount[loopingStopID];
                 analysis.CompareAndUpdateMostWaitingStop(loopingStopID, paxCount[loopingStopID]);
-                analysis.segmentCanReceiveRedeployment |= paxCount[loopingStopID] > 30;
+                analysis.segmentCanReceiveRedeployment |= paxCount[loopingStopID] > STANDARD_BUS_PAX_THRESHOLD;
                 // move to next
                 loopingStopID = nextStopLink[loopingStopID];
                 // Debug.Log("Analyze gouping loop.");

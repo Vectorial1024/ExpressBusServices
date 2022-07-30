@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace ExpressBusServices.TLM
 {
@@ -10,7 +11,22 @@ namespace ExpressBusServices.TLM
     [HarmonyPatch("StopIsConsideredAsTerminus", MethodType.Normal)]
     public class Patch_Self_DetermineCanDepartWithTLM
     {
-        // private static Type 
+        private static Type Type_TLM_TLMStopDataContainer = null;
+
+        static Patch_Self_DetermineCanDepartWithTLM()
+        {
+            try
+            {
+                if (ModDetector.TransportLinesManagerIsLoaded())
+                {
+                    Type_TLM_TLMStopDataContainer = AccessTools.TypeByName("Klyte.TransportLinesManager.Extensions.TLMStopDataContainer");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.Log("Express Bus Services: reflection error. " + ex.ToString());
+            }
+        }
 
         [HarmonyPrepare]
         public static bool CheckIfShouldPatch()
@@ -30,6 +46,15 @@ namespace ExpressBusServices.TLM
             // we will also need to preserve the value from our base mod
 
             // code: __result |= TLMStopDataContainer.Instance.SafeGet(stopID).IsTerminal;
+
+            if (Type_TLM_TLMStopDataContainer == null)
+            {
+                return;
+            }
+
+            // we will let the error flow out then
+            // var methodGetInstance = Type_TLM_TLMStopDataContainer.GetProperty("Instance").GetGetMethod();
+
 
             /*
             __result |= TLMStopDataContainer.Instance.SafeGet(stopID).IsTerminal;

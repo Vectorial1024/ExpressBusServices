@@ -83,6 +83,7 @@ namespace ExpressBusServices
             int selectedIndex_ExpressBus = (int)EBSModConfig.CurrentExpressBusMode;
             bool usesSelfBalancing = EBSModConfig.UseServiceSelfBalancing;
             bool selfBalCanTargetMiddle = EBSModConfig.ServiceSelfBalancingCanDoMiddleStop;
+            bool canUseMinibusMode = EBSModConfig.CanUseMinibusMode;
             var dropdown = group.AddDropdown("EBS Unbunching Mode",
                 new string[] {
                     "Prudential (Legacy)",
@@ -106,6 +107,12 @@ namespace ExpressBusServices
                 Debug.Log($"Express Bus Services: (self balancing middle target) received value {newValue}");
                 ModSettingController.WriteSettings();
             });
+            var toggleCanUseMinibusMode = group.AddCheckbox("Enable \"minibus behavior\" for buses (i.e., buses with <= 20 capacity and pick-drop <= 5 can depart faster)", true, (newValue) =>
+            {
+                EBSModConfig.ServiceSelfBalancingCanDoMiddleStop = newValue;
+                Debug.Log($"Express Bus Services: (minibus mode) received value {newValue}");
+                ModSettingController.WriteSettings();
+            });
             UIDropDown properDropdownObject = dropdown as UIDropDown;
             if (properDropdownObject != null)
             {
@@ -120,6 +127,11 @@ namespace ExpressBusServices
             if (toggleObjectSelfBalCanTargetMid != null)
             {
                 toggleObjectSelfBalCanTargetMid.isChecked = selfBalCanTargetMiddle;
+            }
+            UICheckBox toggleObjectCanUseMinibusMode = toggleCanUseMinibusMode as UICheckBox;
+            if (toggleObjectCanUseMinibusMode != null)
+            {
+                toggleObjectCanUseMinibusMode.isChecked = canUseMinibusMode;
             }
         }
     }

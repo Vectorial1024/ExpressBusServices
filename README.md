@@ -4,6 +4,7 @@ Unlock the peak efficiency of buses:
 1. Buses skip stops whenever possible
 2. Buses do not unbunch (except when at first stop of line)
 3. Niche: can choose to allow buses self-adjust their service levels to better meet commuting demand
+4. Niche: can choose to allow minibuses (ie, buses where capacity <= 20) to depart faster when pax boarding+alighting <= 5
 
 # Mod Status
 
@@ -55,6 +56,12 @@ These transportation types are asking very good questions:
 ## Extra Stop-Skipping Options: Service Level Self-Balancing
 
 When activated, buses will have a chance to immediately transfer themselves to the most in-demand section of the bus line, resuming from the relevant first-stop terminus, thereby skipping multiple stops at once (refer to https://github.com/Vectorial1024/ExpressBusServices/issues/12 for more info); this will be helpful when commuting patterns are asymmetric.
+
+## Extra Niche Options: Minibus Mode
+
+Minibuses are defined as buses where capacity is `<= 20`.
+
+When activated, minibuses will pay attention to the number of passengers boarding and alighting at the bus stop: if that number is `<= 5`, then the minibuses may wait less and depart earlier than usual, simulating the Hong Kong minibus situation.
 
 # Motivation
 

@@ -26,6 +26,7 @@ namespace ExpressBusServices
             EBSModConfig.ExpressMode expressBusMode = EBSModConfig.ExpressMode.PRUDENTIAL;
             bool enableSelfBalancing = true;
             bool selfBalCanTargetMid = true;
+            bool canUseMinibusMode = true;
 
             if (File.Exists(pathToConfigXml))
             {
@@ -59,6 +60,11 @@ namespace ExpressBusServices
                                     string tempValue = currentConfigNode.InnerText;
                                     selfBalCanTargetMid = Convert.ToBoolean(tempValue);
                                 }
+                                if (currentConfigNode.Name == "ExpressBuses_EnableMinibusMode")
+                                {
+                                    string tempValue = currentConfigNode.InnerText;
+                                    canUseMinibusMode = Convert.ToBoolean(tempValue);
+                                }
                             }
                         }
                     }
@@ -72,6 +78,7 @@ namespace ExpressBusServices
             EBSModConfig.CurrentExpressBusMode = expressBusMode;
             EBSModConfig.UseServiceSelfBalancing = enableSelfBalancing;
             EBSModConfig.ServiceSelfBalancingCanDoMiddleStop = selfBalCanTargetMid;
+            EBSModConfig.CanUseMinibusMode = canUseMinibusMode;
         }
 
         public static void WriteSettings()
@@ -79,6 +86,7 @@ namespace ExpressBusServices
             var expressBusMode = EBSModConfig.CurrentExpressBusMode;
             var enableSelfBalancing = EBSModConfig.UseServiceSelfBalancing;
             var selfBalCanTargetMid = EBSModConfig.ServiceSelfBalancingCanDoMiddleStop;
+            var canUseMinibusMode = EBSModConfig.CanUseMinibusMode;
             // var interpretation = IPT2UnbunchingRuleReader.CurrentRuleInterpretation;
             try
             {
@@ -103,6 +111,10 @@ namespace ExpressBusServices
 
                 writer.WriteStartElement("ExpressBuses_SSB_CanTargetMid");
                 writer.WriteString(selfBalCanTargetMid.ToString());
+                writer.WriteEndElement();
+
+                writer.WriteStartElement("ExpressBuses_EnableMinibusMode");
+                writer.WriteString(canUseMinibusMode.ToString());
                 writer.WriteEndElement();
 
                 writer.WriteEndElement();

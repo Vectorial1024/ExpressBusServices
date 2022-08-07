@@ -104,7 +104,7 @@ namespace ExpressBusServices
                 VehicleBAInfo info = GetInfoForBus(vehicleID);
                 int waitTime = 12;
                 int addDropDiff = info != null ? info.Alighted + info.ActualBoarded : 0;
-                if (vehicleIsMinibus && addDropDiff > 0 && addDropDiff <= 5)
+                if (EBSModConfig.CanUseMinibusMode && vehicleIsMinibus && addDropDiff > 0 && addDropDiff <= 5)
                 {
                     waitTime = 4;
                 }

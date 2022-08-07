@@ -17,5 +17,8 @@
 
         // this is used to determine whether service self-balancing can target middle stops
         public static bool ServiceSelfBalancingCanDoMiddleStop { get; set; }
+
+        // this is used to determine whether minibus mode is enabled: fast board/depart for minibus vehicles
+        public static bool CanUseMinibusMode { get; set; }
     }
 }

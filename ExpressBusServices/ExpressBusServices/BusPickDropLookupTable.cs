@@ -101,13 +101,19 @@ namespace ExpressBusServices
                 // midway bus stop; implement logic here
                 // note: we disallow intercity buses from entering this segmentof code
                 VehicleBAInfo info = GetInfoForBus(vehicleID);
-                if (info != null && info.Alighted + info.ActualBoarded == 0)
+                int waitTime = 12;
+                int addDropDiff = info != null ? info.Alighted + info.ActualBoarded : 0;
+                if (addDropDiff > 0 && addDropDiff <= 5 && false)
+                {
+                    waitTime = 4;
+                }
+                if (info != null && addDropDiff == 0)
                 {
                     // this bus did not get any alight or board
                     // then depart now
                     __result = true;
                 }
-                else if (vehicleData.m_waitCounter >= 12 && ReversePatch_VehicleAI_CanLeave.BaseVehicleAI_CanLeave(null, vehicleID, ref vehicleData))
+                else if (vehicleData.m_waitCounter >= waitTime && ReversePatch_VehicleAI_CanLeave.BaseVehicleAI_CanLeave(null, vehicleID, ref vehicleData))
                 {
                     // this bus has alight+board but has waited enough to qualify departure AND all citizens are boarded
                     // then depart now

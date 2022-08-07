@@ -96,6 +96,7 @@ namespace ExpressBusServices
              * 
              * This entire system has a nice property that no save-file access is needed.
              */
+            bool vehicleIsMinibus = vehicleData.m_transferSize <= 20;
             if (DepartureChecker.NowIsEligibleForInstantDeparture(vehicleID, ref vehicleData))
             {
                 // midway bus stop; implement logic here
@@ -103,7 +104,7 @@ namespace ExpressBusServices
                 VehicleBAInfo info = GetInfoForBus(vehicleID);
                 int waitTime = 12;
                 int addDropDiff = info != null ? info.Alighted + info.ActualBoarded : 0;
-                if (addDropDiff > 0 && addDropDiff <= 5 && false)
+                if (vehicleIsMinibus && addDropDiff > 0 && addDropDiff <= 5)
                 {
                     waitTime = 4;
                 }

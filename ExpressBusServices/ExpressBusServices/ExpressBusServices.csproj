@@ -73,6 +73,7 @@
     <Compile Include="Patch_TrolleyBusStartPathFind.cs" />
     <Compile Include="Patch_BusStartPathFind.cs" />
     <Compile Include="Patch_VehicleAI_SimulationStep.cs" />
+    <Compile Include="ReversePatch_TLMPlugin_StopIsTerminus.cs" />
     <Compile Include="ServiceBalancerUtil.cs" />
     <Compile Include="TLM\Patch_Self_DetermineCanDepartWithTLM.cs" />
     <Compile Include="TransportLineUtil.cs" />

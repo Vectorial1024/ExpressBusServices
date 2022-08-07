@@ -61,7 +61,14 @@ namespace ExpressBusServices
 
             TransportManager transportManager = Singleton<TransportManager>.instance;
             ushort firstStopID = transportManager.m_lines.m_buffer[transportLineID].GetLastStop();
-            return firstStopID != 0 && stopID != 0 && stopID == firstStopID;
+
+            // architecture reversal
+            bool isTerminus = firstStopID != 0 && stopID != 0 && stopID == firstStopID;
+            if (ReversePatch_TLMPlugin_StopIsTerminus.PatchIsSuccessful_HasTLM)
+            {
+                isTerminus |= ReversePatch_TLMPlugin_StopIsTerminus.StopIsConsideredTerminus(stopID);
+            }
+            return isTerminus;
         }
 
         public static bool BusIsIntercityBus(Vehicle vehicleData)

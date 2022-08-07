@@ -13,6 +13,8 @@ namespace ExpressBusServices
 
         private static Dictionary<ushort, ushort> vehicleCurrentlyAtStop = new Dictionary<ushort, ushort>();
 
+        private static Dictionary<ushort, bool> redeploymentToTerminus= new Dictionary<ushort, bool>();
+
         private static readonly int STANDARD_BUS_PAX_THRESHOLD = 30;
 
         private struct TransportLineSegmentAnalysis
@@ -46,23 +48,26 @@ namespace ExpressBusServices
             }
         }
 
-        public static bool FindRedeployToTerminus(ushort transortLineID, ushort currentTerminusStopId, out ushort terminusStopId)
+        public static bool FindRedeployToTerminus(ushort vehicleID, ushort transortLineID, ushort currentTerminusStopId, out ushort terminusStopId)
         {
             terminusStopId = 0;
             if (!EBSModConfig.UseServiceSelfBalancing)
             {
                 // option not enabled; skip everything!
+                MarkIsRedeployingToTerminus(vehicleID, false);
                 return false;
             }
             if (!DepartureChecker.StopIsConsideredAsTerminus(currentTerminusStopId, transortLineID))
             {
                 // not a terminus; check not allowed!
+                MarkIsRedeployingToTerminus(vehicleID, false);
                 return false;
             }
             List<TransportLineSegmentAnalysis> analysisList = AnalyzeTransportLinePopularity(transortLineID, currentTerminusStopId);
             if (analysisList.Count < 2)
             {
                 // less than 2 segments, this means it is circular, and is not eligible for super-skipping
+                MarkIsRedeployingToTerminus(vehicleID, false);
                 return false;
             }
             // calculate the average number of pax waiting so that can determine the odds
@@ -91,7 +96,7 @@ namespace ExpressBusServices
                 acceptedList.Add(analysis);
                 summedTotal += avePax;
             }
-            if (OddsPermitRedeployment(selfAvePax, otherAvePaxList))
+            if (OddsPermitRedeployment(selfAvePax, otherAvePaxList, vehicleID))
             {
                 // check against the many segments, and determine which one to go to
                 float nextInRangeRandNum = UnityEngine.Random.Range(0, summedTotal);
@@ -100,6 +105,7 @@ namespace ExpressBusServices
                 ushort loopingMiddleStopId = 0;
                 int loopingMiddleStopPaxCount = 0;
                 skipNext = true;
+                bool isRedeployingToTerminus = false;
                 for (int i = 0; i < acceptedList.Count; i++)
                 {
                     TransportLineSegmentAnalysis analysis = acceptedList[i];
@@ -124,10 +130,13 @@ namespace ExpressBusServices
                 {
                     // deploy to terminus
                     terminusStopId = loopingTerminusStopId;
+                    isRedeployingToTerminus = true;
                 }
                 // Debug.Log("EBS determines that a bus needs to be redeployed: " + currentTerminusStopId + " -> " + terminusStopId);
+                MarkIsRedeployingToTerminus(vehicleID, isRedeployingToTerminus);
                 return true;
             }
+            MarkIsRedeployingToTerminus(vehicleID, false);
             return false;
         }
 
@@ -199,7 +208,7 @@ namespace ExpressBusServices
             return analysisList;
         }
 
-        private static bool OddsPermitRedeployment(float selfAvePaxCount, List<float> otherAvePaxCountList)
+        private static bool OddsPermitRedeployment(float selfAvePaxCount, List<float> otherAvePaxCountList, ushort vehicleID)
         {
             // using the analysis result, performs calculation and determines whether redeployment is allowed
             if (otherAvePaxCountList.Count == 0)
@@ -239,6 +248,11 @@ namespace ExpressBusServices
             // todo read from a config, or not
             float globalBalancerProbability = 0.5f;
             float theProbability = probability * globalBalancerProbability;
+            // further reduce probability of repeated redeployment
+            if (VehicleIsRedeployingToTerminus(vehicleID))
+            {
+                theProbability *= 0.5f;
+            }
             // Random.value gives a PseudoUniform(0, 1) random value
             float rngPick = UnityEngine.Random.value;
             // Debug.Log("Redeployment true probability " + rngPick + " -> " + theProbability);
@@ -270,6 +284,20 @@ namespace ExpressBusServices
         public static void MarkVehicleIsAtStopId(ushort vehicleID, ushort stopId)
         {
             vehicleCurrentlyAtStop[vehicleID] = stopId;
+        }
+
+        public static void MarkIsRedeployingToTerminus(ushort vehicleID, bool flag)
+        {
+            redeploymentToTerminus[vehicleID] = flag;
+        }
+
+        public static bool VehicleIsRedeployingToTerminus(ushort vehicleID)
+        {
+            if (!redeploymentToTerminus.ContainsKey(vehicleID))
+            {
+                return false;
+            }
+            return redeploymentToTerminus[vehicleID];
         }
 
         public static bool ReadVehicleCurrentlyAtWhatStop(ushort vehicleID, out ushort stopId)

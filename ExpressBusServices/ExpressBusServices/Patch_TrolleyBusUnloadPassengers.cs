@@ -14,7 +14,7 @@ namespace ExpressBusServices
             // not yet target the next stop
             ushort currentTerminusStopId = data.m_targetBuilding;
             ServiceBalancerUtil.MarkVehicleIsAtStopId(vehicleID, currentTerminusStopId);
-            if (ServiceBalancerUtil.FindRedeployToTerminus(transportLineId, currentTerminusStopId, out redeploymentTarget))
+            if (ServiceBalancerUtil.FindRedeployToTerminus(vehicleID, transportLineId, currentTerminusStopId, out redeploymentTarget))
             {
                 // set destination to somewhere else
                 // it is basically a "super skip"

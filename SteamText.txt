@@ -55,6 +55,7 @@ With this mod enabled, you can do the following:
 [*]Long-distance, high-frequency bus routes/shuttles? No longer a dream.
 [*]Earn profit from bus routes on a per-line basis (upkeep for depots etc still has to be sourced elsewhere)
 [*]New Feature: use the Service Self-Balancing feature to auto-adjust service along commuting direction (check the gifs for more info)
+[*]New Feature: minibus mode (if the bus has capacity <= 20 and the # of pax boarding and alighting the stop <= 5, then the bus can depart earler than usual)
 [/list]
 [h1]GitHub Repo[/h1]
 This mod is open-sourced, and the repo is available here: https://github.com/Vectorial1024/ExpressBusServices

@@ -107,7 +107,7 @@ namespace ExpressBusServices
                 Debug.Log($"Express Bus Services: (self balancing middle target) received value {newValue}");
                 ModSettingController.WriteSettings();
             });
-            var toggleCanUseMinibusMode = group.AddCheckbox("Enable \"minibus behavior\" for buses (i.e., buses with <= 20 capacity and pick-drop <= 5 can depart faster)", true, (newValue) =>
+            var toggleCanUseMinibusMode = group.AddCheckbox("Enable \"minibus behavior\" for buses", true, (newValue) =>
             {
                 EBSModConfig.ServiceSelfBalancingCanDoMiddleStop = newValue;
                 Debug.Log($"Express Bus Services: (minibus mode) received value {newValue}");

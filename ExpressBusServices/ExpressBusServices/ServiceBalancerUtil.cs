@@ -327,6 +327,10 @@ namespace ExpressBusServices
             {
                 vehicleCurrentlyAtStop = new Dictionary<ushort, ushort>();
             }
+            if (redeploymentToTerminus == null)
+            {
+                redeploymentToTerminus = new Dictionary<ushort, bool>();
+            }
         }
 
         public static void ResetRedeploymentRecords()
@@ -334,6 +338,7 @@ namespace ExpressBusServices
             // reset the dictionary or whatever data struct we decided to use
             redeploymentInstructions.Clear();
             vehicleCurrentlyAtStop.Clear();
+            redeploymentToTerminus.Clear();
         }
     }
 }

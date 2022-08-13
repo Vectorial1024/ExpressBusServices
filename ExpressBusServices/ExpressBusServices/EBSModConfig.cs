@@ -20,5 +20,16 @@
 
         // this is used to determine whether minibus mode is enabled: fast board/depart for minibus vehicles
         public static bool CanUseMinibusMode { get; set; }
+
+        // section break for express tram
+
+        public enum ExpressTramMode
+        {
+            NONE = 0,
+            LIGHT_RAIL,
+            TRAM,
+        }
+
+        public static ExpressTramMode CurrentExpressTramMode { get; set; }
     }
 }

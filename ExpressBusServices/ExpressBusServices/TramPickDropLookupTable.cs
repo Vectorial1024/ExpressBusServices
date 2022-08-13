@@ -57,6 +57,11 @@ namespace ExpressBusServices
             int iterationCount = 0;
             while (currentVehicleID != 0)
             {
+                VehicleBAInfo localInfo = BusPickDropLookupTable.GetInfoForBus(currentVehicleID);
+                if (localInfo == null)
+                {
+                    return null;
+                }
                 unloadCount += BusPickDropLookupTable.GetInfoForBus(currentVehicleID).Alighted;
                 loadCount += BusPickDropLookupTable.GetInfoForBus(currentVehicleID).ActualBoarded;
                 // move to next trailer

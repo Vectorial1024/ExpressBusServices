@@ -41,10 +41,20 @@ namespace ExpressBusServices
             }
         }
 
+        public static void ForgetTram(ushort leaderVehicleID)
+        {
+            tramPickDropTable.Remove(leaderVehicleID);
+        }
+
         public static VehicleBAInfo GatherInfoForTramWithLeader(ushort leaderVehicleID)
         {
             // the way the tram works, it reuses some code from the bus ai
             // therefore we need a function to collect the info from all the tram trailers
+
+            if (tramPickDropTable.ContainsKey(leaderVehicleID))
+            {
+                return tramPickDropTable[leaderVehicleID];
+            }
 
             // clear our record first
             VehicleBAInfo info = new VehicleBAInfo();

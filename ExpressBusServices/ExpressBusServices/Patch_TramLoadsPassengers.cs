@@ -17,6 +17,7 @@ namespace ExpressBusServices
             {
                 return;
             }
+            TramPickDropLookupTable.ForgetTram(vehicleID);
 
             VehicleManager vehicleManager = Singleton<VehicleManager>.instance;
             ushort currentVehicleID = vehicleID;

@@ -28,6 +28,9 @@ namespace ExpressBusServices
             bool selfBalCanTargetMid = true;
             bool canUseMinibusMode = true;
 
+            // sectino break
+            EBSModConfig.ExpressTramMode expressTramMode = EBSModConfig.ExpressTramMode.NONE;
+
             if (File.Exists(pathToConfigXml))
             {
                 try
@@ -65,6 +68,13 @@ namespace ExpressBusServices
                                     string tempValue = currentConfigNode.InnerText;
                                     canUseMinibusMode = Convert.ToBoolean(tempValue);
                                 }
+                                if (currentConfigNode.Name == "ExpressTrams_SelectedIndex")
+                                {
+                                    string tempIndex = currentConfigNode.InnerText;
+                                    int selectedIndex = Convert.ToInt32(tempIndex);
+                                    expressTramMode = (EBSModConfig.ExpressTramMode)selectedIndex;
+                                    // Debug.Log($"Read {EBSModConfig.CurrentExpressBusMode} from settings file.");
+                                }
                             }
                         }
                     }
@@ -79,6 +89,8 @@ namespace ExpressBusServices
             EBSModConfig.UseServiceSelfBalancing = enableSelfBalancing;
             EBSModConfig.ServiceSelfBalancingCanDoMiddleStop = selfBalCanTargetMid;
             EBSModConfig.CanUseMinibusMode = canUseMinibusMode;
+
+            EBSModConfig.CurrentExpressTramMode = expressTramMode;
         }
 
         public static void WriteSettings()
@@ -88,6 +100,7 @@ namespace ExpressBusServices
             var selfBalCanTargetMid = EBSModConfig.ServiceSelfBalancingCanDoMiddleStop;
             var canUseMinibusMode = EBSModConfig.CanUseMinibusMode;
             // var interpretation = IPT2UnbunchingRuleReader.CurrentRuleInterpretation;
+            var expressTramMode = EBSModConfig.CurrentExpressTramMode;
             try
             {
                 XmlWriterSettings settings = new XmlWriterSettings();
@@ -115,6 +128,11 @@ namespace ExpressBusServices
 
                 writer.WriteStartElement("ExpressBuses_EnableMinibusMode");
                 writer.WriteString(canUseMinibusMode.ToString());
+                writer.WriteEndElement();
+
+                writer.WriteStartElement("ExpressTrams_SelectedIndex");
+                writer.WriteString(((int)expressTramMode).ToString());
+                //Debug.Log($"Write {((int)interpretation).ToString()} to config file.");
                 writer.WriteEndElement();
 
                 writer.WriteEndElement();

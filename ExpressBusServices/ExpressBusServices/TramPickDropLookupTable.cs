@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ColossalFramework;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -40,6 +41,35 @@ namespace ExpressBusServices
             }
         }
 
+        public static void GatherInfoForTramWithLeader(ushort leaderVehicleID)
+        {
+            // the way the tram works, it reuses some code from the bus ai
+            // therefore we need a function to collect the info from all the tram trailers
+
+            // clear our record first
+            VehicleBAInfo info = GetInfoForTramByLeader(leaderVehicleID, true);
+
+            // and then gather the stuff
+            VehicleManager vehicleManager = Singleton<VehicleManager>.instance;
+            ushort currentVehicleID = leaderVehicleID;
+            int unloadCount = 0;
+            int iterationCount = 0;
+            while (currentVehicleID != 0)
+            {
+                unloadCount += BusPickDropLookupTable.GetInfoForBus(currentVehicleID).Alighted;
+                // move to next trailer
+                currentVehicleID = vehicleManager.m_vehicles.m_buffer[currentVehicleID].m_trailingVehicle;
+                if (++iterationCount > 16384)
+                {
+                    // invalid list yada yada
+                    break;
+                }
+            }
+
+            // finally saving the stuff
+            info.Alighted = unloadCount;
+        }
+
         public static bool RecordForTramExists(ushort vehicleID) => tramPickDropTable?.ContainsKey(vehicleID) ?? false;
 
         public static void Notify_PassengersAlightedFromTram(ushort vehicleID, int alightedCount)
@@ -56,6 +86,11 @@ namespace ExpressBusServices
         public static void Notify_PassengersAlreadyBoardedOntoTram(ushort vehicleID, ref Vehicle data)
         {
             GetInfoForTramByLeader(vehicleID, true).PassengersAfterBoarding = data.m_transferSize;
+        }
+
+        public static void Notify_TramTotallyLoadedPassengers(ushort leaderVehicleID, int loadCount)
+        {
+
         }
 
         public static void DetermineIfTramShouldDepart(ref bool __result, ushort vehicleID, ref Vehicle vehicleData)

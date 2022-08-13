@@ -64,6 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Patch_TramLoadsPassengers.cs" />
     <Compile Include="TramPickDropLookupTable.cs" />
     <Compile Include="BusPickDropLookupTable.cs" />
     <Compile Include="BusStopSkippingLookupTable.cs" />

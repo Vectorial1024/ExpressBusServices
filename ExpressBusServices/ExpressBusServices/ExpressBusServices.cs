@@ -133,6 +133,25 @@ namespace ExpressBusServices
             {
                 toggleObjectCanUseMinibusMode.isChecked = canUseMinibusMode;
             }
+
+            UIHelperBase expressTramGroup = helper.AddGroup("Express Tram Services: Settings");
+            int selectedIndex_ExpressTram = (int)EBSModConfig.CurrentExpressTramMode;
+            var dropdownExpressTramMode = expressTramGroup.AddDropdown("ETS Unbunching Mode",
+                new string[] {
+                    "Disabled",
+                    "Light Rail Mode",
+                    "True Tram Mode" },
+                0,
+                (index) => {
+                    EBSModConfig.CurrentExpressTramMode = (EBSModConfig.ExpressTramMode)index;
+                    Debug.Log($"Express Bus Services: (express tram) received index {index}");
+                    ModSettingController.WriteSettings();
+                });
+            UIDropDown dropdownExpressTramModeObject = dropdownExpressTramMode as UIDropDown;
+            if (dropdownExpressTramModeObject != null)
+            {
+                dropdownExpressTramModeObject.selectedIndex = selectedIndex_ExpressTram;
+            }
         }
     }
 }

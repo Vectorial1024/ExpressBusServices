@@ -13,6 +13,15 @@ namespace ExpressBusServices
         public static readonly string pathToConfigXml = "ExpressBusServices_Config.xml";
         public static readonly string rootNodeName = "ExpressBusServices_Config";
 
+        // we will have to change these to readonly strings for extra safety
+
+        public static readonly string tagName_ExpressBusMode = "ExpressBuses_SelectedIndex";
+        public static readonly string tagName_ExpressBusSelfBalancing = "ExpressBuses_ServiceSelfBalancing";
+        public static readonly string tagName_ExpressBusSelfBal_TargetMid = "ExpressBuses_SSB_CanTargetMid";
+        public static readonly string tagName_ExpressMinibusMode = "ExpressBuses_EnableMinibusMode";
+
+        public static readonly string tagName_ExpressTramMode = "ExpressTrams_SelectedIndex";
+
         public static void Touch()
         {
             // with JSON being so tedious in C# I can understand why everyone opted for XML setting files
@@ -46,29 +55,29 @@ namespace ExpressBusServices
                             {
                                 XmlNode currentConfigNode = root.ChildNodes[j];
 
-                                if (currentConfigNode.Name == "ExpressBuses_SelectedIndex")
+                                if (currentConfigNode.Name == tagName_ExpressBusMode)
                                 {
                                     string tempIndex = currentConfigNode.InnerText;
                                     int selectedIndex = Convert.ToInt32(tempIndex);
                                     expressBusMode = (EBSModConfig.ExpressMode)selectedIndex;
                                     // Debug.Log($"Read {EBSModConfig.CurrentExpressBusMode} from settings file.");
                                 }
-                                if (currentConfigNode.Name == "ExpressBuses_ServiceSelfBalancing")
+                                if (currentConfigNode.Name == tagName_ExpressBusSelfBalancing)
                                 {
                                     string tempValue = currentConfigNode.InnerText;
                                     enableSelfBalancing = Convert.ToBoolean(tempValue);
                                 }
-                                if (currentConfigNode.Name == "ExpressBuses_SSB_CanTargetMid")
+                                if (currentConfigNode.Name == tagName_ExpressBusSelfBal_TargetMid)
                                 {
                                     string tempValue = currentConfigNode.InnerText;
                                     selfBalCanTargetMid = Convert.ToBoolean(tempValue);
                                 }
-                                if (currentConfigNode.Name == "ExpressBuses_EnableMinibusMode")
+                                if (currentConfigNode.Name == tagName_ExpressMinibusMode)
                                 {
                                     string tempValue = currentConfigNode.InnerText;
                                     canUseMinibusMode = Convert.ToBoolean(tempValue);
                                 }
-                                if (currentConfigNode.Name == "ExpressTrams_SelectedIndex")
+                                if (currentConfigNode.Name == tagName_ExpressTramMode)
                                 {
                                     string tempIndex = currentConfigNode.InnerText;
                                     int selectedIndex = Convert.ToInt32(tempIndex);
@@ -113,24 +122,24 @@ namespace ExpressBusServices
                 writer.WriteStartDocument();
                 writer.WriteStartElement(rootNodeName);
 
-                writer.WriteStartElement("ExpressBuses_SelectedIndex");
+                writer.WriteStartElement(tagName_ExpressBusMode);
                 writer.WriteString(((int)expressBusMode).ToString());
                 //Debug.Log($"Write {((int)interpretation).ToString()} to config file.");
                 writer.WriteEndElement();
 
-                writer.WriteStartElement("ExpressBuses_ServiceSelfBalancing");
+                writer.WriteStartElement(tagName_ExpressBusSelfBalancing);
                 writer.WriteString(enableSelfBalancing.ToString());
                 writer.WriteEndElement();
 
-                writer.WriteStartElement("ExpressBuses_SSB_CanTargetMid");
+                writer.WriteStartElement(tagName_ExpressBusSelfBal_TargetMid);
                 writer.WriteString(selfBalCanTargetMid.ToString());
                 writer.WriteEndElement();
 
-                writer.WriteStartElement("ExpressBuses_EnableMinibusMode");
+                writer.WriteStartElement(tagName_ExpressMinibusMode);
                 writer.WriteString(canUseMinibusMode.ToString());
                 writer.WriteEndElement();
 
-                writer.WriteStartElement("ExpressTrams_SelectedIndex");
+                writer.WriteStartElement(tagName_ExpressTramMode);
                 writer.WriteString(((int)expressTramMode).ToString());
                 //Debug.Log($"Write {((int)interpretation).ToString()} to config file.");
                 writer.WriteEndElement();

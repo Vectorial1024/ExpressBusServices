@@ -120,7 +120,7 @@ namespace ExpressBusServices
                 {
                     // brief stop and go
                     // prototype is Hong Kong Tram
-                    VehicleBAInfo info = GetInfoForTramByLeader(vehicleID);
+                    VehicleBAInfo info = GatherInfoForTramWithLeader(vehicleID);
                     bool noAddDrop = info != null && info.Alighted + info.ActualBoarded == 0;
                     if (noAddDrop)
                     {

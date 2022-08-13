@@ -14,5 +14,8 @@ namespace ExpressBusServices
         public ushort PassengersAfterBoarding { get; set; }
 
         public int ActualBoarded => PassengersAfterBoarding - PassengersBeforeBoarding;
+
+        // special variable required for the tram module to work
+        public int TramActualBoarded { get; set; }
     }
 }

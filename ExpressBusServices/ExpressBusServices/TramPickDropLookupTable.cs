@@ -41,22 +41,24 @@ namespace ExpressBusServices
             }
         }
 
-        public static void GatherInfoForTramWithLeader(ushort leaderVehicleID)
+        public static VehicleBAInfo GatherInfoForTramWithLeader(ushort leaderVehicleID)
         {
             // the way the tram works, it reuses some code from the bus ai
             // therefore we need a function to collect the info from all the tram trailers
 
             // clear our record first
-            VehicleBAInfo info = GetInfoForTramByLeader(leaderVehicleID, true);
+            VehicleBAInfo info = new VehicleBAInfo();
 
             // and then gather the stuff
             VehicleManager vehicleManager = Singleton<VehicleManager>.instance;
             ushort currentVehicleID = leaderVehicleID;
             int unloadCount = 0;
+            int loadCount = 0;
             int iterationCount = 0;
             while (currentVehicleID != 0)
             {
                 unloadCount += BusPickDropLookupTable.GetInfoForBus(currentVehicleID).Alighted;
+                loadCount += BusPickDropLookupTable.GetInfoForBus(currentVehicleID).ActualBoarded;
                 // move to next trailer
                 currentVehicleID = vehicleManager.m_vehicles.m_buffer[currentVehicleID].m_trailingVehicle;
                 if (++iterationCount > 16384)
@@ -68,6 +70,10 @@ namespace ExpressBusServices
 
             // finally saving the stuff
             info.Alighted = unloadCount;
+            info.TramActualBoarded = loadCount;
+
+            // 
+            return info;
         }
 
         public static bool RecordForTramExists(ushort vehicleID) => tramPickDropTable?.ContainsKey(vehicleID) ?? false;

@@ -5,11 +5,12 @@ Unlock the peak efficiency of buses:
 2. Buses do not unbunch (except when at first stop of line)
 3. Niche: can choose to allow buses self-adjust their service levels to better meet commuting demand
 4. Niche: can choose to allow minibuses (ie, buses where capacity <= 20) to depart faster when pax boarding+alighting <= 5
+5. Special extension: trams can be configured to not unbunch at non-terminus stops (Light Rail mode and True Tram mode)
 
 # Mod Status
 
 - Compatible with Transport Line Manager (implemented compatibility; TLM can work more completely)
-- Compatible with Improved Public Transport 2 (implemented compatibility; IPT2 would override things otherwise)
+- ~~Compatible with Improved Public Transport 2 (implemented compatibility; IPT2 would override things otherwise)~~
 - Mods available for this mod (yes, mod-ception):
   - Express Bus Services (IPT2 Plug-In) https://github.com/Vectorial1024/ExpressBusServices_IPT2
   - Express Bus Services (TLM Plug-In) https://github.com/Vectorial1024/ExpressBusServices_TLM
@@ -28,6 +29,10 @@ These transportation types are currently covered by this mod:
 
 Note: Intercity buses were previously affected by this mod, which does not make much sense and might have caused some other problems (https://github.com/Vectorial1024/ExpressBusServices/issues/15#issuecomment-1187672211), and so they are now free and are not affected by this mod.
 
+These transportation types are covered by this mod, but contains a different set of settings:
+
+- Trams
+
 These transportation types will NEVER be covered by this mod because it will not make sense:
 
 - Cruisers
@@ -43,15 +48,17 @@ These transpotation types will not be covered by this mod because they will beco
 - Monorails
 - Helicopters
 
-These transportation types are asking very good questions:
-
-- Trams
-
 ## Modes of Stop-Skipping
 
 - Prudential (Legacy): buses etc still stop at stops, but will depart immediately when the stop-skipping criteria is met
 - Aggressive: buses etc will try to predict whether it needs to stop at non-terminus stops, and will literally skip the stop if the prediction passed. Not available for trams.
 - Experimental: a stronger version of Aggressive Mode. WIP.
+
+### Trams-only: Tram Mode
+
+- Disabled: trams behave according to "default behavior" (eg if you have TLM, it uses TLM behavior)
+- Light Rail: trams stop fully at stops, but do not unbunch at non-terminus stops
+- True Tram: equivalent to Prudential mode as described above
 
 ## Extra Stop-Skipping Options: Service Level Self-Balancing
 

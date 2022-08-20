@@ -1,4 +1,4 @@
-Unlock the peak efficiency of buses.
+Unlock the peak efficiency of buses; now also improves trams!
 
 中文名：特快巴士服務
 
@@ -9,9 +9,11 @@ Unlock the peak efficiency of buses.
 [*]Buses will skip stops whenever possible (NEW: can choose between different stop-skipping modes)
 [*]Buses will mostly no longer unbunch
 [*]And some other niche features for buses!
+[*]Logic also extends to trams, but with a twist (please check the gifs)
 [*]巴士終於識得飛站; 其他交通工具(例如: 地鐵)維持現狀 (站站停, 冇飛站)
 [*]除總站外，上落客後，毋須等待，即時開出 (新功能：你可以選擇如何進行飛站，請參考上面gif)
 [*]以及一啲其他細碎、同巴士相關嘅功能
+[*]亦將功能延伸至tram，並有一啲變化 (請參考gif)
 [*]本mod已經有TLM以及IPT2嘅support
 [*]Sister mod for IPT2 available for even better compatibility with IPT2: [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2296003260]Express Bus Services (IPT2 Plugin)[/url]
 [*]IPT2玩家可以考慮同時安裝姊妹mod獲得更好嘅IPT2體驗: [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2296003260]Express Bus Services (IPT2 Plugin)[/url]

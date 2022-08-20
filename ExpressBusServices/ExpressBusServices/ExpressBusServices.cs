@@ -19,7 +19,7 @@ namespace ExpressBusServices
         {
             get
             {
-                return "Unlock the peak efficiency of buses.";
+                return "Unlock the peak efficiency of buses; now also improves trams!";
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ColossalFramework;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -124,8 +125,19 @@ namespace ExpressBusServices
                 // apply the "runaway citizen check" here; it seems previously we have applied the fix at a wrong place.
             }
             // we are now at the point where we want to check whether to fix "runaway citizen".
-            if (__result == false && vehicleData.m_waitCounter > 12 && !ReversePatch_VehicleAI_CanLeave.BaseVehicleAI_CanLeave(null, vehicleID, ref vehicleData))
+            if (__result == false && vehicleData.m_waitCounter > 12)
             {
+                // we should be able to depart... why can't we?
+                if (UnbunchingReckeckIsActuallyCanLeave(vehicleID, ref vehicleData))
+                {
+                    // huh. we should actually be able to depart. the unbunching gave the green light.
+                    __result = true;
+                }
+                if (!ReversePatch_VehicleAI_CanLeave.BaseVehicleAI_CanLeave(null, vehicleID, ref vehicleData))
+                {
+                    // actually, someone still has not yet boarded, so do not depart yet.
+                    __result = false;
+                }
                 // at midway bus stop
                 // We should correct those bugged CIMs.
                 // again, what we do here is simply "request recheck", but not to decide anything.
@@ -142,6 +154,13 @@ namespace ExpressBusServices
                 // can depart, remove redeployment instructions
                 ServiceBalancerUtil.ReadRedeploymentInstructions(vehicleID, out _, removeEntry: true);
             }
+        }
+
+        public static bool UnbunchingReckeckIsActuallyCanLeave(ushort vehicleID, ref Vehicle vehicleData)
+        {
+            // mainly for IPT2; thre is probably some side effect that is caused by how the IPT2 plugin is influencing the work of IPT2 itself
+            // this aims to remedy that.
+            return Singleton<TransportManager>.instance.m_lines.m_buffer[vehicleData.m_transportLine].CanLeaveStop(vehicleData.m_targetBuilding, vehicleData.m_waitCounter >> 4);
         }
     }
 }

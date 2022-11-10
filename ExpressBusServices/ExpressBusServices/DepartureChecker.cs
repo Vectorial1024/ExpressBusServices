@@ -76,5 +76,15 @@ namespace ExpressBusServices
             ItemClass itemClass = vehicleData.Info.m_class;
             return TransportStationAI.IsIntercity(itemClass);
         }
+
+        public static bool RecheckUnbunchingCanLeave(ushort vehicleID, ref Vehicle vehicleData)
+        {
+            // mainly for IPT2; there is probably some side effect that is caused by how the IPT2 plugin is influencing the work of IPT2 itself
+            // this aims to remedy that.
+            // this is also a place to further extend the unbunching checking, so that we can implement the so-called rapid deployment feature.
+            bool canLeave = Singleton<TransportManager>.instance.m_lines.m_buffer[vehicleData.m_transportLine].CanLeaveStop(vehicleData.m_targetBuilding, vehicleData.m_waitCounter >> 4);
+            // todo recalculate with a different waiting time when the budget is not at 100%.
+            return canLeave;
+        }
     }
 }

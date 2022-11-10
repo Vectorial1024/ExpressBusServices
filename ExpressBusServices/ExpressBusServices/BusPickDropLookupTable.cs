@@ -128,7 +128,7 @@ namespace ExpressBusServices
             if (__result == false && vehicleData.m_waitCounter > 12)
             {
                 // we should be able to depart... why can't we?
-                if (UnbunchingReckeckIsActuallyCanLeave(vehicleID, ref vehicleData))
+                if (DepartureChecker.RecheckUnbunchingCanLeave(vehicleID, ref vehicleData))
                 {
                     // huh. we should actually be able to depart. the unbunching gave the green light.
                     __result = true;
@@ -154,13 +154,6 @@ namespace ExpressBusServices
                 // can depart, remove redeployment instructions
                 ServiceBalancerUtil.ReadRedeploymentInstructions(vehicleID, out _, removeEntry: true);
             }
-        }
-
-        public static bool UnbunchingReckeckIsActuallyCanLeave(ushort vehicleID, ref Vehicle vehicleData)
-        {
-            // mainly for IPT2; thre is probably some side effect that is caused by how the IPT2 plugin is influencing the work of IPT2 itself
-            // this aims to remedy that.
-            return Singleton<TransportManager>.instance.m_lines.m_buffer[vehicleData.m_transportLine].CanLeaveStop(vehicleData.m_targetBuilding, vehicleData.m_waitCounter >> 4);
         }
     }
 }

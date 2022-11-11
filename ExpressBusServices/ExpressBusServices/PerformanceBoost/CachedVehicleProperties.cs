@@ -46,7 +46,9 @@ namespace ExpressBusServices.PerformanceBoost
         public static void SetToCache(ushort vehicleId, CachedVehicleProperties cachedData)
         {
             // how long?
-            cachedData.ExpirySimTick = Singleton<SimulationManager>.instance.m_currentTickIndex + 400;
+            // I found some data suggesting 60 ticks = 1 second by definition
+            // so 300 -> 5 seconds, sounds reasonable; this will be enough to cover a bit of the unbunching
+            cachedData.ExpirySimTick = Singleton<SimulationManager>.instance.m_currentTickIndex + 300;
             cachedProps[vehicleId] = cachedData;
         }
 

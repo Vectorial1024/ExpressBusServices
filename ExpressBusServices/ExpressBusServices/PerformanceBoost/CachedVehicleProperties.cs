@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ColossalFramework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,8 @@ namespace ExpressBusServices.PerformanceBoost
     {
         // cached stuff of a vehicle that does not survive a save-load.
         public int TrainCapacity { get; internal set; }
+
+        private uint ExpirySimTick { get; set; }
 
         private static Dictionary<ushort, CachedVehicleProperties> cachedProps = new Dictionary<ushort, CachedVehicleProperties>();
 
@@ -24,11 +27,26 @@ namespace ExpressBusServices.PerformanceBoost
         public static CachedVehicleProperties GetFromCache(ushort vehicleId)
         {
             // does not nsure exists
-            return cachedProps[vehicleId] ?? null;
+            CachedVehicleProperties props = cachedProps[vehicleId] ?? null;
+            if (props == null)
+            {
+                return null;
+            }
+            // is it expired?
+            if (props.ExpirySimTick > Singleton<SimulationManager>.instance.m_currentTickIndex)
+            {
+                // expired; forget it
+                UnsetCache(vehicleId);
+                return null;
+            }
+            // not expired yet
+            return props;
         }
 
         public static void SetToCache(ushort vehicleId, CachedVehicleProperties cachedData)
         {
+            // how long?
+            cachedData.ExpirySimTick = Singleton<SimulationManager>.instance.m_currentTickIndex + 400;
             cachedProps[vehicleId] = cachedData;
         }
 

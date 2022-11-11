@@ -96,6 +96,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReversePatch_VehicleAI_CanLeave.cs" />
     <Compile Include="VehicleBAInfo.cs" />
+    <Compile Include="VehicleUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

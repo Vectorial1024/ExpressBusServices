@@ -97,7 +97,7 @@ namespace ExpressBusServices
              * 
              * This entire system has a nice property that no save-file access is needed.
              */
-            bool vehicleIsMinibus = vehicleData.m_transferSize <= 20;
+            bool vehicleIsMinibus = VehicleUtil.GetMaxCarryingCapacityOfTrain(vehicleID, ref vehicleData) <= 20;
             if (DepartureChecker.NowIsEligibleForInstantDeparture(vehicleID, ref vehicleData))
             {
                 // midway bus stop; implement logic here

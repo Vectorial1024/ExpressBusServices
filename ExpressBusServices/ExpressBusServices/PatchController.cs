@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using ExpressBusServices.PerformanceBoost;
+using HarmonyLib;
 using System.Reflection;
 
 namespace ExpressBusServices
@@ -38,6 +39,8 @@ namespace ExpressBusServices
             ServiceBalancerUtil.EnsureTableExists();
 
             TramPickDropLookupTable.EnsureTableExists();
+
+            CachedVehicleProperties.TouchAndResetCache();
         }
 
         public static void Deactivate()
@@ -49,6 +52,8 @@ namespace ExpressBusServices
             ServiceBalancerUtil.ResetRedeploymentRecords();
 
             TramPickDropLookupTable.WipeTable();
+
+            CachedVehicleProperties.TouchAndResetCache();
         }
     }
 }

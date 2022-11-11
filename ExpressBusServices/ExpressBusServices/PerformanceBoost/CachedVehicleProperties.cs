@@ -26,12 +26,12 @@ namespace ExpressBusServices.PerformanceBoost
 
         public static CachedVehicleProperties GetFromCache(ushort vehicleId)
         {
-            // does not nsure exists
-            CachedVehicleProperties props = cachedProps[vehicleId] ?? null;
-            if (props == null)
+            // does not ensure exists
+            if (!cachedProps.ContainsKey(vehicleId))
             {
                 return null;
             }
+            CachedVehicleProperties props = cachedProps[vehicleId];
             // is it expired?
             if (props.ExpirySimTick > Singleton<SimulationManager>.instance.m_currentTickIndex)
             {

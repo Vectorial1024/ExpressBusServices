@@ -9,7 +9,7 @@ namespace ExpressBusServices.PerformanceBoost
     public class CachedVehicleProperties
     {
         // cached stuff of a vehicle that does not survive a save-load.
-        public int TrainCapacity { get; internal set; }
+        public int? TrainCapacity { get; internal set; }
 
         private uint ExpirySimTick { get; set; }
 

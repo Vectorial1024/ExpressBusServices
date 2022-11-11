@@ -1,4 +1,5 @@
 ﻿using ColossalFramework;
+using ExpressBusServices.PerformanceBoost;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,16 @@ namespace ExpressBusServices
     {
         public static int GetMaxCarryingCapacityOfTrain(ushort vehicleID, ref Vehicle data)
         {
+            // try to get from cache
+            CachedVehicleProperties props = CachedVehicleProperties.GetFromCache(vehicleID); 
+            if (props != null)
+            {
+                if (props.TrainCapacity.HasValue)
+                {
+                    return props.TrainCapacity.Value;
+                }
+            }
+
             VehicleManager instance = Singleton<VehicleManager>.instance;
             // look self
             int totalCapacity = GetCarryingCapacityOfThisVehicle(vehicleID, ref data);
@@ -45,6 +56,18 @@ namespace ExpressBusServices
                 }
             }
             // summation complete
+            // also save to the cache
+            if (props == null)
+            {
+                props = new CachedVehicleProperties
+                {
+                    TrainCapacity = totalCapacity
+                };
+            } else
+            {
+                props.TrainCapacity = totalCapacity;
+            }
+            CachedVehicleProperties.SetToCache(vehicleID, props);
             return totalCapacity;
         }
 

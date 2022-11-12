@@ -113,7 +113,7 @@ namespace ExpressBusServices
                     }
                 }
                 num = nextUnit;
-                if (++num2 > 524288)
+                if (++num2 > instance.m_units.m_size)
                 {
                     // "invalid list detected yada yada"
                     break;

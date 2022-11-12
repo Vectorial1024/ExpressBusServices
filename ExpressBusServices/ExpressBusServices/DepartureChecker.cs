@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ColossalFramework;
+using Epic.OnlineServices.Presence;
+using ExpressBusServices.DataTypes;
+using UnityEngine;
+using static RenderManager;
 
 namespace ExpressBusServices
 {
@@ -84,7 +88,114 @@ namespace ExpressBusServices
             // this is also a place to further extend the unbunching checking, so that we can implement the so-called rapid deployment feature.
             bool canLeave = Singleton<TransportManager>.instance.m_lines.m_buffer[vehicleData.m_transportLine].CanLeaveStop(vehicleData.m_targetBuilding, vehicleData.m_waitCounter >> 4);
             // todo recalculate with a different waiting time when the budget is not at 100%.
+            if (VehicleLineProgressNeedToCatchUp(vehicleID, ref vehicleData))
+            {
+                return true;
+            }
             return canLeave;
+        }
+
+        private static bool VehicleLineProgressNeedToCatchUp(ushort vehicleID, ref Vehicle vehicleData)
+        {
+            ushort transportLine = vehicleData.m_transportLine;
+            if (transportLine == 0)
+            {
+                return false;
+            }
+
+            /*
+             * Objectievs:
+             * 1. Locate the vehicle in the line
+             * 2. Locate the previous vehicle in the line (thus calculating the progress)
+             * 3. Count number of vehicles in the line
+             */
+            TransportLine theLine = Singleton<TransportManager>.instance.m_lines.m_buffer[transportLine];
+            VehicleManager instance = Singleton<VehicleManager>.instance;
+            ushort vehicleIterator = theLine.m_vehicles;
+            List<VehicleLineProgress> progressList = new List<VehicleLineProgress>();
+            // StringBuilder builder = new StringBuilder("Vehicle IDs:\n");
+            float current, max;
+            while (vehicleIterator != 0)
+            {
+                VehicleInfo info = Singleton<VehicleManager>.instance.m_vehicles.m_buffer[vehicleIterator].Info;
+                info.m_vehicleAI.GetProgressStatus(vehicleIterator, ref Singleton<VehicleManager>.instance.m_vehicles.m_buffer[vehicleIterator], out current, out max);
+                // the bool return is simply to indicate whether the bus is stopping at a stop.
+                // for us, this is still useful.
+                if (max != 0)
+                {
+                    // a valid bus; invalid bus (eg is despawning) will get max = 0
+                    VehicleLineProgress progress = new VehicleLineProgress(vehicleIterator, current / max);
+                    progressList.Add(progress);
+                    // builder.AppendLine(vehicleIterator.ToString());
+                }
+                vehicleIterator = instance.m_vehicles.m_buffer[vehicleIterator].m_nextLineVehicle;
+            }
+            // all vehicles found
+            if (progressList.Count == 1)
+            {
+                // invalid operation; no need to unbunch, just go
+                return true;
+            }
+
+            // sort the list for in-order progress checking
+            progressList.Sort(delegate(VehicleLineProgress left, VehicleLineProgress right)
+            {
+                // sort by the percentage progress
+                return left.percentProgress.CompareTo(right.percentProgress);
+            });
+
+            // print the list for reference
+            /*
+            StringBuilder builder2 = new StringBuilder("Progresses:\n");
+            foreach (VehicleLineProgress prog in progressList)
+            {
+                builder2.AppendLine(prog.percentProgress.ToString());
+            }
+            Debug.Log(builder2.ToString());
+            */
+
+            // find this vehicle and its "previous" vehicle
+            int indexOfThis = 0;
+            int indexOfNext = 0;
+            for (int i = 0; i < progressList.Count; i++)
+            {
+                if (progressList[i].vehicleID == vehicleID)
+                {
+                    indexOfThis = i;
+                    indexOfNext = i + 1;
+                    break;
+                }
+            }
+            // must exists
+            if (indexOfNext >= progressList.Count)
+            {
+                // wrap around
+                indexOfNext = 0;
+            }
+
+            // calculate expected distance
+            // this can potentially be exposed as a config for unbunch strength
+            float unbunchingBuffer = 0.2f;
+            float idealDistance = (1 + unbunchingBuffer) / progressList.Count;
+
+            // check expected distance
+            float distanceToNext = progressList[indexOfNext].percentProgress - progressList[indexOfThis].percentProgress;
+            if (distanceToNext < 0)
+            {
+                // wrap around
+                distanceToNext += 1;
+            }
+
+            // decide: is the distance too large?
+            /*
+            String message = "Distance compare " + distanceToNext + " " + idealDistance;
+            if (distanceToNext > idealDistance)
+            {
+                message += " GO";
+            }
+            Debug.Log(message);
+            */
+            return distanceToNext > idealDistance;
         }
     }
 }

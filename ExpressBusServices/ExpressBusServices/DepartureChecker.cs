@@ -112,7 +112,7 @@ namespace ExpressBusServices
             List<VehicleLineProgress> progressList = VehicleLineProgress.GetProgressList(transportLine);
             if (progressList.Count < 2)
             {
-                // invalid operation: too few buses, no need to unbunch
+                // invalid operation: too few buses, no need to unbunch, just catch up is ok
                 return true;
             }
 

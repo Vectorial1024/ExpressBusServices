@@ -98,6 +98,7 @@ namespace ExpressBusServices
              * This entire system has a nice property that no save-file access is needed.
              */
             bool vehicleIsMinibus = VehicleUtil.GetMaxCarryingCapacityOfTrain(vehicleID, ref vehicleData) <= 20;
+            bool unbunchingShouldStayLonger = false;
             if (DepartureChecker.NowIsEligibleForInstantDeparture(vehicleID, ref vehicleData))
             {
                 // midway bus stop; implement logic here
@@ -124,6 +125,16 @@ namespace ExpressBusServices
                 }
                 // apply the "runaway citizen check" here; it seems previously we have applied the fix at a wrong place.
             }
+            else
+            {
+                // would our unbunching suggest waiting longer?
+                unbunchingShouldStayLonger = DepartureChecker.RecheckUnbunchingShouldStay(vehicleID, ref vehicleData);
+                if (unbunchingShouldStayLonger)
+                {
+                    // actually, we decide to wait further.
+                    __result = false;
+                }
+            }
             // we are now at the point where we want to check whether to fix "runaway citizen".
             if (__result == false && vehicleData.m_waitCounter > 12)
             {
@@ -131,7 +142,7 @@ namespace ExpressBusServices
                 if (DepartureChecker.RecheckUnbunchingCanLeave(vehicleID, ref vehicleData))
                 {
                     // huh. we should actually be able to depart. the unbunching gave the green light.
-                    __result = true;
+                    __result = true && !unbunchingShouldStayLonger;
                 }
                 if (!ReversePatch_VehicleAI_CanLeave.BaseVehicleAI_CanLeave(null, vehicleID, ref vehicleData))
                 {

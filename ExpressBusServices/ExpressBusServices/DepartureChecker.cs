@@ -95,6 +95,16 @@ namespace ExpressBusServices
             return canLeave;
         }
 
+        public static bool RecheckUnbunchingShouldStay(ushort vehicleID, ref Vehicle vehicleData)
+        {
+            if (vehicleData.m_waitCounter >= 250)
+            {
+                // technical limit: we must leave them go, otherwise they flip over and appear as if they have just arrived
+                return false;
+            }
+            return VehicleLineProgressNeedToChill(vehicleID, ref vehicleData);
+        }
+
         private static bool VehicleLineProgressNeedToCatchUp(ushort vehicleID, ref Vehicle vehicleData)
         {
             ushort transportLine = vehicleData.m_transportLine;
@@ -168,6 +178,102 @@ namespace ExpressBusServices
             Debug.Log(message);
             */
             return distanceToNext > idealDistance;
+        }
+
+        private static bool VehicleLineProgressNeedToChill(ushort vehicleID, ref Vehicle vehicleData)
+        {
+            ushort transportLine = vehicleData.m_transportLine;
+            if (transportLine == 0)
+            {
+                return false;
+            }
+
+            /*
+             * Objectievs:
+             * 1. Locate the vehicle in the line
+             * 2. Locate the previous vehicle in the line (thus calculating the progress)
+             * 3. Count number of vehicles in the line
+             */
+            List<VehicleLineProgress> progressList = VehicleLineProgress.GetProgressList(transportLine);
+            if (progressList.Count < 2)
+            {
+                // invalid operation: too few buses, no need to chill, just catch up is ok
+                return false;
+            }
+
+            // print the list for reference
+            /*
+            StringBuilder builder2 = new StringBuilder("Progresses:\n");
+            foreach (VehicleLineProgress prog in progressList)
+            {
+                builder2.AppendLine(prog.percentProgress.ToString());
+            }
+            Debug.Log(builder2.ToString());
+            */
+
+            // find this vehicle and its "previous" vehicle
+            int indexOfThis = 0;
+            int indexOfNext = 0;
+            for (int i = 0; i < progressList.Count; i++)
+            {
+                if (progressList[i].vehicleID == vehicleID)
+                {
+                    indexOfThis = i;
+                    indexOfNext = i + 1;
+                    break;
+                }
+            }
+            // must exists
+            if (indexOfNext >= progressList.Count)
+            {
+                // wrap around
+                indexOfNext = 0;
+            }
+
+            // calculate expected distance
+            // this can potentially be exposed as a config for unbunch strength
+            /*
+             * note: because we are dealing with minimum unbunching distance, we CANNOT set any hard limits
+             * the reason is obvious: what if there is a traffic jam? if we set a hard minimum limit, then we are simply back to vanilla unbunching
+             * and that is not ok
+             * instead, make use of vanilla's idea to use waiting time, and extend upon it:
+             * if the buses are too close, let the latter bus wait longer, but not wait infinitely.
+             */
+            float unbunchingThreshold = 0.2f;
+            // the way the distance is calculated is similar to the above "catchup" function
+            float checkingDistance = (1 - unbunchingThreshold) / progressList.Count;
+
+            // check expected distance
+            float distanceToNext = progressList[indexOfNext].percentProgress - progressList[indexOfThis].percentProgress;
+            if (distanceToNext < 0)
+            {
+                // wrap around
+                distanceToNext += 1;
+            }
+
+            if (distanceToNext > checkingDistance)
+            {
+                // has met the threshold. the game can decide whether can unbunch (based on waiting time)
+                return false;
+            }
+
+            // distance is below threshold
+            // we apply a hyperbolic curve to guard the waiting time.
+            float standardWaitingTime = 64;
+            float curveProgressPercent = distanceToNext / checkingDistance;
+            float curveIncrementRate = 4f;
+            float curveFactor = curveIncrementRate * 2;
+            float designatedWaitingTime = (curveFactor / curveProgressPercent - (curveFactor - 1)) * standardWaitingTime;
+
+            // decide: is the waiting time too small?
+            String message = "Waiting time compare " + vehicleData.m_waitCounter + " " + designatedWaitingTime;
+            if (vehicleData.m_waitCounter < designatedWaitingTime)
+            {
+                message += " CHILL";
+            }
+            // Debug.Log(message);
+
+            return vehicleData.m_waitCounter < designatedWaitingTime;
         }
     }
 }

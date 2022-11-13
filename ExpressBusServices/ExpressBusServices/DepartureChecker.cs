@@ -230,6 +230,42 @@ namespace ExpressBusServices
                 indexOfNext = 0;
             }
 
+            // check if it is overcrowded: if overcrowded, then use the vanilla method of unbunching
+            // we check those within 2 progress percent, whether there are more than 3 buses waiting (including self)
+            if (progressList.Count > 3)
+            {
+                float overcrowdProgressDistance = 0.02f;
+                int indexOfQueueing = indexOfThis;
+                int crowdedCount = 0;
+                VehicleLineProgress selfProgress = progressList[indexOfThis];
+                while (true)
+                {
+                    VehicleLineProgress queueing = progressList[indexOfQueueing];
+                    float progressDistance = selfProgress.percentProgress - queueing.percentProgress;
+                    if (progressDistance < 0)
+                    {
+                        progressDistance += 1;
+                    }
+                    if (progressDistance > overcrowdProgressDistance)
+                    {
+                        // went out of range, and there aren't enough buses
+                        break;
+                    }
+                    crowdedCount++;
+                    if (crowdedCount > 3)
+                    {
+                        // too many buses near here; don't wait!
+                        return false;
+                    }
+                    // check next
+                    if (indexOfQueueing == 0)
+                    {
+                        indexOfQueueing = progressList.Count;
+                    }
+                    indexOfQueueing--;
+                }
+            }
+
             // calculate expected distance
             // this can potentially be exposed as a config for unbunch strength
             /*

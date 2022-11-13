@@ -261,7 +261,7 @@ namespace ExpressBusServices
             // we apply a hyperbolic curve to guard the waiting time.
             float standardWaitingTime = 64;
             float curveProgressPercent = distanceToNext / checkingDistance;
-            float curveIncrementRate = 4f;
+            float curveIncrementRate = 2f;
             float curveFactor = curveIncrementRate * 2;
             float designatedWaitingTime = (curveFactor / curveProgressPercent - (curveFactor - 1)) * standardWaitingTime;
 

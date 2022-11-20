@@ -9,6 +9,11 @@ namespace ExpressBusServices
         [HarmonyPrefix]
         public static void CheckRedeployment(ushort vehicleID, ref Vehicle data, ref bool forceUnload)
         {
+            if (DepartureChecker.VehicleIsTram(data))
+            {
+                // trams are not eligible for redeployment.
+                return;
+            }
             ushort redeploymentTarget;
             ushort transportLineId = data.m_transportLine;
             // not yet target the next stop

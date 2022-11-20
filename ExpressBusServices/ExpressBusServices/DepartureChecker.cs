@@ -81,6 +81,12 @@ namespace ExpressBusServices
             return TransportStationAI.IsIntercity(itemClass);
         }
 
+        public static bool VehicleIsTram(Vehicle vehicleData)
+        {
+            ItemClass itemClass = vehicleData.Info.m_class;
+            return itemClass.m_service == ItemClass.Service.PublicTransport && itemClass.m_subService == ItemClass.SubService.PublicTransportTram;
+        }
+
         public static bool RecheckUnbunchingCanLeave(ushort vehicleID, ref Vehicle vehicleData)
         {
             // mainly for IPT2; there is probably some side effect that is caused by how the IPT2 plugin is influencing the work of IPT2 itself

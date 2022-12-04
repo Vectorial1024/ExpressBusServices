@@ -183,7 +183,51 @@ namespace ExpressBusServices
             }
             Debug.Log(message);
             */
-            return distanceToNext > idealDistance;
+            if (distanceToNext > idealDistance)
+            {
+                return true;
+            }
+
+            // second layer:
+            // the shouldChill has released control when number of waiting vehicles exceed 3
+            // when there are more than enough vehicles waiting at the stop, reduce the waiting time and check again.
+            if (progressList.Count < 3)
+            {
+                return false;
+            }
+            float selfPercentProgress = progressList[indexOfThis].percentProgress;
+            float percentageDistance = 0.1f;
+            int waitingVehicles = 0;
+            int loopingIndex = indexOfThis;
+            while (true)
+            {
+                if (loopingIndex == 0)
+                {
+                    loopingIndex = progressList.Count;
+                }
+                loopingIndex--;
+                VehicleLineProgress currentProgress = progressList[loopingIndex];
+                if (currentProgress.vehicleID == vehicleID)
+                {
+                    // we somehow reached ourselves!
+                    break;
+                }
+                float percentProgress = progressList[loopingIndex].percentProgress;
+                float currentPercentDistance = selfPercentProgress - percentProgress;
+                if (currentPercentDistance < 0)
+                {
+                    currentPercentDistance += 1;
+                }
+                if (currentPercentDistance >= percentageDistance)
+                {
+                    // out of range
+                    break;
+                }
+                waitingVehicles++;
+            }
+            // for each extra vehicle after the 3rd one, decrease uniformly such that the minimum amount of time waiting is at 24 (2x boarding time)
+            int fasterWaitingTime = Mathf.Max(64 - (Mathf.Max(waitingVehicles - 3, 0)) * 5, 24);
+            return vehicleData.m_waitCounter > fasterWaitingTime;
         }
 
         private static bool VehicleLineProgressNeedToChill(ushort vehicleID, ref Vehicle vehicleData)

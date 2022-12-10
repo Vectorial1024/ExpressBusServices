@@ -40,6 +40,8 @@ namespace ExpressBusServices
 
             TramPickDropLookupTable.EnsureTableExists();
 
+            BusDepotRedeploymentInstructions.EnsureTableExists();
+
             CachedVehicleProperties.TouchAndResetCache();
         }
 
@@ -52,6 +54,8 @@ namespace ExpressBusServices
             ServiceBalancerUtil.ResetRedeploymentRecords();
 
             TramPickDropLookupTable.WipeTable();
+
+            BusDepotRedeploymentInstructions.WipeTable();
 
             CachedVehicleProperties.TouchAndResetCache();
         }

@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="1000"
+   height="600"
+   viewBox="0 0 264.58333 158.75"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
+   sodipodi:docname="ImprovedUnbunching.svg"
+   inkscape:export-filename="C:\Users\vince\Documents\GitHub\ExpressBusServices\Images\ImprovedUnbunching.png"
+   inkscape:export-xdpi="115.2"
+   inkscape:export-ydpi="115.2"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="1"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="px"
+     showgrid="false"
+     units="px"
+     inkscape:zoom="1.0053654"
+     inkscape:cx="512.7489"
+     inkscape:cy="370.51205"
+     inkscape:window-width="1920"
+     inkscape:window-height="991"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer2" />
+  <defs
+     id="defs2">
+    <marker
+       style="overflow:visible;"
+       id="marker25018"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.6) rotate(180) translate(0,0)"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         style="stroke:context-stroke;fill-rule:evenodd;fill:context-stroke;stroke-width:0.62500000;stroke-linejoin:round;"
+         id="path25016" />
+    </marker>
+    <marker
+       style="overflow:visible;"
+       id="marker25008"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.6) rotate(180) translate(0,0)"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         style="stroke:context-stroke;fill-rule:evenodd;fill:context-stroke;stroke-width:0.62500000;stroke-linejoin:round;"
+         id="path24774" />
+    </marker>
+    <marker
+       style="overflow:visible;"
+       id="Arrow1Mend"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4) rotate(180) translate(10,0)"
+         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt;"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path33180" />
+    </marker>
+    <marker
+       style="overflow:visible;"
+       id="marker74498"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.6) rotate(180) translate(0,0)"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         style="stroke:context-stroke;fill-rule:evenodd;fill:context-stroke;stroke-width:0.62500000;stroke-linejoin:round;"
+         id="path74496" />
+    </marker>
+    <marker
+       style="overflow:visible;"
+       id="Arrow2Mend"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.6) rotate(180) translate(0,0)"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         style="stroke:context-stroke;fill-rule:evenodd;fill:context-stroke;stroke-width:0.62500000;stroke-linejoin:round;"
+         id="path33198" />
+    </marker>
+    <marker
+       style="overflow:visible;"
+       id="marker74480"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(1.1) rotate(180) translate(1,0)"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         style="stroke:context-stroke;fill-rule:evenodd;fill:context-stroke;stroke-width:0.62500000;stroke-linejoin:round;"
+         id="path74478" />
+    </marker>
+    <marker
+       style="overflow:visible;"
+       id="Arrow2Lend"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(1.1) rotate(180) translate(1,0)"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         style="stroke:context-stroke;fill-rule:evenodd;fill:context-stroke;stroke-width:0.62500000;stroke-linejoin:round;"
+         id="path33192" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Lend-3"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path33192-0" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker25008-2"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path24774-2" />
+    </marker>
+  </defs>
+  <g
+     inkscape:label="Text"
+     inkscape:groupmode="layer"
+     id="layer1"
+     sodipodi:insensitive="true">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:10.8852px;line-height:1.25;font-family:Play;-inkscape-font-specification:'Play, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;stroke-width:0.27213"
+       x="132.87219"
+       y="18.079006"
+       id="text1998"><tspan
+         sodipodi:role="line"
+         id="tspan1996"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:10.8852px;font-family:Play;-inkscape-font-specification:'Play, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.27213"
+         x="132.87219"
+         y="18.079006">Improved Unbunching: Recommended Distance</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.11732px;line-height:1.25;font-family:Play;-inkscape-font-specification:'Play, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;stroke-width:0.177933"
+       x="132.97714"
+       y="28.37994"
+       id="text6720"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.11732px;font-family:Play;-inkscape-font-specification:'Play, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.177933"
+         x="132.97714"
+         y="28.37994"
+         id="tspan3960">When unbunching at termini, buses now maintain a reasonable distance:</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.11732px;font-family:Play;-inkscape-font-specification:'Play, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.177933"
+         x="132.97714"
+         y="37.276588"
+         id="tspan6904">not too close, not too far.</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.11732px;font-family:Play;-inkscape-font-specification:'Play, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.177933"
+         x="132.97714"
+         y="46.173241"
+         id="tspan8616">Such distance depends on the vehicle count in the line.</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.5833px;line-height:1.25;font-family:sans-serif;text-align:center;text-anchor:middle;stroke-width:0.264583"
+       x="132.49623"
+       y="62.311501"
+       id="text35938"><tspan
+         sodipodi:role="line"
+         id="tspan35936"
+         style="stroke-width:0.264583"
+         x="132.49623"
+         y="62.311501">班次自我調節：建議距離</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:7.33056px;line-height:1.25;font-family:sans-serif;text-align:center;text-anchor:middle;stroke-width:0.183264"
+       x="135.28317"
+       y="73.990807"
+       id="text35938-7"><tspan
+         sodipodi:role="line"
+         id="tspan35936-5"
+         style="stroke-width:0.183264"
+         x="135.28317"
+         y="73.990807">當巴士於總站等候開車時，將會維持合理間距：</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.183264"
+         x="135.28317"
+         y="83.700134"
+         id="tspan10790">不會太近，亦不會太遠。</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.183264"
+         x="135.28317"
+         y="93.409454"
+         id="tspan40489">開車間距係基於路線派車數量而決定。</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Lines">
+    <g
+       id="g25175"
+       transform="translate(0,-6.3161115)">
+      <path
+         style="fill:none;stroke:#000000;stroke-width:1.05833;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker25008)"
+         d="M 54.213291,112.90049 H 246.32835"
+         id="path24643" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:1.05833;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 65.266485,109.41348 v 6.84245"
+         id="path25059" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:1.05833;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 162.82596,109.43411 v 6.84245"
+         id="path25059-4" />
+    </g>
+    <g
+       id="g25175-6"
+       transform="translate(0,15.527103)">
+      <path
+         style="fill:none;stroke:#000000;stroke-width:1.05833;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker25008-2)"
+         d="M 54.213291,112.90049 H 246.32835"
+         id="path24643-7" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:1.05833;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 65.266485,109.41348 v 6.84245"
+         id="path25059-0" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:1.05833;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 162.82596,109.43411 v 6.84245"
+         id="path25059-4-6" />
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:10.5833px;line-height:1.25;font-family:'Cascadia Code';text-align:center;text-anchor:middle;stroke-width:0.264583;-inkscape-font-specification:'Cascadia Code, Normal';font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+       x="27.896158"
+       y="114.08477"
+       id="text26784"><tspan
+         sodipodi:role="line"
+         id="tspan26782"
+         style="stroke-width:0.264583;-inkscape-font-specification:'Cascadia Code, Normal';font-family:'Cascadia Code';font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;font-size:10.58329996px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+         x="27.896158"
+         y="114.08477">WAIT...</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.5833px;line-height:1.25;font-family:'Cascadia Code';text-align:center;text-anchor:middle;stroke-width:0.264583;stroke-miterlimit:4;stroke-dasharray:none;-inkscape-font-specification:'Cascadia Code, Normal';font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+       x="26.185545"
+       y="135.00688"
+       id="text28438"><tspan
+         sodipodi:role="line"
+         id="tspan28436"
+         style="stroke-width:0.26458333;stroke-miterlimit:4;stroke-dasharray:none;-inkscape-font-specification:'Cascadia Code, Normal';font-family:'Cascadia Code';font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;font-size:10.58329996px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+         x="26.185545"
+         y="135.00688">GO!</tspan></text>
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542"
+       cx="74.600517"
+       cy="113.92401"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-8"
+       cx="77.948883"
+       cy="113.9912"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-5"
+       cx="88.165154"
+       cy="113.99122"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-5-1"
+       cx="104.02443"
+       cy="113.74118"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-5-1-7"
+       cx="114.0733"
+       cy="114.02032"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-5-1-7-1"
+       cx="133.4267"
+       cy="114.08427"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-5-1-7-1-7-1"
+       cx="185.14102"
+       cy="114.21635"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-5-1-7-1-7-1-4"
+       cx="188.95702"
+       cy="114.34794"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-5-1-7-1-7-1-4-4"
+       cx="203.56302"
+       cy="114.34794"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-5-1-7-1-7-1-4-4-0"
+       cx="215.40572"
+       cy="114.47952"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-5-1-7-1-7-1-4-4-0-7"
+       cx="238.95955"
+       cy="114.61111"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-5-1-7-1-7-1-4-4-0-7-0"
+       cx="159.87657"
+       cy="114.34793"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-5-1-7-1-7"
+       cx="162.77145"
+       cy="114.34794"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-5-1-7-1-7-1-4-4-0-7-8-0"
+       cx="59.476715"
+       cy="113.69001"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-5-1-7-1-7-1-4-4-0-7-8"
+       cx="62.240013"
+       cy="113.69001"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-5-4"
+       cx="65.410713"
+       cy="113.71207"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-89"
+       cx="87.353378"
+       cy="136.49094"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-8-3"
+       cx="99.155144"
+       cy="136.55814"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-5-19"
+       cx="119.37193"
+       cy="136.55815"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-5-1-9"
+       cx="137.71034"
+       cy="136.57127"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-5-1-7-19"
+       cx="154.73328"
+       cy="136.58725"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-5-1-7-1-8"
+       cx="162.63873"
+       cy="136.6512"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-5-1-7-1-7-1-41"
+       cx="198.168"
+       cy="136.78328"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-5-1-7-1-7-1-4-6"
+       cx="208.43169"
+       cy="136.91487"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-5-1-7-1-7-1-4-4-8"
+       cx="212.11609"
+       cy="136.91487"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-5-1-7-1-7-1-4-4-0-5"
+       cx="230.53807"
+       cy="137.04645"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-5-1-7-1-7-1-4-4-0-7-1"
+       cx="242.51236"
+       cy="137.17804"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-5-1-7-1-7-1-4-4-0-7-0-9"
+       cx="180.14076"
+       cy="136.91486"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-5-1-7-1-7-3"
+       cx="188.16748"
+       cy="136.91487"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-5-1-7-1-7-1-4-4-0-7-8-0-3"
+       cx="59.081959"
+       cy="136.25694"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-5-1-7-1-7-1-4-4-0-7-8-06"
+       cx="61.845257"
+       cy="136.25694"
+       r="2.6150913" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path28542-5-4-0"
+       cx="65.015961"
+       cy="136.27899"
+       r="2.6150913" />
+    <rect
+       style="fill:#ffffff;fill-opacity:0;stroke:#000000;stroke-width:1.05833333;stroke-miterlimit:4;stroke-dasharray:1.05833333,2.11666665;stroke-dashoffset:0"
+       id="rect29132"
+       width="17.198994"
+       height="15.554165"
+       x="65.220062"
+       y="103.05094" />
+    <rect
+       style="fill:#ffffff;fill-opacity:0;stroke:#000000;stroke-width:1.05833;stroke-miterlimit:4;stroke-dasharray:1.05833, 2.11667;stroke-dashoffset:0"
+       id="rect29132-2"
+       width="17.198994"
+       height="15.554165"
+       x="65.266487"
+       y="124.94058" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.11331px;line-height:1.25;font-family:Play;-inkscape-font-specification:'Play, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;text-anchor:start;stroke-width:0.127833"
+       x="5.0379486"
+       y="148.49251"
+       id="text31467"><tspan
+         sodipodi:role="line"
+         id="tspan31465"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.11331px;font-family:Play;-inkscape-font-specification:'Play, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;text-anchor:start;stroke-width:0.127833"
+         x="5.0379486"
+         y="148.49251">Note: if buses are accumulating at the terminus,</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.11331px;font-family:Play;-inkscape-font-specification:'Play, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;text-anchor:start;stroke-width:0.127833"
+         x="5.0379486"
+         y="154.88414"
+         id="tspan34995">then the unbunching distance is further reduced.</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.11331px;line-height:1.25;font-family:Play;-inkscape-font-specification:'Play, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:end;text-anchor:end;stroke-width:0.127833"
+       x="260.38873"
+       y="148.07515"
+       id="text31467-5"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.11331px;font-family:Play;-inkscape-font-specification:'Play, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:end;text-anchor:end;stroke-width:0.127833"
+         x="260.38873"
+         y="148.07515"
+         id="tspan34995-4">備註：如果總站開始積壓大量巴士，</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.11331px;font-family:Play;-inkscape-font-specification:'Play, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:end;text-anchor:end;stroke-width:0.127833"
+         x="260.38873"
+         y="154.72"
+         id="tspan37507">則開車間距將會被另外降低。</tspan></text>
+  </g>
+</svg>

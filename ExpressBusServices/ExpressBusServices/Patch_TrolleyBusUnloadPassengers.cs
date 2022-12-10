@@ -9,6 +9,11 @@ namespace ExpressBusServices
         [HarmonyPrefix]
         public static void CheckRedeployment(ushort vehicleID, ref Vehicle data, ref bool forceUnload)
         {
+            if (DepartureChecker.VehicleIsNotBus(data))
+            {
+                // huh???
+                return;
+            }
             ushort redeploymentTarget;
             ushort transportLineId = data.m_transportLine;
             // not yet target the next stop

@@ -16,6 +16,11 @@ namespace ExpressBusServices
                 // trams are not eligible for redeployment.
                 return;
             }
+            if (DepartureChecker.VehicleIsNotBus(data))
+            {
+                // huh???
+                return;
+            }
             ushort redeploymentTarget;
             ushort transportLineId = data.m_transportLine;
             // not yet target the next stop

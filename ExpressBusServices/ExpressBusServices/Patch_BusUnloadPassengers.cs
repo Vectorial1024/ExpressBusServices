@@ -42,7 +42,7 @@ namespace ExpressBusServices
                     TransportLine theLine = Singleton<TransportManager>.instance.m_lines.m_buffer[data.m_transportLine];
                     theLine.RemoveVehicle(vehicleID, ref data);
                     data.Info.m_vehicleAI.SetTransportLine(vehicleID, ref data, 0);
-                    Debug.Log($"Vehicle {vehicleID} is redeploying via teleportation because the target {redeploymentTarget} is too far away.");
+                    // Debug.Log($"Vehicle {vehicleID} is redeploying via teleportation because the target {redeploymentTarget} is too far away.");
                 }
             }
         }

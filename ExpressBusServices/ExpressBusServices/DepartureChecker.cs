@@ -305,7 +305,7 @@ namespace ExpressBusServices
             // we check those within 2 progress percent, whether there are more than 3 buses waiting (including self)
             if (progressList.Count > 3)
             {
-                float overcrowdProgressDistance = 0.02f;
+                float overcrowdProgressDistance = UnbunchingProximityPercentDist;
                 int indexOfQueueing = indexOfThis;
                 int crowdedCount = 0;
                 VehicleLineProgress selfProgress = progressList[indexOfThis];

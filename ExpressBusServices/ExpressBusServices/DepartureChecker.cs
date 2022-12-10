@@ -211,6 +211,7 @@ namespace ExpressBusServices
             float percentageDistance = 0.1f;
             int waitingVehicles = 0;
             int loopingIndex = indexOfThis;
+            int iterationCount = 0;
             while (true)
             {
                 if (loopingIndex == 0)
@@ -233,6 +234,11 @@ namespace ExpressBusServices
                 if (currentPercentDistance >= percentageDistance)
                 {
                     // out of range
+                    break;
+                }
+                if (++iterationCount >= 16384)
+                {
+                    // huh? bad list?
                     break;
                 }
                 waitingVehicles++;

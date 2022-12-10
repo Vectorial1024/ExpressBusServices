@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using ColossalFramework;
+using HarmonyLib;
 
 namespace ExpressBusServices
 {
@@ -28,6 +29,15 @@ namespace ExpressBusServices
                 BusStopSkippingLookupTable.Notify_BusShouldSkipLoading(vehicleID);
                 // force everyone to get dropped off for redeployment; they aren't supposed to travel around the bus line through termini anyways
                 forceUnload = true;
+                // what if it is too far away? we will need to handle the stuff.
+                if (BusDepotRedeploymentInstructions.ShouldUseTeleportationRedeployment(vehicleID, redeploymentTarget))
+                {
+                    BusDepotRedeploymentInstructions.NotifyTransportLineAddFutureDeployment(data.m_transportLine, redeploymentTarget);
+                    TransportLine theLine = Singleton<TransportManager>.instance.m_lines.m_buffer[data.m_transportLine];
+                    theLine.RemoveVehicle(vehicleID, ref data);
+                    data.Info.m_vehicleAI.SetTransportLine(vehicleID, ref data, 0);
+                    // Debug.Log($"Vehicle {vehicleID} is redeploying via teleportation because the target {redeploymentTarget} is too far away.");
+                }
             }
         }
 

@@ -238,12 +238,12 @@ namespace ExpressBusServices
                     // out of range
                     break;
                 }
+                waitingVehicles++;
                 if (++iterationCount >= 16384)
                 {
                     // huh? bad list?
                     break;
                 }
-                waitingVehicles++;
             }
             // for each extra vehicle after the 3rd one, decrease uniformly such that the minimum amount of time waiting is at 24 (2x boarding time)
             int fasterWaitingTime = Mathf.Max(64 - (Mathf.Max(waitingVehicles - 3, 0)) * 5, 24);

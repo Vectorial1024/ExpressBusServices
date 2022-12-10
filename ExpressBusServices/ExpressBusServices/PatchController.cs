@@ -1,4 +1,5 @@
 ﻿using ExpressBusServices.PerformanceBoost;
+using ExpressBusServices.Redeployment;
 using HarmonyLib;
 using System.Reflection;
 
@@ -40,7 +41,7 @@ namespace ExpressBusServices
 
             TramPickDropLookupTable.EnsureTableExists();
 
-            BusDepotRedeploymentInstructions.EnsureTableExists();
+            TeleportRedeployInstructions.EnsureTableExists();
 
             CachedVehicleProperties.TouchAndResetCache();
         }
@@ -55,7 +56,7 @@ namespace ExpressBusServices
 
             TramPickDropLookupTable.WipeTable();
 
-            BusDepotRedeploymentInstructions.WipeTable();
+            TeleportRedeployInstructions.WipeTable();
 
             CachedVehicleProperties.TouchAndResetCache();
         }

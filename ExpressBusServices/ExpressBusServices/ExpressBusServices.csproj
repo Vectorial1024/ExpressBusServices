@@ -64,7 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusDepotRedeploymentInstructions.cs" />
+    <Compile Include="Redeployment\TeleportRedeployInstructions.cs" />
     <Compile Include="DataTypes\VehicleLineProgress.cs" />
     <Compile Include="Patch_TransportManager_ReleaseLine.cs" />
     <Compile Include="Patch_TransportLine_AddVehicle.cs" />

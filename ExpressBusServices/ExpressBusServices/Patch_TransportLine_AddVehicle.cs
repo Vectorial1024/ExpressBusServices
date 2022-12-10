@@ -1,5 +1,5 @@
-﻿using HarmonyLib;
-using UnityEngine;
+﻿using ExpressBusServices.Redeployment;
+using HarmonyLib;
 
 namespace ExpressBusServices
 {
@@ -20,7 +20,7 @@ namespace ExpressBusServices
             {
                 return;
             }
-            if (BusDepotRedeploymentInstructions.TransportLineReadFutureDeployment(transportLineID, out ushort targetStopID))
+            if (TeleportRedeployInstructions.TransportLineReadFutureDeployment(transportLineID, out ushort targetStopID))
             {
                 data.m_targetBuilding = targetStopID;
                 // Debug.Log($"New vehicle of transport line ${transportLineID} now redeploying to stop {targetStopID} as per future instructions.");

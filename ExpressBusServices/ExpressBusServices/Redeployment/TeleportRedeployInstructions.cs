@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace ExpressBusServices
+namespace ExpressBusServices.Redeployment
 {
-    public class BusDepotRedeploymentInstructions
+    public class TeleportRedeployInstructions
     {
         private static Dictionary<ushort, List<ushort>> transportLineDepotInstructions;
 

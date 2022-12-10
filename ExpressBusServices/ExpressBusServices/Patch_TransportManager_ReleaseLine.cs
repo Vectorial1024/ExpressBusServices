@@ -1,5 +1,5 @@
-﻿using HarmonyLib;
-using UnityEngine;
+﻿using ExpressBusServices.Redeployment;
+using HarmonyLib;
 
 namespace ExpressBusServices
 {
@@ -10,7 +10,7 @@ namespace ExpressBusServices
         [HarmonyPostfix]
         public static void PostFix(ushort lineID)
         {
-            BusDepotRedeploymentInstructions.NotifyTransportLineDeleted(lineID);
+            TeleportRedeployInstructions.NotifyTransportLineDeleted(lineID);
         }
     }
 }

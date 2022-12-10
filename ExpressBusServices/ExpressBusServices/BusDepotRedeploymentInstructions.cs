@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace ExpressBusServices
 {
@@ -67,6 +68,22 @@ namespace ExpressBusServices
                 }
             }
             return false;
+        }
+
+        public static float CalculateDistanceFromVehicleToStop(ushort vehicleID, ushort stopID)
+        {
+            // vehicleData.m_targetPos0;
+            VehicleManager vehicleManager = Singleton<VehicleManager>.instance;
+            Vehicle theVehicle = vehicleManager.m_vehicles.m_buffer[vehicleID];
+            NetManager manager = Singleton<NetManager>.instance;
+            NetNode theNode = manager.m_nodes.m_buffer[stopID];
+            // we will just assume that both side exists...
+            return Vector4.Distance(theVehicle.m_targetPos0, theNode.m_position);
+        }
+
+        public static bool ShouldUseTeleportationRedeployment(ushort vehicleID, ushort stopID)
+        {
+            return CalculateDistanceFromVehicleToStop(vehicleID, stopID) > 1000;
         }
     }
 }

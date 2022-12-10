@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="BusDepotRedeploymentInstructions.cs" />
     <Compile Include="DataTypes\VehicleLineProgress.cs" />
+    <Compile Include="Patch_TransportLine_AddVehicle.cs" />
     <Compile Include="Patch_TramLoadsPassengers.cs" />
     <Compile Include="PerformanceBoost\CachedVehicleProperties.cs" />
     <Compile Include="PerformanceBoost\VehicleUnspawnListenerPatch.cs" />

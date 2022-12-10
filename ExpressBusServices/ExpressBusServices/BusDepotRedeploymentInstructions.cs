@@ -21,6 +21,15 @@ namespace ExpressBusServices
 
         public static void WipeTable() => transportLineDepotInstructions?.Clear();
 
+        public static void NotifyTransportLineDeleted(ushort transportLineID)
+        {
+            if (!transportLineDepotInstructions.ContainsKey(transportLineID))
+            {
+                return;
+            }
+            transportLineDepotInstructions.Remove(transportLineID);
+        }
+
         public static void NotifyTransportLineAddFutureDeployment(ushort transportLineID, ushort targetStopID)
         {
             if (!transportLineDepotInstructions.ContainsKey(transportLineID))

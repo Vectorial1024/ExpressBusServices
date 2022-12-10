@@ -31,6 +31,7 @@ namespace ExpressBusServices.DataTypes
             List<VehicleLineProgress> progressList = new List<VehicleLineProgress>();
             // StringBuilder builder = new StringBuilder("Vehicle IDs:\n");
             float current, max;
+            int iterationCount = 0;
             while (vehicleIterator != 0)
             {
                 VehicleInfo info = Singleton<VehicleManager>.instance.m_vehicles.m_buffer[vehicleIterator].Info;
@@ -45,6 +46,11 @@ namespace ExpressBusServices.DataTypes
                     // builder.AppendLine(vehicleIterator.ToString());
                 }
                 vehicleIterator = instance.m_vehicles.m_buffer[vehicleIterator].m_nextLineVehicle;
+                if (++iterationCount >= instance.m_vehicles.m_size)
+                {
+                    // invalid list, yada yada
+                    break;
+                }
             }
             // all vehicles found
             // sort the list for in-order progress checking

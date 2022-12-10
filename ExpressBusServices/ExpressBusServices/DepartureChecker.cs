@@ -12,6 +12,8 @@ namespace ExpressBusServices
 {
     public class DepartureChecker
     {
+        public static readonly float UnbunchingProximityPercentDist = 0.02f;
+
         // if true, then this mod will intervene in handling instant departures etc.
         public static bool NowIsEligibleForInstantDeparture(ushort vehicleID, ref Vehicle vehicleData)
         {
@@ -208,7 +210,7 @@ namespace ExpressBusServices
                 return false;
             }
             float selfPercentProgress = progressList[indexOfThis].percentProgress;
-            float percentageDistance = 0.1f;
+            float proximityPercentDist = UnbunchingProximityPercentDist;
             int waitingVehicles = 0;
             int loopingIndex = indexOfThis;
             int iterationCount = 0;
@@ -231,7 +233,7 @@ namespace ExpressBusServices
                 {
                     currentPercentDistance += 1;
                 }
-                if (currentPercentDistance >= percentageDistance)
+                if (currentPercentDistance >= proximityPercentDist)
                 {
                     // out of range
                     break;

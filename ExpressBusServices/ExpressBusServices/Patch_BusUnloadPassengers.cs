@@ -41,6 +41,7 @@ namespace ExpressBusServices
                     BusDepotRedeploymentInstructions.NotifyTransportLineAddFutureDeployment(data.m_transportLine, redeploymentTarget);
                     TransportLine theLine = Singleton<TransportManager>.instance.m_lines.m_buffer[data.m_transportLine];
                     theLine.RemoveVehicle(vehicleID, ref data);
+                    data.m_transportLine = 0;
                     Debug.Log($"Vehicle {vehicleID} is redeploying via teleportation because the target {redeploymentTarget} is too far away.");
                 }
             }

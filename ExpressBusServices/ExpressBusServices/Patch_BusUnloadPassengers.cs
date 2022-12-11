@@ -44,6 +44,14 @@ namespace ExpressBusServices
                     // Debug.Log($"Vehicle {vehicleID} is redeploying via teleportation because the target {redeploymentTarget} is too far away.");
                 }
             }
+            if (!TransportVehicleUtil.VehicleHasProgressPercent(vehicleID, ref data))
+            {
+                // something wrong happened; all should have progress!
+                // send them back to depot
+                BusStopSkippingLookupTable.Notify_BusShouldSkipLoading(vehicleID);
+                forceUnload = true;
+                TransportVehicleUtil.TellVehicleToReturnToBase(vehicleID, ref data);
+            }
         }
 
         [HarmonyPostfix]

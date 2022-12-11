@@ -10,6 +10,11 @@ namespace ExpressBusServices.Util
     {
         public static void TellVehicleToReturnToBase(ushort vehicleID, ref Vehicle data)
         {
+            if (data.m_transportLine == 0)
+            {
+                // no op
+                return;
+            }
             TransportLine theLine = Singleton<TransportManager>.instance.m_lines.m_buffer[data.m_transportLine];
             theLine.RemoveVehicle(vehicleID, ref data);
             data.Info.m_vehicleAI.SetTransportLine(vehicleID, ref data, 0);

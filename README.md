@@ -64,11 +64,17 @@ These transpotation types will not be covered by this mod because they will beco
 
 When activated, buses will have a chance to immediately transfer themselves to the most in-demand section of the bus line, resuming from the relevant first-stop terminus, thereby skipping multiple stops at once (refer to https://github.com/Vectorial1024/ExpressBusServices/issues/12 for more info); this will be helpful when commuting patterns are asymmetric.
 
+When attempting to transfer over a long distance (currently set to 1 city tile), buses will send themselves back to depot, and let (another) depot spawn a replacement bus. This reduces the time that the bus "arrives" at the intended transfer target, and speeds up the transfer.
+
 ## Extra Niche Options: Minibus Mode
 
 Minibuses are defined as buses where capacity is `<= 20`.
 
 When activated, minibuses will pay attention to the number of passengers boarding and alighting at the bus stop: if that number is `<= 5`, then the minibuses may wait less and depart earlier than usual, simulating the Hong Kong minibus situation.
+
+## Extra QOL Behavior: Improved Unbunching
+
+Buses will now unbunch based on the number of vehicles on the line. This results in generally higher effectiveness of high-frequency buses, while also maintaining reasonable spacing for low-frequency buses. (Note: due to tech limitations, there is a max amount of time that buses can wait at termini, and I cannot influence that; so low-frequency buses cannot be too low-frequency if you are aiming for an even distribution of buses in the line.) 
 
 # Motivation
 

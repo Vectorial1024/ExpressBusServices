@@ -9,6 +9,8 @@ Unlock the peak efficiency of buses:
 
 # Mod Status
 
+[img]https://i.imgur.com/O3ujMsj.png[/img]
+
 - Compatible with Transport Line Manager (implemented compatibility; TLM can work more completely)
 - ~~Compatible with Improved Public Transport 2 (implemented compatibility; IPT2 would override things otherwise)~~
 - Mods available for this mod (yes, mod-ception):

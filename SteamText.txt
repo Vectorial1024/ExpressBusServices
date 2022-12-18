@@ -2,6 +2,8 @@ Unlock the peak efficiency of buses; now also improves trams!
 
 中文名：特快巴士服務
 
+[img]https://i.imgur.com/O3ujMsj.png[/img]
+
 [h1]Quick info[/h1]
 [list]
 [*]Requires Harmony

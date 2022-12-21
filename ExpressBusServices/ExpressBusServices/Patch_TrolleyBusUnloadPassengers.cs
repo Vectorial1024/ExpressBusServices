@@ -17,6 +17,11 @@ namespace ExpressBusServices
                 // huh???
                 return;
             }
+            if (DepartureChecker.BusIsIntercityBus(data))
+            {
+                // no
+                return;
+            }
             ushort redeploymentTarget;
             ushort transportLineId = data.m_transportLine;
             // not yet target the next stop

@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Reflection;
-using ColossalFramework;
 using HarmonyLib;
 
 namespace ExpressBusServices
 {
-	[HarmonyPatch(typeof(VehicleAI))]
-	[HarmonyPatch("CanLeave", MethodType.Normal)]
+	[HarmonyPatch]
 	public class ReversePatch_TLMPlugin_StopIsTerminus
 	{
 		internal static bool PatchIsSuccessful_HasTLM { get; set; }

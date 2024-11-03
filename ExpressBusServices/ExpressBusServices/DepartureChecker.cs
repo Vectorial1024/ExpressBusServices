@@ -245,8 +245,8 @@ namespace ExpressBusServices
                     break;
                 }
             }
-            // for each extra vehicle after the 3rd one, decrease uniformly such that the minimum amount of time waiting is at 24 (2x boarding time)
-            int fasterWaitingTime = Mathf.Max(64 - (Mathf.Max(waitingVehicles - 3, 0)) * 5, 24);
+            // for each extra vehicle after the 3rd one, decrease uniformly such that the minimum amount of time waiting is at 16 (1.33x boarding time)
+            int fasterWaitingTime = Mathf.Max(64 - (Mathf.Max(waitingVehicles - 3, 0)) * 6, 16);
             // Debug.Log($"Faster waiting time of vehicle {vehicleID} is {fasterWaitingTime}");
             return vehicleData.m_waitCounter > fasterWaitingTime;
         }

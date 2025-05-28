@@ -19,6 +19,11 @@ namespace ExpressBusServices.DataTypes
 
         public int PaxActualBoarded => PaxAfterBoarding - PaxBeforeBoarding;
 
+        /// <summary>
+        /// The actual delta-pax of this vehicle. This is used by minibus-mode.
+        /// </summary>
+        public int PaxDeltaCount => PaxAlighted + PaxActualBoarded;
+        
         public bool HasPaxDelta => PaxAlighted > 0 || PaxActualBoarded > 0;
 
         private static Dictionary<ushort, VehiclePaxDeltaInfo> paxDeltaTable;

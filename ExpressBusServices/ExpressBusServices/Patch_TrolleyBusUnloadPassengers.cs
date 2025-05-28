@@ -6,7 +6,7 @@ using HarmonyLib;
 namespace ExpressBusServices
 {
     [HarmonyPatch(typeof(TrolleybusAI))]
-    [HarmonyPatch("TransportArriveAtTarget", MethodType.Normal)]
+    [HarmonyPatch(nameof(TrolleybusAI.TransportArriveAtTarget), MethodType.Normal)]
     public class Patch_TrolleyBusUnloadPassengers
     {
         [HarmonyPrefix]

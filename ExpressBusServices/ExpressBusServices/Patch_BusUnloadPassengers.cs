@@ -9,6 +9,11 @@ namespace ExpressBusServices
     [HarmonyPatch(nameof(BusAI.TransportArriveAtTarget), MethodType.Normal)]
     public class Patch_BusUnloadPassengers
     {
+        /*
+         * important note:
+         * for some reason, this is called from BusAI, and also TramAI.
+         */
+        
         [HarmonyPrefix]
         public static void CheckRedeployment(ushort vehicleID, ref Vehicle data, ref bool forceUnload)
         {

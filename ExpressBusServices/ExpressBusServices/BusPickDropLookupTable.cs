@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace ExpressBusServices
 {
+    [Obsolete("Refactor to use VehiclePaxDeltaInfo instead.")]
     public class BusPickDropLookupTable
     {
         private static Dictionary<ushort, VehicleBAInfo> busPickDropTable;

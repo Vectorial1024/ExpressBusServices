@@ -2,6 +2,7 @@
 using ExpressBusServices.Redeployment;
 using HarmonyLib;
 using System.Reflection;
+using ExpressBusServices.DataTypes;
 
 namespace ExpressBusServices
 {
@@ -34,6 +35,9 @@ namespace ExpressBusServices
         public static void Activate()
         {
             GetHarmonyInstance().PatchAll(Assembly.GetExecutingAssembly());
+            
+            VehiclePaxDeltaInfo.TouchAndResetTable();
+            
             BusPickDropLookupTable.EnsureTableExists();
             CitizenRunawayTable.EnsureTableExists();
             BusStopSkippingLookupTable.EnsureTableExists();
@@ -49,6 +53,9 @@ namespace ExpressBusServices
         public static void Deactivate()
         {
             GetHarmonyInstance().UnpatchAll(HarmonyModID);
+            
+            VehiclePaxDeltaInfo.WipeTable();
+            
             BusPickDropLookupTable.WipeTable();
             CitizenRunawayTable.WipeTable();
             BusStopSkippingLookupTable.WipeTable();

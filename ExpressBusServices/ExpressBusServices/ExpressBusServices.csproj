@@ -103,6 +103,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReversePatch_VehicleAI_CanLeave.cs" />
     <Compile Include="Util\TransportVehicleUtil.cs" />
+    <Compile Include="Util\VehicleDepartureUtil.cs" />
     <Compile Include="VehicleBAInfo.cs" />
     <Compile Include="VehicleUtil.cs" />
   </ItemGroup>

@@ -36,7 +36,7 @@ namespace ExpressBusServices
         {
             GetHarmonyInstance().PatchAll(Assembly.GetExecutingAssembly());
             
-            VehiclePaxDeltaInfo.TouchAndResetTable();
+            VehiclePaxDeltaInfo.EnsureTableExists();
             
             BusPickDropLookupTable.EnsureTableExists();
             CitizenRunawayTable.EnsureTableExists();

@@ -22,7 +22,7 @@ namespace ExpressBusServices.DataTypes
 
         private static Dictionary<ushort, VehiclePaxDeltaInfo> paxDeltaTable;
 
-        public static void TouchAndResetTable()
+        public static void EnsureTableExists()
         {
             if (paxDeltaTable == null)
             {

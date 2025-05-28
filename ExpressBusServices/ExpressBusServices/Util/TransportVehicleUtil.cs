@@ -31,5 +31,30 @@ namespace ExpressBusServices.Util
             // find where exists self
             return progressList.Where(item => item.vehicleID == vehicleID).ToList().Count > 0;
         }
+
+        public static void FindFirstVehicleOfVehicleSet(ushort vehicleID, ref Vehicle data, out ushort firstVehicleID, out Vehicle firstVehicleData)
+        {
+            // assume valid lists
+            ushort currentID = data.m_leadingVehicle;
+            if (currentID == 0)
+            {
+                // already first of set
+                firstVehicleID = vehicleID;
+                firstVehicleData = data;
+                return;
+            }
+            
+            // iterate to the first of the list
+            VehicleManager manager = Singleton<VehicleManager>.instance;
+            ref Vehicle currentData = ref manager.m_vehicles.m_buffer[currentID];
+            while (currentData.m_leadingVehicle != 0)
+            {
+                currentID = currentData.m_leadingVehicle;
+                currentData = ref manager.m_vehicles.m_buffer[currentID];
+            }
+            // at first of list
+            firstVehicleID = currentID;
+            firstVehicleData = data;
+        }
     }
 }

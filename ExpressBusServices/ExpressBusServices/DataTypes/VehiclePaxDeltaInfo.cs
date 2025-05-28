@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace ExpressBusServices.DataTypes
 {
@@ -45,15 +45,18 @@ namespace ExpressBusServices.DataTypes
 
         /// <summary>
         /// Returns the pax-delta info of a vehicle. This does NOT consider the trailers of the vehicle.
+        /// <para/>
+        /// A new entry will be created if the vehicle was not previously initialized. 
         /// </summary>
         /// <param name="vehicleID">The ID of the vehicle in question.</param>
         /// <returns>The last-known pax-delta info of said vehicle.</returns>
-        /// <exception cref="ArgumentException">Thrown when a pax-delta info was requested without being initialized.</exception>
-        public static VehiclePaxDeltaInfo Get(ushort vehicleID)
+        [NotNull]
+        public static VehiclePaxDeltaInfo GetSafely(ushort vehicleID)
         {
             if (!paxDeltaTable.TryGetValue(vehicleID, out VehiclePaxDeltaInfo value))
             {
-                throw new ArgumentException("PaxDelta info for ${vehicleID} requested without being initialized");
+                value = new VehiclePaxDeltaInfo();
+                paxDeltaTable[vehicleID] = value;
             }
             return value;
         }
@@ -66,17 +69,17 @@ namespace ExpressBusServices.DataTypes
 
         public static void Notify_VehicleHasUnloadedPax(ushort vehicleID, ref int serviceCounter)
         {
-            Get(vehicleID).PaxAlighted = serviceCounter;
+            GetSafely(vehicleID).PaxAlighted = serviceCounter;
         }
 
         public static void Notify_VehicleStartsLoadingPax(ushort vehicleID, ref Vehicle data)
         {
-            Get(vehicleID).PaxBeforeBoarding = data.m_transferSize;
+            GetSafely(vehicleID).PaxBeforeBoarding = data.m_transferSize;
         }
 
         public static void Notify_VehicleHasLoadedPax(ushort vehicleID, ref Vehicle data)
         {
-            Get(vehicleID).PaxAfterBoarding = data.m_transferSize;
+            GetSafely(vehicleID).PaxAfterBoarding = data.m_transferSize;
         }
     }
 }

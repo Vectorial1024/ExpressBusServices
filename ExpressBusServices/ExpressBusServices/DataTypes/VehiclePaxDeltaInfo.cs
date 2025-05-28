@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using ColossalFramework;
 using JetBrains.Annotations;
 
 namespace ExpressBusServices.DataTypes
@@ -18,7 +19,7 @@ namespace ExpressBusServices.DataTypes
 
         public int PaxActualBoarded => PaxAfterBoarding - PaxBeforeBoarding;
 
-        public bool PaxHasDelta => PaxAlighted > 0 || PaxActualBoarded > 0;
+        public bool HasPaxDelta => PaxAlighted > 0 || PaxActualBoarded > 0;
 
         private static Dictionary<ushort, VehiclePaxDeltaInfo> paxDeltaTable;
 
@@ -80,6 +81,57 @@ namespace ExpressBusServices.DataTypes
         public static void Notify_VehicleFinishedLoadingPax(ushort vehicleID, ref Vehicle data)
         {
             GetSafely(vehicleID).PaxAfterBoarding = data.m_transferSize;
+        }
+
+        /// <summary>
+        /// Returns whether the vehicle set of the given vehicle (aka the "train" that contains the vehicle) has any passenger delta.
+        /// This counts the whole set in addition to the vehicle itself; trailers and leaders are also considered.
+        /// <para/>
+        /// This method may be safely called by any valid vehicle of the vehicle set, and will return identical results. 
+        /// </summary>
+        /// <param name="vehicleID">The ID of the vehicle in question.</param>
+        /// <param name="data">The data reference of the vehicle in question, to be used for iteration.</param>
+        /// <returns>If true, then the vehicle set has a pax-delta among its constituent vehicles.</returns>
+        public static bool VehicleSetHasPaxDelta(ushort vehicleID, ref Vehicle data)
+        {
+            // optimization: short circuit if this one has pax delta
+            // single-vehicle buses and busy trams will benefit from this optimization
+            if (GetSafely(vehicleID).HasPaxDelta)
+            {
+                return true;
+            }
+
+            // this vehicle does NOT have delta, but other vehicles in the set may have
+            // standard procedure
+            // note: we assume "valid lists" so we will not check for iteration sizes as seen in vanilla code.
+            VehicleManager managerInstance = Singleton<VehicleManager>.instance;
+
+            // first, iterate the "pointer" to the front.
+            ref Vehicle currentData = ref data;
+            ushort currentID = currentData.m_leadingVehicle;
+            while (currentID != 0)
+            {
+                currentData = managerInstance.m_vehicles.m_buffer[currentID];
+                currentID = currentData.m_leadingVehicle;
+            }
+
+            // we are at the front
+            // next, iterate till the end
+            while (true)
+            {
+                if (GetSafely(currentID).HasPaxDelta)
+                {
+                    return true;
+                }
+                currentID = currentData.m_trailingVehicle;
+                if (currentID == 0)
+                {
+                    break;
+                }
+                currentData = managerInstance.m_vehicles.m_buffer[currentID];
+            }
+            // reached end without pax delta
+            return false;
         }
     }
 }

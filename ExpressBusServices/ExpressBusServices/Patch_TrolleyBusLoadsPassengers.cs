@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using ExpressBusServices.DataTypes;
+using HarmonyLib;
 
 namespace ExpressBusServices
 {
@@ -10,6 +11,7 @@ namespace ExpressBusServices
         public static bool HandleBusAboutToLoadPassengers(ushort vehicleID, ref Vehicle data)
         {
             BusPickDropLookupTable.Notify_PassengersAboutToBoardOntoBus(vehicleID, ref data);
+            VehiclePaxDeltaInfo.Notify_VehicleStartsLoadingPax(vehicleID, ref data);
             if (BusStopSkippingLookupTable.BusShouldSkipPassengerLoading(vehicleID))
             {
                 return false;
@@ -21,6 +23,7 @@ namespace ExpressBusServices
         public static void HandleBusAlreadyLoadedPassengers(ushort vehicleID, ref Vehicle data)
         {
             BusPickDropLookupTable.Notify_PassengersAlreadyBoardedOntoBus(vehicleID, ref data);
+            VehiclePaxDeltaInfo.Notify_VehicleHasLoadedPax(vehicleID, ref data);
         }
     }
 }

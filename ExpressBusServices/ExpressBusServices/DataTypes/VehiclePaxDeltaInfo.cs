@@ -67,7 +67,7 @@ namespace ExpressBusServices.DataTypes
         /// <param name="vehicleID">The ID of the vehicle in question.</param>
         public static void Remove(ushort vehicleID) => paxDeltaTable.Remove(vehicleID);
 
-        public static void Notify_VehicleHasUnloadedPax(ushort vehicleID, ref int serviceCounter)
+        public static void Notify_VehicleHasUnloadedPax(ushort vehicleID, int serviceCounter)
         {
             GetSafely(vehicleID).PaxAlighted = serviceCounter;
         }

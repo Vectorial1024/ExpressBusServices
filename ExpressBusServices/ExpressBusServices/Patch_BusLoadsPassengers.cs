@@ -25,7 +25,7 @@ namespace ExpressBusServices
         {
             BusStopSkippingLookupTable.ForgetBus(vehicleID);
             BusPickDropLookupTable.Notify_PassengersAlreadyBoardedOntoBus(vehicleID, ref data);
-            VehiclePaxDeltaInfo.Notify_VehicleHasLoadedPax(vehicleID, ref data);
+            VehiclePaxDeltaInfo.Notify_VehicleFinishedLoadingPax(vehicleID, ref data);
         }
     }
 }

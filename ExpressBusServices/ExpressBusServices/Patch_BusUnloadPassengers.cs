@@ -69,7 +69,7 @@ namespace ExpressBusServices
         public static void HandleBusArrivedAtTarget(ushort vehicleID, ref Vehicle data, ref int serviceCounter)
         {
             BusPickDropLookupTable.Notify_PassengersAlightedFromBus(vehicleID, serviceCounter);
-            VehiclePaxDeltaInfo.Notify_VehicleHasUnloadedPax(vehicleID, serviceCounter);
+            VehiclePaxDeltaInfo.Notify_VehicleFinishedUnloadingPax(vehicleID, serviceCounter);
         }
     }
 }

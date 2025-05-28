@@ -45,7 +45,7 @@ namespace ExpressBusServices
         [HarmonyPostfix]
         public static void HandleTramAlreadyLoadedPassengers(ushort vehicleID, ref Vehicle data, ushort currentStop)
         {
-            VehiclePaxDeltaInfo.Notify_VehicleHasLoadedPax(vehicleID, ref data);
+            VehiclePaxDeltaInfo.Notify_VehicleFinishedLoadingPax(vehicleID, ref data);
             if (data.m_leadingVehicle != 0)
             {
                 return;

@@ -23,7 +23,7 @@ namespace ExpressBusServices
         public static void HandleBusAlreadyLoadedPassengers(ushort vehicleID, ref Vehicle data)
         {
             BusPickDropLookupTable.Notify_PassengersAlreadyBoardedOntoBus(vehicleID, ref data);
-            VehiclePaxDeltaInfo.Notify_VehicleHasLoadedPax(vehicleID, ref data);
+            VehiclePaxDeltaInfo.Notify_VehicleFinishedLoadingPax(vehicleID, ref data);
         }
     }
 }

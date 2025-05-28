@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using ColossalFramework;
+using ExpressBusServices.Util;
 using JetBrains.Annotations;
 
 namespace ExpressBusServices.DataTypes
@@ -108,20 +109,11 @@ namespace ExpressBusServices.DataTypes
 
             // this vehicle does NOT have delta, but other vehicles in the set may have
             // standard procedure
-            // note: we assume "valid lists" so we will not check for iteration sizes as seen in vanilla code.
-            VehicleManager managerInstance = Singleton<VehicleManager>.instance;
-
-            // first, iterate the "pointer" to the front.
-            ref Vehicle currentData = ref data;
-            ushort currentID = currentData.m_leadingVehicle;
-            while (currentID != 0)
-            {
-                currentData = managerInstance.m_vehicles.m_buffer[currentID];
-                currentID = currentData.m_leadingVehicle;
-            }
-
-            // we are at the front
+            // find the first vehicle
+            TransportVehicleUtil.FindFirstVehicleOfVehicleSet(vehicleID, ref data, out ushort currentID, out Vehicle currentData);
+            
             // next, iterate till the end
+            VehicleManager managerInstance = Singleton<VehicleManager>.instance;
             while (true)
             {
                 if (GetSafely(currentID).HasPaxDelta)

@@ -118,7 +118,12 @@ namespace ExpressBusServices
         {
             if (vehicleData.m_leadingVehicle != 0)
             {
-                // non leader vehicle; IDK!
+                // non leader vehicle; should just mirror the leader vehicle's status
+                // what is the leader's vehicle data?
+                ushort leadingVehicleID = vehicleData.m_leadingVehicle;
+                VehicleManager vehicleManager = Singleton<VehicleManager>.instance;
+                ref Vehicle leaderVehicleData = ref vehicleManager.m_vehicles.m_buffer[leadingVehicleID];
+                DetermineIfTramShouldDepart(ref __result, leadingVehicleID, ref leaderVehicleData);
                 return;
             }
             // the logic should be somewhat similar to the bus logic, so you can go there and read the doc

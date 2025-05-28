@@ -43,7 +43,7 @@ namespace ExpressBusServices.Util
                 firstVehicleData = data;
                 return;
             }
-            
+
             // iterate to the first of the list
             VehicleManager manager = Singleton<VehicleManager>.instance;
             ref Vehicle currentData = ref manager.m_vehicles.m_buffer[currentID];

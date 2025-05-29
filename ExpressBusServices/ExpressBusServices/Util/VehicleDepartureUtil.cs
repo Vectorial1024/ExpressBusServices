@@ -43,7 +43,74 @@ namespace ExpressBusServices.Util
                 // we don't have data for this; abort!
                 return;
             }
-            // wip
+
+            if (DepartureChecker.NowIsEligibleForInstantDeparture(vehicleID, ref vehicleData))
+            {
+                // now is not at terminus, which has potential to instant-depart
+                // wip
+            }
+            else
+            {
+                // now is at terminus, usually no potential to instant-depart
+                // wip
+            }
+
+            // regardless of what happened, have some common post-action checking.
+            TryTroubleshootWhyCannotDepart(ref __result, vehicleID, ref vehicleData);
+
+            // status is finalized
+            if (__result)
+            {
+                // allowed to depart
+
+                // remove the redeployment instructions to avoid contaminating with arriving at other stops
+                ServiceBalancerUtil.ReadRedeploymentInstructions(vehicleID, out _, removeEntry: true);
+            }
+        }
+
+        /// <summary>
+        /// Try to troubleshoot why departure is not allowed. This may change departure flag to true.
+        /// </summary>
+        /// <param name="__result"></param>
+        /// <param name="vehicleID"></param>
+        /// <param name="vehicleData"></param>
+        private static void TryTroubleshootWhyCannotDepart(ref bool __result, ushort vehicleID, ref Vehicle vehicleData)
+        {
+            if (__result)
+            {
+                // already planning to depart; no action needed
+                return;
+            }
+
+            // why cannot go?
+            if (vehicleData.m_waitCounter <= 12)
+            {
+                // wait counter <= 12 is normal
+                return;
+            }
+
+            // we must respect pax that hasn't boarded yet
+            if (!ReversePatch_VehicleAI_CanLeave.BaseVehicleAI_CanLeave(null, vehicleID, ref vehicleData))
+            {
+                // some cims are still boarding the vehicles; don't do it!
+                return;
+                /*
+                 * note: the "Cim Runaway Problem" was originally discovered here,
+                 * but eventually, Public Transport Unstucker (another mod) was made to more effectively deal with this problem.
+                 * for general ease of management, users of this mod should also use Public Transport Unstucker.
+                 */
+            }
+
+            // all pax aboard; check the advanced unbunching instructions
+            if (DepartureChecker.RecheckUnbunchingCanLeave(vehicleID, ref vehicleData))
+            {
+                // rubberbanding says we gotta go now (spacing is good enough OR too many vehicles piled up, etc.)
+                __result = true;
+                return;
+                // todo this feels like duplicated logic: rubberbanding seems to have 2 methods that essentially are opposites of each other
+            }
+
+            // then, idk.
         }
         // wip
     }

@@ -14,10 +14,13 @@ namespace ExpressBusServices
          * important note:
          * for some reason, this is called from BusAI, and also TramAI.
          */
-        
+
         [HarmonyPrefix]
         public static void CheckRedeployment(ushort vehicleID, ref Vehicle data, ref bool forceUnload)
         {
+            // reset the relevant pax-delta info first
+            VehiclePaxDeltaInfo.TouchAndResetEntry(vehicleID);
+
             if (DepartureChecker.VehicleIsTram(data))
             {
                 // trams are not eligible for redeployment.

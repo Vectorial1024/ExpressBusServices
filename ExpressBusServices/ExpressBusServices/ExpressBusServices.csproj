@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataTypes\VehiclePaxDeltaInfo.cs" />
+    <Compile Include="DataTypes\RubberbandingCommand.cs" />
     <Compile Include="Redeployment\TeleportRedeployInstructions.cs" />
     <Compile Include="DataTypes\VehicleLineProgress.cs" />
     <Compile Include="Patch_TransportManager_ReleaseLine.cs" />

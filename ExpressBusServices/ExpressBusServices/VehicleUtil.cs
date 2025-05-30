@@ -13,7 +13,7 @@ namespace ExpressBusServices
         public static int GetMaxCarryingCapacityOfTrain(ushort vehicleID, ref Vehicle data)
         {
             // try to get from cache
-            CachedVehicleProperties props = CachedVehicleProperties.GetFromCache(vehicleID); 
+            CachedVehicleProperties props = CachedVehicleProperties.GetFromCache(vehicleID);
             if (props != null)
             {
                 if (props.TrainCapacity.HasValue)
@@ -82,6 +82,34 @@ namespace ExpressBusServices
                 citizenUnitIndex = instance.m_units.m_buffer[citizenUnitIndex].m_nextUnit;
             }
             return count * 5;
+        }
+
+        public static bool IsEveryoneAboardTheTrain(ushort vehicleID, ref Vehicle data)
+        {
+            // VehicleAI has CanLeave: true when all pax are inside the vehicle.
+            // we just call this for all vehicles of the train
+            // assume first vehicle ID
+
+            if (!ReversePatch_VehicleAI_CanLeave.BaseVehicleAI_CanLeave(null, vehicleID, ref data))
+            {
+                return false;
+            }
+
+            VehicleManager instance = Singleton<VehicleManager>.instance;
+            ushort currentVehicleID = data.m_trailingVehicle;
+            while (currentVehicleID != 0)
+            {
+                ref Vehicle currentData = ref instance.m_vehicles.m_buffer[currentVehicleID];
+                if (!ReversePatch_VehicleAI_CanLeave.BaseVehicleAI_CanLeave(null, currentVehicleID, ref currentData))
+                {
+                    return false;
+                }
+                // check next
+                currentVehicleID = currentData.m_trailingVehicle;
+            }
+
+            // all vehicles in train has pax
+            return true;
         }
     }
 }

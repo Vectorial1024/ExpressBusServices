@@ -38,21 +38,51 @@ namespace ExpressBusServices.Util
                 return;
             }
 
-            RubberbandingCommand unbunchingCommand = RubberbandingCommand.Default;
-            if (!VehiclePaxDeltaInfo.Has(vehicleID) || DepartureChecker.NowIsEligibleForInstantDeparture(vehicleID, ref vehicleData))
+            RubberbandingCommand unbunchingIntention = RubberbandingCommand.Default;
+            if (!VehiclePaxDeltaInfo.Has(vehicleID) || DepartureChecker.NowHasPotentialToSkipUnbunching(vehicleID, ref vehicleData))
             {
-                // now is not at terminus, which has potential to instant-depart
+                // now is not at terminus, which has potential to skip unbunching
                 // or, now is game fresh load, so no data, and we default to "no unbunching"
-                // wip
+                int waitTime = 12;
+                bool vehicleIsMinibus = vehicleData.m_leadingVehicle == 0 && vehicleData.m_trailingVehicle == 0 && VehicleUtil.GetMaxCarryingCapacityOfTrain(vehicleID, ref vehicleData) <= 20;
+                if (EBSModConfig.CanUseMinibusMode && vehicleIsMinibus)
+                {
+                    // minibus mode: allow faster departure if pax delta is small
+                    var paxDeltaInfo = VehiclePaxDeltaInfo.GetSafely(vehicleID);
+                    if (paxDeltaInfo.PaxDeltaCount <= 5)
+                    {
+                        waitTime = 4;
+                    }
+                }
+                if (!VehiclePaxDeltaInfo.VehicleSetHasPaxDelta(vehicleID, ref vehicleData) || vehicleData.m_waitCounter >= waitTime)
+                {
+                    // no pax delta; can skip unbunching
+                    // OR, we have waited enough
+                    unbunchingIntention = RubberbandingCommand.Go;
+                }
+                // note: we no longer directly manipulate the departure flag here.
             }
             else
             {
                 // now is at terminus, usually need to unbunch
-                unbunchingCommand = DepartureChecker.GetRubberbandingUnbunchingForVehicle(vehicleID, ref vehicleData);
+                unbunchingIntention = DepartureChecker.GetRubberbandingUnbunchingForVehicle(vehicleID, ref vehicleData);
             }
 
-            // regardless of what happened, have some common post-action checking.
-            TryTroubleshootWhyCannotDepart(ref __result, vehicleID, ref vehicleData);
+            // update the flag according to our intention
+            if (unbunchingIntention == RubberbandingCommand.Hold)
+            {
+                // don't go yet!
+                __result = false;
+            }
+            else if (unbunchingIntention == RubberbandingCommand.Go)
+            {
+                // we intend to go; has everyone boarded yet?
+                if (VehicleUtil.IsEveryoneAboardTheTrain(vehicleID, ref vehicleData))
+                {
+                    // yes indeed.
+                    __result = true;
+                }
+            }
 
             // status is finalized
             if (__result)

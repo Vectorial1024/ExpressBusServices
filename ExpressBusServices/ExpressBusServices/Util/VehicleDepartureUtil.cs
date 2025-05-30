@@ -38,15 +38,10 @@ namespace ExpressBusServices.Util
                 return;
             }
 
-            if (!VehiclePaxDeltaInfo.Has(vehicleID))
-            {
-                // we don't have data for this; abort!
-                return;
-            }
-
-            if (DepartureChecker.NowIsEligibleForInstantDeparture(vehicleID, ref vehicleData))
+            if (!VehiclePaxDeltaInfo.Has(vehicleID) || DepartureChecker.NowIsEligibleForInstantDeparture(vehicleID, ref vehicleData))
             {
                 // now is not at terminus, which has potential to instant-depart
+                // or, now is game fresh load, so no data, and we default to "no unbunching"
                 // wip
             }
             else

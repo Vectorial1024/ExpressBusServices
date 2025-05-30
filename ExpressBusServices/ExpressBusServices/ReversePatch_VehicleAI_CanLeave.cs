@@ -5,7 +5,7 @@ using HarmonyLib;
 namespace ExpressBusServices
 {
 	[HarmonyPatch(typeof(VehicleAI))]
-	[HarmonyPatch("CanLeave", MethodType.Normal)]
+	[HarmonyPatch(nameof(VehicleAI.CanLeave), MethodType.Normal)]
 	public class ReversePatch_VehicleAI_CanLeave
     {
 		[HarmonyReversePatch]

@@ -427,7 +427,7 @@ namespace ExpressBusServices
             // ---
             // begin checking!
 
-            if (VehicleHasEnoughUnbunchingSpacing(selfProgress.Value, lineProgress))
+            if (VehicleHasEnoughUnbunchingSpacing(selfProgress.Value, lineProgress, out float currentSpacing))
             {
                 // enough spacing already; go and catch up!
                 return RubberbandingCommand.Go;
@@ -443,7 +443,7 @@ namespace ExpressBusServices
         /// <param name="vehicleProgress">The vehicle progress of the vehicle V.</param>
         /// <param name="lineProgress"></param>
         /// <returns></returns>
-        private static bool VehicleHasEnoughUnbunchingSpacing(VehicleLineProgress vehicleProgress, TransportLineVehicleProgress lineProgress)
+        private static bool VehicleHasEnoughUnbunchingSpacing(VehicleLineProgress vehicleProgress, TransportLineVehicleProgress lineProgress, out float currentSpacing)
         {
             // determine ideal spacing first
             // this can potentially be exposed as a config for unbunch strength
@@ -455,6 +455,7 @@ namespace ExpressBusServices
             if (!frontVehicleProgress.HasValue)
             {
                 // ???
+                currentSpacing = 0;
                 return true;
             }
 
@@ -462,7 +463,9 @@ namespace ExpressBusServices
             if (progressSpacing < 0)
             {
                 // wrap around
+                progressSpacing += 1;
             }
+            currentSpacing = progressSpacing;
             return progressSpacing > idealSpacing;
         }
     }

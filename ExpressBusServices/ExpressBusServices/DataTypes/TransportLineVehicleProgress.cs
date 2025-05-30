@@ -3,7 +3,9 @@ using System.Collections.Generic;
 namespace ExpressBusServices.DataTypes
 {
     /// <summary>
-    /// An object that contains all vehicle progresses in this transport line for easy analysis.
+    /// An object that contains all vehicle progresses in this transport line at a given instant for easy analysis.
+    /// <para/>
+    /// Important: DO NOT persist this object! The data inside will go out of date very quickly.
     /// </summary>
     public class TransportLineVehicleProgress
     {

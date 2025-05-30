@@ -38,6 +38,7 @@ namespace ExpressBusServices.Util
                 return;
             }
 
+            RubberbandingCommand unbunchingCommand = RubberbandingCommand.Default;
             if (!VehiclePaxDeltaInfo.Has(vehicleID) || DepartureChecker.NowIsEligibleForInstantDeparture(vehicleID, ref vehicleData))
             {
                 // now is not at terminus, which has potential to instant-depart
@@ -46,8 +47,8 @@ namespace ExpressBusServices.Util
             }
             else
             {
-                // now is at terminus, usually no potential to instant-depart
-                // wip
+                // now is at terminus, usually need to unbunch
+                unbunchingCommand = DepartureChecker.GetRubberbandingUnbunchingForVehicle(vehicleID, ref vehicleData);
             }
 
             // regardless of what happened, have some common post-action checking.

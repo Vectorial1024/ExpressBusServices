@@ -6,8 +6,17 @@ namespace ExpressBusServices.DataTypes
     /// </summary>
     public enum RubberbandingCommand
     {
-        Release = 1,
+        /// <summary>
+        /// Vehicle is granted permission to leave the stop.
+        /// </summary>
+        Go = 1,
+        /// <summary>
+        /// Vehicle should wait at the station for unbunching.
+        /// </summary>
         Hold = -1,
+        /// <summary>
+        /// No comment; let vanilla decide.
+        /// </summary>
         Default = 0,
     }
 }

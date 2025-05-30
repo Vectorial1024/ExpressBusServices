@@ -393,6 +393,64 @@ namespace ExpressBusServices
         /// <returns>The rubberbanding unbunching command for the vehicle.</returns>
         public static RubberbandingCommand GetRubberbandingUnbunchingForVehicle(ushort vehicleID, ref Vehicle vehicleData)
         {
+            if (vehicleData.m_waitCounter >= 250)
+            {
+                // technical limit: we must let them go, otherwise they flip over and appear as if they have just arrived
+                // this might explain why sometimes IPT2 vehicles are apparently "stuck" when unbunching.
+                return RubberbandingCommand.Go;
+            }
+            ushort vehicleTransportLine = vehicleData.m_transportLine;
+            if (vehicleTransportLine == 0)
+            {
+                // not part of any user-defined public transport line; no comment from us!
+                return RubberbandingCommand.Default;
+            }
+
+            /*
+             * Analyze the public transport line with these objectives:
+             * 1. Locate the vehicle in the line
+             * 2. Locate the previous vehicle in the line (thus calculating the progress)
+             * 3. Count number of vehicles in the line
+             */
+            List<VehicleLineProgress> progressList = VehicleLineProgress.GetProgressList(vehicleTransportLine);
+            if (progressList.Count < 2)
+            {
+                // too few vehicles; no need to unbunch!
+                return RubberbandingCommand.Go;
+            }
+
+            // print the list for reference
+            /*
+            StringBuilder builder2 = new StringBuilder("Progresses:\n");
+            foreach (VehicleLineProgress prog in progressList)
+            {
+                builder2.AppendLine(prog.percentProgress.ToString());
+            }
+            Debug.Log(builder2.ToString());
+            */
+
+            // find this vehicle and its "previous" vehicle
+            int indexOfThis = 0;
+            int indexOfNext = 0;
+            for (int i = 0; i < progressList.Count; i++)
+            {
+                if (progressList[i].vehicleID == vehicleID)
+                {
+                    indexOfThis = i;
+                    indexOfNext = i + 1;
+                    break;
+                }
+            }
+            // must exist
+            if (indexOfNext >= progressList.Count)
+            {
+                // wrap around
+                indexOfNext = 0;
+            }
+
+            // ---
+            // begin checking!
+
             // wip
             return RubberbandingCommand.Default;
         }

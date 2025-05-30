@@ -427,14 +427,81 @@ namespace ExpressBusServices
             // ---
             // begin checking!
 
-            if (VehicleHasEnoughUnbunchingSpacing(selfProgress.Value, lineProgress, out float currentSpacing))
+            if (VehicleHasEnoughUnbunchingSpacing(selfProgress.Value, lineProgress, out float currentSpacing, out float idealSpacing))
             {
                 // enough spacing already; go and catch up!
                 return RubberbandingCommand.Go;
             }
 
-            // wip
-            return RubberbandingCommand.Default;
+            /*
+             * not enough spacing; possible causes:
+             * - natural; no jams, but front vehicle just hasn't got there yet
+             * - traffic jam; front vehicle blocked by jam and hasn't got there
+             * - redeployment; redeploying to the immediate next stop of current stop will show as "not enough spacing"
+             *
+             * determine which waiting style to use by checking overcrowdedness.
+             * with this, rubberbanding is achieved.
+             */
+
+            int bunchedVehiclesCount = CountSelfAndBehindBunchingVehicles(selfProgress.Value, lineProgress);
+            int targetWaitCounter;
+            if (bunchedVehiclesCount > 3)
+            {
+                // overcrowding; use fast waiting time
+                // for each extra vehicle after the 3rd one, decrease uniformly such that the minimum amount of time waiting is at 16 (1.33x boarding time) with 8 vehicles waiting
+                targetWaitCounter = Mathf.Max(64 - (bunchedVehiclesCount - 3) * 6, 16);
+            }
+            else
+            {
+                // not overcrowded; use spacing waiting time
+                // we apply a curve to guard the wait counter.
+                /*
+                 * note:
+                 * this curve (a multiplier) is designed with the following in mind:
+                 * - it becomes 1 when spacing progress reaches 1
+                 * - it increases somewhat inversely when spacing progress is less than 1
+                 *
+                 * we set the increment rate to 2 to hopefully make it less likely to be exceeded by the increasing waiting time itself
+                 */
+                float standardWaitCounter = 64;
+                float curveProgressSpacing = currentSpacing / idealSpacing;
+                float curveIncrementRate = 2f;
+                float curveFactor = curveIncrementRate * 2;
+                targetWaitCounter = (int) ((curveFactor / curveProgressSpacing - (curveFactor - 1)) * standardWaitCounter);
+            }
+
+            // decide
+            return vehicleData.m_waitCounter >= targetWaitCounter ? RubberbandingCommand.Go : RubberbandingCommand.Hold;
+        }
+
+        private static int CountSelfAndBehindBunchingVehicles(VehicleLineProgress vehicleProgress, TransportLineVehicleProgress lineProgress)
+        {
+            // includes self
+            // counts how many vehicles are currently bunched at a stop
+            ushort selfVehicleID = vehicleProgress.vehicleID;
+            int vehicleCount = 1;
+            float detectionSpacing = UnbunchingProximityPercentDist;
+            float selfPercentProgress = vehicleProgress.percentProgress;
+            VehicleLineProgress? backVehicleProgress = lineProgress.GetProgressOfBackOf(vehicleProgress.vehicleID);
+            while (backVehicleProgress.HasValue && backVehicleProgress.Value.vehicleID != selfVehicleID)
+            {
+                // check spacing
+                VehicleLineProgress innerBackVehicleProgress = backVehicleProgress.Value;
+                float backSpacing = selfPercentProgress - innerBackVehicleProgress.percentProgress;
+                if (backSpacing < 0)
+                {
+                    // wrap around
+                    backSpacing += 1;
+                }
+                if (backSpacing > detectionSpacing)
+                {
+                    // too far away; stop!
+                    break;
+                }
+                vehicleCount++;
+                backVehicleProgress = lineProgress.GetProgressOfBackOf(innerBackVehicleProgress.vehicleID);
+            }
+            return vehicleCount;
         }
 
         /// <summary>
@@ -443,13 +510,18 @@ namespace ExpressBusServices
         /// <param name="vehicleProgress">The vehicle progress of the vehicle V.</param>
         /// <param name="lineProgress"></param>
         /// <param name="currentSpacing">The current unbunching spacing (same unit as vehicle progress) as calculated by this method.</param>
+        /// <param name="idealSpacing">The idea unbunching spacing (same unit as vehicle progress) as recommended by this method.</param>
         /// <returns></returns>
-        private static bool VehicleHasEnoughUnbunchingSpacing(VehicleLineProgress vehicleProgress, TransportLineVehicleProgress lineProgress, out float currentSpacing)
+        private static bool VehicleHasEnoughUnbunchingSpacing(
+            VehicleLineProgress vehicleProgress,
+            TransportLineVehicleProgress lineProgress,
+            out float currentSpacing,
+            out float idealSpacing)
         {
             // determine ideal spacing first
             // this can potentially be exposed as a config for unbunch strength
             float unbunchingBuffer = 0.2f;
-            float idealSpacing = (1 + unbunchingBuffer) / lineProgress.VehiclesCount;
+            idealSpacing = (1 + unbunchingBuffer) / lineProgress.VehiclesCount;
 
             // then, check current spacing
             VehicleLineProgress? frontVehicleProgress = lineProgress.GetProgressOfFrontOf(vehicleProgress.vehicleID);

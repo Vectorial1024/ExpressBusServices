@@ -11,7 +11,6 @@ namespace ExpressBusServices
         [HarmonyPriority(Priority.LowerThanNormal)]
         public static bool HandleBusAboutToLoadPassengers(ushort vehicleID, ref Vehicle data)
         {
-            BusPickDropLookupTable.Notify_PassengersAboutToBoardOntoBus(vehicleID, ref data);
             VehiclePaxDeltaInfo.Notify_VehicleStartsLoadingPax(vehicleID, ref data);
             if (BusStopSkippingLookupTable.BusShouldSkipPassengerLoading(vehicleID))
             {
@@ -24,7 +23,6 @@ namespace ExpressBusServices
         public static void HandleBusAlreadyLoadedPassengers(ushort vehicleID, ref Vehicle data)
         {
             BusStopSkippingLookupTable.ForgetBus(vehicleID);
-            BusPickDropLookupTable.Notify_PassengersAlreadyBoardedOntoBus(vehicleID, ref data);
             VehiclePaxDeltaInfo.Notify_VehicleFinishedLoadingPax(vehicleID, ref data);
         }
     }

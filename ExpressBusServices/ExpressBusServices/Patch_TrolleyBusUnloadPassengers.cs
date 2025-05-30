@@ -1,4 +1,5 @@
 ﻿using ColossalFramework;
+using ExpressBusServices.DataTypes;
 using ExpressBusServices.Redeployment;
 using ExpressBusServices.Util;
 using HarmonyLib;
@@ -57,7 +58,7 @@ namespace ExpressBusServices
         [HarmonyPostfix]
         public static void HandleBusArrivedAtTarget(ushort vehicleID, ref Vehicle data, ref int serviceCounter)
         {
-            BusPickDropLookupTable.Notify_PassengersAlightedFromBus(vehicleID, serviceCounter);
+            VehiclePaxDeltaInfo.Notify_VehicleFinishedUnloadingPax(vehicleID, serviceCounter);
         }
     }
 }

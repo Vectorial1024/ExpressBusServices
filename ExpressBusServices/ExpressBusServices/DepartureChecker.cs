@@ -101,6 +101,7 @@ namespace ExpressBusServices
             return itemClass.m_service != ItemClass.Service.PublicTransport || itemClass.m_subService != ItemClass.SubService.PublicTransportTrolleybus;
         }
 
+        [Obsolete("Refactor to use GetRubberbandingUnbunchingForVehicle instead.")]
         public static bool RecheckUnbunchingCanLeave(ushort vehicleID, ref Vehicle vehicleData)
         {
             // mainly for IPT2; there is probably some side effect that is caused by how the IPT2 plugin is influencing the work of IPT2 itself
@@ -115,6 +116,7 @@ namespace ExpressBusServices
             return canLeave;
         }
 
+        [Obsolete("Refactor to use GetRubberbandingUnbunchingForVehicle instead.")]
         public static bool RecheckUnbunchingShouldStay(ushort vehicleID, ref Vehicle vehicleData)
         {
             if (vehicleData.m_waitCounter >= 250)
@@ -381,6 +383,18 @@ namespace ExpressBusServices
             // Debug.Log(message);
 
             return vehicleData.m_waitCounter < designatedWaitingTime;
+        }
+
+        /// <summary>
+        /// Determines the rubberbanding unbunching command to be given to the vehicle.
+        /// </summary>
+        /// <param name="vehicleID">The ID of the vehicle in question.</param>
+        /// <param name="vehicleData">The data of the vehicle in question.</param>
+        /// <returns>The rubberbanding unbunching command for the vehicle.</returns>
+        public static RubberbandingCommand GetRubberbandingUnbunchingForVehicle(ushort vehicleID, ref Vehicle vehicleData)
+        {
+            // wip
+            return RubberbandingCommand.Default;
         }
     }
 }

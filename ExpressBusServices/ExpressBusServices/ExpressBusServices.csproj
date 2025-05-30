@@ -97,7 +97,6 @@
     <Compile Include="Patch_TrolleyBusLoadsPassengers.cs" />
     <Compile Include="Patch_TrolleyBusAiCorrector.cs" />
     <Compile Include="Patch_BusAiCorrector.cs" />
-    <Compile Include="Patch_IPT2_TransportLoadsPassengers.cs" />
     <Compile Include="Patch_BusLoadsPassengers.cs" />
     <Compile Include="Patch_BusUnloadPassengers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

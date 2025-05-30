@@ -408,53 +408,62 @@ namespace ExpressBusServices
                 return RubberbandingCommand.Default;
             }
 
-            /*
-             * Analyze the public transport line with these objectives:
-             * 1. Locate the vehicle in the line
-             * 2. Locate the previous vehicle in the line (thus calculating the progress)
-             * 3. Count number of vehicles in the line
-             */
-            List<VehicleLineProgress> progressList = VehicleLineProgress.GetProgressList(vehicleTransportLine);
-            if (progressList.Count < 2)
+            // get the instant analysis object
+            TransportLineVehicleProgress lineProgress = VehicleLineProgress.GetTransportLineVehicleProgress(vehicleTransportLine);
+            if (lineProgress.VehiclesCount < 2)
             {
                 // too few vehicles; no need to unbunch!
                 return RubberbandingCommand.Go;
             }
 
-            // print the list for reference
-            /*
-            StringBuilder builder2 = new StringBuilder("Progresses:\n");
-            foreach (VehicleLineProgress prog in progressList)
+            // find our progress in the list
+            VehicleLineProgress? selfProgress = lineProgress.GetProgressOf(vehicleID);
+            if (!selfProgress.HasValue)
             {
-                builder2.AppendLine(prog.percentProgress.ToString());
-            }
-            Debug.Log(builder2.ToString());
-            */
-
-            // find this vehicle and its "previous" vehicle
-            int indexOfThis = 0;
-            int indexOfNext = 0;
-            for (int i = 0; i < progressList.Count; i++)
-            {
-                if (progressList[i].vehicleID == vehicleID)
-                {
-                    indexOfThis = i;
-                    indexOfNext = i + 1;
-                    break;
-                }
-            }
-            // must exist
-            if (indexOfNext >= progressList.Count)
-            {
-                // wrap around
-                indexOfNext = 0;
+                // ???
+                return RubberbandingCommand.Default;
             }
 
             // ---
             // begin checking!
 
+            if (VehicleHasEnoughUnbunchingSpacing(selfProgress.Value, lineProgress))
+            {
+                // enough spacing already; go and catch up!
+                return RubberbandingCommand.Go;
+            }
+
             // wip
             return RubberbandingCommand.Default;
+        }
+
+        /// <summary>
+        /// Given a vehicle V, returns whether V has unbunched enough that we consider V to have enough spacing with the vehicle in front of V.
+        /// </summary>
+        /// <param name="vehicleProgress">The vehicle progress of the vehicle V.</param>
+        /// <param name="lineProgress"></param>
+        /// <returns></returns>
+        private static bool VehicleHasEnoughUnbunchingSpacing(VehicleLineProgress vehicleProgress, TransportLineVehicleProgress lineProgress)
+        {
+            // determine ideal spacing first
+            // this can potentially be exposed as a config for unbunch strength
+            float unbunchingBuffer = 0.2f;
+            float idealSpacing = (1 + unbunchingBuffer) / lineProgress.VehiclesCount;
+
+            // then, check current spacing
+            VehicleLineProgress? frontVehicleProgress = lineProgress.GetProgressOfFrontOf(vehicleProgress.vehicleID);
+            if (!frontVehicleProgress.HasValue)
+            {
+                // ???
+                return true;
+            }
+
+            float progressSpacing = frontVehicleProgress.Value.percentProgress - vehicleProgress.percentProgress;
+            if (progressSpacing < 0)
+            {
+                // wrap around
+            }
+            return progressSpacing > idealSpacing;
         }
     }
 }

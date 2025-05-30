@@ -16,6 +16,8 @@ namespace ExpressBusServices.DataTypes
 
         private readonly Dictionary<ushort, int> _progressIndex = new Dictionary<ushort, int>();
 
+        public int VehiclesCount => _progressArray.Length;
+
         /// <summary>
         /// Creates an instance.
         /// </summary>

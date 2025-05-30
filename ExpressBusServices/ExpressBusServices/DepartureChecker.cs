@@ -14,8 +14,14 @@ namespace ExpressBusServices
     {
         public static readonly float UnbunchingProximityPercentDist = 0.02f;
 
-        // if true, then this mod will intervene in handling instant departures etc.
+        [Obsolete("To make the code more obvious, change to use NowHasPotentialToSkipUnbunching instead.")]
         public static bool NowIsEligibleForInstantDeparture(ushort vehicleID, ref Vehicle vehicleData)
+        {
+            return NowHasPotentialToSkipUnbunching(vehicleID, ref vehicleData);
+        }
+
+        // if true, then this mod will intervene in handling instant departures etc.
+        public static bool NowHasPotentialToSkipUnbunching(ushort vehicleID, ref Vehicle vehicleData)
         {
             if (BusIsIntercityBus(vehicleData))
             {

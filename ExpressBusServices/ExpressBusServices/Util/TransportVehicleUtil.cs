@@ -54,7 +54,7 @@ namespace ExpressBusServices.Util
             }
             // at first of list
             firstVehicleID = currentID;
-            firstVehicleData = data;
+            firstVehicleData = currentData;
         }
     }
 }

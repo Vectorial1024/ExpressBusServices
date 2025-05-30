@@ -442,6 +442,7 @@ namespace ExpressBusServices
         /// </summary>
         /// <param name="vehicleProgress">The vehicle progress of the vehicle V.</param>
         /// <param name="lineProgress"></param>
+        /// <param name="currentSpacing">The current unbunching spacing (same unit as vehicle progress) as calculated by this method.</param>
         /// <returns></returns>
         private static bool VehicleHasEnoughUnbunchingSpacing(VehicleLineProgress vehicleProgress, TransportLineVehicleProgress lineProgress, out float currentSpacing)
         {

@@ -54,7 +54,41 @@ namespace ExpressBusServices.Util
                         waitTime = 4;
                     }
                 }
-                if (!VehiclePaxDeltaInfo.VehicleSetHasPaxDelta(vehicleID, ref vehicleData) || vehicleData.m_waitCounter >= waitTime)
+
+                // class-specific checking
+                if (DepartureChecker.VehicleIsTram(vehicleData))
+                {
+                    // special handling for trams
+                    if (EBSModConfig.CurrentExpressTramMode == EBSModConfig.ExpressTramMode.TRAM)
+                    {
+                        // brief stop and go
+                        // prototype is Hong Kong Tram
+                        if (VehiclePaxDeltaInfo.VehicleSetHasPaxDelta(vehicleID, ref vehicleData))
+                        {
+                            // has pax delta; wait fully
+                            if (vehicleData.m_waitCounter >= waitTime)
+                            {
+                                unbunchingIntention = RubberbandingCommand.Go;
+                            }
+                        }
+                        else
+                        {
+                            // no pax delta; go now!
+                            unbunchingIntention = RubberbandingCommand.Go;
+                        }
+                    }
+                    else if (EBSModConfig.CurrentExpressTramMode == EBSModConfig.ExpressTramMode.LIGHT_RAIL)
+                    {
+                        // full stop but no unbunch go
+                        // prototype is Hong Kong LRT
+                        if (vehicleData.m_waitCounter >= waitTime)
+                        {
+                            // whatever happens, they need to wait for the timer to finish
+                            unbunchingIntention = RubberbandingCommand.Go;
+                        }
+                    }
+                }
+                else if (!VehiclePaxDeltaInfo.VehicleSetHasPaxDelta(vehicleID, ref vehicleData) || vehicleData.m_waitCounter >= waitTime)
                 {
                     // no pax delta; can skip unbunching
                     // OR, we have waited enough

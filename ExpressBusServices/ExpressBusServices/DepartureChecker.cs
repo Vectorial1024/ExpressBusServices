@@ -127,6 +127,7 @@ namespace ExpressBusServices
             return VehicleLineProgressNeedToChill(vehicleID, ref vehicleData);
         }
 
+        [Obsolete]
         private static bool VehicleLineProgressNeedToCatchUp(ushort vehicleID, ref Vehicle vehicleData)
         {
             ushort transportLine = vehicleData.m_transportLine;
@@ -253,6 +254,7 @@ namespace ExpressBusServices
             return vehicleData.m_waitCounter > fasterWaitingTime;
         }
 
+        [Obsolete]
         private static bool VehicleLineProgressNeedToChill(ushort vehicleID, ref Vehicle vehicleData)
         {
             ushort transportLine = vehicleData.m_transportLine;

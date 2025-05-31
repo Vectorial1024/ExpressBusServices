@@ -231,7 +231,7 @@ namespace ExpressBusServices
             if (bunchedVehiclesCount > 3)
             {
                 // overcrowding; use fast waiting time
-                // for each extra vehicle after the 3rd one, decrease uniformly such that the minimum amount of time waiting is at 16 (1.33x boarding time) with 8 vehicles waiting
+                // for each extra vehicle after the 3rd one, decrease uniformly such that the minimum amount of time waiting is at 16 (1.33x boarding time) with 11 vehicles waiting
                 targetWaitCounter = Mathf.Max(64 - (bunchedVehiclesCount - 3) * 6, 16);
             }
             else

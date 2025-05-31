@@ -216,6 +216,24 @@ namespace ExpressBusServices
                 // enough spacing already; go and catch up!
                 return vehicleData.m_waitCounter >= targetWaitCounter ? RubberbandingCommand.Go : RubberbandingCommand.Hold;
             }
+            if (currentSpacing <= 0.01f)
+            {
+                // enforce minimum spacing
+                /*
+                 * for some reason, there is a possibility of vehicles just bunching *inside* each other at terminus stops,
+                 * which breaks the below "stop is crowded" logic
+                 * we enforce a hard minimum spacing of "1% progress".
+                 * even if we are using the spacing formula below, with a 0.20 buffer value, this would be equivalent to 120 vehicles in the same line,
+                 * and to be honest, having 120 vehicles in the same line is rather unlikely, so no problems
+                 *
+                 * still, this may cause problems if the terminus is somehow getting too crowded and vehicles cannot leave the stop,
+                 * but that seems like a design problem and therefore a skill issue. not our problem.
+                 *
+                 * by enforcing minimum spacing, these highly-bunched vehicles can be unbunched "naturally".
+                 */
+                // always hold
+                return RubberbandingCommand.Hold;
+            }
 
             /*
              * not enough spacing; possible causes:

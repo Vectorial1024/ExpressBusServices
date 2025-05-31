@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using HarmonyLib;
+using JetBrains.Annotations;
 
 namespace ExpressBusServices
 {
@@ -10,6 +11,7 @@ namespace ExpressBusServices
 		internal static bool PatchIsSuccessful_HasTLM { get; set; }
 
 		[HarmonyPrepare]
+		[UsedImplicitly]
 		public static bool ShouldPatch()
 		{
 			return TargetMethod() != null;

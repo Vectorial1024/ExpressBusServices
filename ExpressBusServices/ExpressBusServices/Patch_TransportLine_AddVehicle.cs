@@ -1,14 +1,17 @@
 ﻿using ExpressBusServices.Redeployment;
 using HarmonyLib;
+using JetBrains.Annotations;
 
 namespace ExpressBusServices
 {
     [HarmonyPatch(typeof(TransportLine))]
-    [HarmonyPatch("AddVehicle", MethodType.Normal)]
+    [HarmonyPatch(nameof(TransportLine.AddVehicle), MethodType.Normal)]
+    [UsedImplicitly]
     public class Patch_TransportLine_AddVehicle
     {
         [HarmonyPostfix]
-        public static void PostFix(ushort vehicleID, ref Vehicle data, bool findTargetStop)
+        [UsedImplicitly]
+        public static void CheckRedeploymentInstructions(ushort vehicleID, ref Vehicle data, bool findTargetStop)
         {
             if (!findTargetStop)
             {

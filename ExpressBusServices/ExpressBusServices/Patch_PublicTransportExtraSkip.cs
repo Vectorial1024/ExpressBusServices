@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using JetBrains.Annotations;
 
 namespace ExpressBusServices
 {
     // set priority such that IPT2 can execute first; essentially this should execute last
     [HarmonyPatch]
     [HarmonyPriority(Priority.LowerThanNormal)]
+    [UsedImplicitly]
     public class Patch_PublicTransportExtraSkip
     {
         /*
@@ -17,12 +19,14 @@ namespace ExpressBusServices
          */
 
         [HarmonyTargetMethod]
+        [UsedImplicitly]
         public static MethodBase TargetRelevantMethod()
         {
             return AccessTools.Method(typeof(VehicleAI), "ArrivingToDestination");
         }
 
         [HarmonyPrepare]
+        [UsedImplicitly]
         public static bool DetermineIfShouldPatch()
         {
             // dont do it if TLM is detected
@@ -34,6 +38,7 @@ namespace ExpressBusServices
         }
 
         [HarmonyPrefix]
+        [UsedImplicitly]
         public static bool ExtraSkippingLogic(VehicleAI __instance, ushort vehicleID, ref Vehicle vehicleData)
         {
             // FileLog.Log($"Current Express Mode: {EBSModConfig.CurrentExpressBusMode}; Do Extra Skip? ${(int)EBSModConfig.CurrentExpressBusMode < (int)EBSModConfig.ExpressMode.AGGRESSIVE}");
@@ -90,7 +95,7 @@ namespace ExpressBusServices
                 // I think this is to let it iterate their stuff
                 AccessTools.Method(typeof(BusAI), "UnloadPassengers").Invoke(busAi, unloadParams);
                 AccessTools.Method(typeof(BusAI), "LoadPassengers").Invoke(busAi, unloadParams);
-            } 
+            }
             else if (__instance is TrolleybusAI trolleyAi)
             {
                 if (!(bool) AccessTools.Method(typeof(TrolleybusAI), "StartPathfind", new Type[] { typeof(ushort), typeof(Vehicle).MakeByRefType() }).Invoke(trolleyAi, pathfindParams))
@@ -104,7 +109,7 @@ namespace ExpressBusServices
                 // I think this is to let it iterate their stuff
                 AccessTools.Method(typeof(TrolleybusAI), "UnloadPassengers").Invoke(trolleyAi, unloadParams);
                 AccessTools.Method(typeof(TrolleybusAI), "LoadPassengers").Invoke(trolleyAi, unloadParams);
-            } 
+            }
             else
             {
                 // we should have already filtered this...?

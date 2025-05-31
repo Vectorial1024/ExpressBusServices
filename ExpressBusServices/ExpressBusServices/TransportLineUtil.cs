@@ -1,8 +1,5 @@
 ﻿using ColossalFramework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace ExpressBusServices
@@ -10,7 +7,7 @@ namespace ExpressBusServices
     /*
      * Special thanks to klyte45 from TLM for letting me use this logic.
      */
-    public class TransportLineUtil
+    public static class TransportLineUtil
     {
         public static void CountPassengersWaiting(ushort currentStop, out int residents, out int tourists)
         {

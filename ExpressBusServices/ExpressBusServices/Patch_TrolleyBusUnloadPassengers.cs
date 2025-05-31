@@ -1,16 +1,18 @@
-﻿using ColossalFramework;
-using ExpressBusServices.DataTypes;
+﻿using ExpressBusServices.DataTypes;
 using ExpressBusServices.Redeployment;
 using ExpressBusServices.Util;
 using HarmonyLib;
+using JetBrains.Annotations;
 
 namespace ExpressBusServices
 {
     [HarmonyPatch(typeof(TrolleybusAI))]
     [HarmonyPatch(nameof(TrolleybusAI.TransportArriveAtTarget), MethodType.Normal)]
+    [UsedImplicitly]
     public class Patch_TrolleyBusUnloadPassengers
     {
         [HarmonyPrefix]
+        [UsedImplicitly]
         public static void CheckRedeployment(ushort vehicleID, ref Vehicle data, ref bool forceUnload)
         {
             if (DepartureChecker.VehicleIsNotBus(data))
@@ -56,6 +58,7 @@ namespace ExpressBusServices
         }
 
         [HarmonyPostfix]
+        [UsedImplicitly]
         public static void HandleBusArrivedAtTarget(ushort vehicleID, ref Vehicle data, ref int serviceCounter)
         {
             VehiclePaxDeltaInfo.Notify_VehicleFinishedUnloadingPax(vehicleID, serviceCounter);

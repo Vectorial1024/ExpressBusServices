@@ -1,14 +1,17 @@
 ﻿using ExpressBusServices.Redeployment;
 using HarmonyLib;
+using JetBrains.Annotations;
 
 namespace ExpressBusServices
 {
     [HarmonyPatch(typeof(TransportManager))]
-    [HarmonyPatch("ReleaseLine", MethodType.Normal)]
+    [HarmonyPatch(nameof(TransportManager.ReleaseLine), MethodType.Normal)]
+    [UsedImplicitly]
     public class Patch_TransportManager_ReleaseLine
     {
         [HarmonyPostfix]
-        public static void PostFix(ushort lineID)
+        [UsedImplicitly]
+        public static void CleanUpTransportLine(ushort lineID)
         {
             TeleportRedeployInstructions.NotifyTransportLineDeleted(lineID);
         }

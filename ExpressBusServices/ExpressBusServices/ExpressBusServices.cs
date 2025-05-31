@@ -1,27 +1,17 @@
 ﻿using CitiesHarmony.API;
 using ColossalFramework.UI;
 using ICities;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace ExpressBusServices
 {
+    [UsedImplicitly]
     public class ExpressBusServices : LoadingExtensionBase, IUserMod
     {
-        public virtual string Name
-        {
-            get
-            {
-                return "Express Bus Services";
-            }
-        }
+        public virtual string Name => "Express Bus Services";
 
-        public virtual string Description
-        {
-            get
-            {
-                return "Unlock the peak efficiency of buses; now also improves trams!";
-            }
-        }
+        public virtual string Description => "Unlock the peak efficiency of buses; now also improves trams!";
 
         /// <summary>
         /// Executed whenever a level completes its loading process.
@@ -76,6 +66,7 @@ namespace ExpressBusServices
         // It seems they will dynamically find whether a certain method that matches some criteria
         // exists, and then apply UI settings to it.
         // This is kinda like an in-house Harmony Lib except it targets some very specific areas.
+        [UsedImplicitly]
         public void OnSettingsUI(UIHelperBase helper)
         {
             UIHelperBase group = helper.AddGroup("Express Bus Services: Settings");

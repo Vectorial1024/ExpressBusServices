@@ -1,13 +1,14 @@
-﻿using ColossalFramework;
-using ExpressBusServices.DataTypes;
+﻿using ExpressBusServices.DataTypes;
 using ExpressBusServices.Redeployment;
 using ExpressBusServices.Util;
 using HarmonyLib;
+using JetBrains.Annotations;
 
 namespace ExpressBusServices
 {
     [HarmonyPatch(typeof(BusAI))]
     [HarmonyPatch(nameof(BusAI.TransportArriveAtTarget), MethodType.Normal)]
+    [UsedImplicitly]
     public class Patch_BusUnloadPassengers
     {
         /*
@@ -16,6 +17,7 @@ namespace ExpressBusServices
          */
 
         [HarmonyPrefix]
+        [UsedImplicitly]
         public static void CheckRedeployment(ushort vehicleID, ref Vehicle data, ref bool forceUnload)
         {
             // reset the relevant pax-delta info first
@@ -69,6 +71,7 @@ namespace ExpressBusServices
         }
 
         [HarmonyPostfix]
+        [UsedImplicitly]
         public static void HandleBusArrivedAtTarget(ushort vehicleID, ref Vehicle data, ref int serviceCounter)
         {
             VehiclePaxDeltaInfo.Notify_VehicleFinishedUnloadingPax(vehicleID, serviceCounter);

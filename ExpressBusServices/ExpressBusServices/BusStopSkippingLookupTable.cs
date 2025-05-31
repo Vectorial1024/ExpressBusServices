@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace ExpressBusServices
 {
     // this is used so that eg IPT2 can update their UI screens correctly
-    public class BusStopSkippingLookupTable
+    public static class BusStopSkippingLookupTable
     {
         // what vehicle ID will skip the stop
         private static HashSet<ushort> busSkipStopTable;

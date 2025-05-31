@@ -1,14 +1,9 @@
 ﻿using ColossalFramework;
 using ExpressBusServices.PerformanceBoost;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using static RenderManager;
 
 namespace ExpressBusServices
 {
-    public class VehicleUtil
+    public static class VehicleUtil
     {
         public static int GetMaxCarryingCapacityOfTrain(ushort vehicleID, ref Vehicle data)
         {

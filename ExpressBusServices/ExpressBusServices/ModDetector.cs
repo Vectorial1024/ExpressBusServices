@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace ExpressBusServices
 {
-    internal class ModDetector
+    internal static class ModDetector
     {
         public static readonly ulong MODID_KLYTE45_TRANSPORT_LINES_MANAGER = 1312767991;
 

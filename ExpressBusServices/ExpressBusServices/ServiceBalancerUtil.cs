@@ -1,8 +1,4 @@
-﻿using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace ExpressBusServices
@@ -74,7 +70,7 @@ namespace ExpressBusServices
             TransportLineSegmentAnalysis selfAnalysis = analysisList[0];
             float selfAvePax = selfAnalysis.paxCount * 1.0f / selfAnalysis.stopCount;
             List<float> otherAvePaxList = new List<float>();
-            List<TransportLineSegmentAnalysis> acceptedList = new List<TransportLineSegmentAnalysis>(); 
+            List<TransportLineSegmentAnalysis> acceptedList = new List<TransportLineSegmentAnalysis>();
             bool skipNext = true;
             float summedTotal = 0;
             foreach (TransportLineSegmentAnalysis analysis in analysisList)

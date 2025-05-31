@@ -40,7 +40,7 @@ namespace ExpressBusServices.Util
                 return;
             }
 
-            RubberbandingCommand unbunchingIntention = RubberbandingCommand.Default;
+            DepartureIntention unbunchingIntention = DepartureIntention.Default;
             // note: no-data cases will need to be handled at respective methods
             // otherwise, will cause vehicles to e.g. ignore unbunching
             if (DepartureChecker.NowHasPotentialToSkipUnbunching(vehicleID, ref vehicleData))
@@ -56,12 +56,12 @@ namespace ExpressBusServices.Util
             }
 
             // update the flag according to our intention
-            if (unbunchingIntention == RubberbandingCommand.Hold)
+            if (unbunchingIntention == DepartureIntention.Hold)
             {
                 // don't go yet!
                 __result = false;
             }
-            else if (unbunchingIntention == RubberbandingCommand.Go)
+            else if (unbunchingIntention == DepartureIntention.Go)
             {
                 // we intend to go; has everyone boarded yet?
                 if (VehicleUtil.IsEveryoneAboardTheTrain(vehicleID, ref vehicleData))

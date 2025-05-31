@@ -1,10 +1,12 @@
 namespace ExpressBusServices.DataTypes
 {
     /// <summary>
-    /// Represents the rubberbanding command to be given to the vehicle that asked for it.
+    /// Represents the departure intention of the vehicle that asked for it.
+    /// This can be used for rubberbanding unbunching, or just plan per-stop departure control.
+    /// <para/>
     /// Vehicles should act according to this command.
     /// </summary>
-    public enum RubberbandingCommand
+    public enum DepartureIntention
     {
         /// <summary>
         /// Vehicle is granted permission to leave the stop.

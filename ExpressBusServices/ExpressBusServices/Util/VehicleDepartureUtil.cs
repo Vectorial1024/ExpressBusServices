@@ -10,6 +10,8 @@ namespace ExpressBusServices.Util
         /// <summary>
         /// The centralized method for reviewing whether the given local public transport vehicle should change its departure status.
         /// This mod may hold or release vehicles according to a list of criteria, essentially overriding vanilla logic.
+        /// <para/>
+        /// DO NOT call this for irrelevant/unsupported vehicles!
         /// </summary>
         /// <param name="__result">The result of this operation; if true, signals the game engine to depart the vehicle at the next sim-step.</param>
         /// <param name="vehicleID">The ID of the vehicle in question.</param>
@@ -39,67 +41,18 @@ namespace ExpressBusServices.Util
             }
 
             RubberbandingCommand unbunchingIntention = RubberbandingCommand.Default;
-            if (!VehiclePaxDeltaInfo.Has(vehicleID) || DepartureChecker.NowHasPotentialToSkipUnbunching(vehicleID, ref vehicleData))
+            // note: no-data cases will need to be handled at respective methods
+            // otherwise, will cause vehicles to e.g. ignore unbunching
+            if (DepartureChecker.NowHasPotentialToSkipUnbunching(vehicleID, ref vehicleData))
             {
                 // now is not at terminus, which has potential to skip unbunching
-                // or, now is game fresh load, so no data, and we default to "no unbunching"
-                int waitTime = 12;
-                bool vehicleIsMinibus = vehicleData.m_leadingVehicle == 0 && vehicleData.m_trailingVehicle == 0 && VehicleUtil.GetMaxCarryingCapacityOfTrain(vehicleID, ref vehicleData) <= 20;
-                if (EBSModConfig.CanUseMinibusMode && vehicleIsMinibus)
-                {
-                    // minibus mode: allow faster departure if pax delta is small
-                    var paxDeltaInfo = VehiclePaxDeltaInfo.GetSafely(vehicleID);
-                    if (paxDeltaInfo.PaxDeltaCount <= 5)
-                    {
-                        waitTime = 4;
-                    }
-                }
-
-                // class-specific checking
-                if (DepartureChecker.VehicleIsTram(vehicleData))
-                {
-                    // special handling for trams
-                    if (EBSModConfig.CurrentExpressTramMode == EBSModConfig.ExpressTramMode.TRAM)
-                    {
-                        // brief stop and go
-                        // prototype is Hong Kong Tram
-                        if (VehiclePaxDeltaInfo.VehicleSetHasPaxDelta(vehicleID, ref vehicleData))
-                        {
-                            // has pax delta; wait fully
-                            if (vehicleData.m_waitCounter >= waitTime)
-                            {
-                                unbunchingIntention = RubberbandingCommand.Go;
-                            }
-                        }
-                        else
-                        {
-                            // no pax delta; go now!
-                            unbunchingIntention = RubberbandingCommand.Go;
-                        }
-                    }
-                    else if (EBSModConfig.CurrentExpressTramMode == EBSModConfig.ExpressTramMode.LIGHT_RAIL)
-                    {
-                        // full stop but no unbunch go
-                        // prototype is Hong Kong LRT
-                        if (vehicleData.m_waitCounter >= waitTime)
-                        {
-                            // whatever happens, they need to wait for the timer to finish
-                            unbunchingIntention = RubberbandingCommand.Go;
-                        }
-                    }
-                }
-                else if (!VehiclePaxDeltaInfo.VehicleSetHasPaxDelta(vehicleID, ref vehicleData) || vehicleData.m_waitCounter >= waitTime)
-                {
-                    // no pax delta; can skip unbunching
-                    // OR, we have waited enough
-                    unbunchingIntention = RubberbandingCommand.Go;
-                }
                 // note: we no longer directly manipulate the departure flag here.
+                unbunchingIntention = DepartureChecker.GetInstantDepartIntentionForVehicle(vehicleID, ref vehicleData);
             }
             else
             {
                 // now is at terminus, usually need to unbunch
-                unbunchingIntention = DepartureChecker.GetRubberbandingUnbunchingForVehicle(vehicleID, ref vehicleData);
+                unbunchingIntention = DepartureChecker.GetRubberbandingIntentionForVehicle(vehicleID, ref vehicleData);
             }
 
             // update the flag according to our intention

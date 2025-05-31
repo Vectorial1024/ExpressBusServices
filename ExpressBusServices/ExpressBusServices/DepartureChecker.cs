@@ -92,13 +92,79 @@ namespace ExpressBusServices
         }
 
         /// <summary>
+        /// Determines the midway instant-depart command to be given to the vehicle.
+        /// </summary>
+        /// <param name="vehicleID">The ID of the vehicle in question.</param>
+        /// <param name="vehicleData">The data of the vehicle in question.</param>
+        /// <returns>The midway instant-depart command for the vehicle.</returns>
+        public static RubberbandingCommand GetInstantDepartIntentionForVehicle(ushort vehicleID, ref Vehicle vehicleData)
+        {
+            if (!VehiclePaxDeltaInfo.Has(vehicleID))
+            {
+                // no data; most likely fresh-load from savegame
+                // just hold for 12 ticks as usual.
+                return vehicleData.m_waitCounter >= 12 ? RubberbandingCommand.Go : RubberbandingCommand.Hold;
+            }
+
+            // have data; check for pax delta
+            int waitTime = 12;
+            bool vehicleIsMinibus = vehicleData.m_leadingVehicle == 0 && vehicleData.m_trailingVehicle == 0 && VehicleUtil.GetMaxCarryingCapacityOfTrain(vehicleID, ref vehicleData) <= 20;
+            if (EBSModConfig.CanUseMinibusMode && vehicleIsMinibus)
+            {
+                // minibus mode: allow faster departure if pax delta is small
+                var paxDeltaInfo = VehiclePaxDeltaInfo.GetSafely(vehicleID);
+                if (paxDeltaInfo.PaxDeltaCount <= 5)
+                {
+                    waitTime = 4;
+                }
+            }
+
+            // class-specific checking
+            if (VehicleIsTram(vehicleData))
+            {
+                // special handling for trams
+                if (EBSModConfig.CurrentExpressTramMode == EBSModConfig.ExpressTramMode.TRAM)
+                {
+                    // brief stop and go
+                    // prototype is Hong Kong Tram
+                    if (!VehiclePaxDeltaInfo.VehicleSetHasPaxDelta(vehicleID, ref vehicleData))
+                    {
+                        // no pax delta; go now!
+                        return RubberbandingCommand.Go;
+                    }
+                    // hax pax delta; wait fully
+                    return vehicleData.m_waitCounter >= waitTime ? RubberbandingCommand.Go : RubberbandingCommand.Hold;
+                }
+                if (EBSModConfig.CurrentExpressTramMode == EBSModConfig.ExpressTramMode.LIGHT_RAIL)
+                {
+                    // full stop but no unbunch go
+                    // prototype is Hong Kong LRT
+                    // whatever happens, they need to wait for the timer to finish
+                    return vehicleData.m_waitCounter >= waitTime ? RubberbandingCommand.Go : RubberbandingCommand.Hold;
+                }
+                // tram mode not enabled
+                return RubberbandingCommand.Default;
+            }
+
+            // this should be buses/trolleybuses
+            if (!VehiclePaxDeltaInfo.VehicleSetHasPaxDelta(vehicleID, ref vehicleData))
+            {
+                // no pax delta; can skip unbunching
+                return RubberbandingCommand.Go;
+            }
+            // has pax delta; wait fully!
+            return vehicleData.m_waitCounter >= waitTime ? RubberbandingCommand.Go : RubberbandingCommand.Hold;
+        }
+
+        /// <summary>
         /// Determines the rubberbanding unbunching command to be given to the vehicle.
         /// </summary>
         /// <param name="vehicleID">The ID of the vehicle in question.</param>
         /// <param name="vehicleData">The data of the vehicle in question.</param>
         /// <returns>The rubberbanding unbunching command for the vehicle.</returns>
-        public static RubberbandingCommand GetRubberbandingUnbunchingForVehicle(ushort vehicleID, ref Vehicle vehicleData)
+        public static RubberbandingCommand GetRubberbandingIntentionForVehicle(ushort vehicleID, ref Vehicle vehicleData)
         {
+            int targetWaitCounter = 12;
             if (vehicleData.m_waitCounter >= 250)
             {
                 // technical limit: we must let them go, otherwise they flip over and appear as if they have just arrived
@@ -117,7 +183,7 @@ namespace ExpressBusServices
             if (lineProgress.VehiclesCount < 2)
             {
                 // too few vehicles; no need to unbunch!
-                return RubberbandingCommand.Go;
+                return vehicleData.m_waitCounter >= targetWaitCounter ? RubberbandingCommand.Go : RubberbandingCommand.Hold;
             }
 
             // find our progress in the list
@@ -148,7 +214,7 @@ namespace ExpressBusServices
             if (VehicleHasEnoughUnbunchingSpacing(selfProgress.Value, lineProgress, out float currentSpacing, out float idealSpacing))
             {
                 // enough spacing already; go and catch up!
-                return RubberbandingCommand.Go;
+                return vehicleData.m_waitCounter >= targetWaitCounter ? RubberbandingCommand.Go : RubberbandingCommand.Hold;
             }
 
             /*
@@ -162,7 +228,6 @@ namespace ExpressBusServices
              */
 
             int bunchedVehiclesCount = CountSelfAndBehindBunchingVehicles(selfProgress.Value, lineProgress);
-            int targetWaitCounter;
             if (bunchedVehiclesCount > 3)
             {
                 // overcrowding; use fast waiting time

@@ -1,0 +1,3 @@
+Singleton<TransportManager>.instance.m_lines.m_buffer[vehicleData.m_transportLine].CanLeaveStop(vehicleData.m_targetBuilding, vehicleData.m_waitCounter >> 4);
+
+wait time 64 is from "m_waitCounter >> 4, value >= 4" implies "m_waitCounter >= 64"

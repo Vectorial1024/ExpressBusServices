@@ -35,15 +35,11 @@ namespace ExpressBusServices
         public static void Activate()
         {
             GetHarmonyInstance().PatchAll(Assembly.GetExecutingAssembly());
-            
+
             VehiclePaxDeltaInfo.EnsureTableExists();
-            
-            BusPickDropLookupTable.EnsureTableExists();
             CitizenRunawayTable.EnsureTableExists();
             BusStopSkippingLookupTable.EnsureTableExists();
             ServiceBalancerUtil.EnsureTableExists();
-
-            TramPickDropLookupTable.EnsureTableExists();
 
             TeleportRedeployInstructions.EnsureTableExists();
 
@@ -53,15 +49,11 @@ namespace ExpressBusServices
         public static void Deactivate()
         {
             GetHarmonyInstance().UnpatchAll(HarmonyModID);
-            
+
             VehiclePaxDeltaInfo.WipeTable();
-            
-            BusPickDropLookupTable.WipeTable();
             CitizenRunawayTable.WipeTable();
             BusStopSkippingLookupTable.WipeTable();
             ServiceBalancerUtil.ResetRedeploymentRecords();
-
-            TramPickDropLookupTable.WipeTable();
 
             TeleportRedeployInstructions.WipeTable();
 

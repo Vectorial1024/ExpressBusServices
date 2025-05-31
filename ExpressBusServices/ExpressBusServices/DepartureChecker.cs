@@ -1,24 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using ColossalFramework;
-using Epic.OnlineServices.Presence;
 using ExpressBusServices.DataTypes;
 using UnityEngine;
-using static RenderManager;
 
 namespace ExpressBusServices
 {
     public class DepartureChecker
     {
         public static readonly float UnbunchingProximityPercentDist = 0.02f;
-
-        [Obsolete("To make the code more obvious, change to use NowHasPotentialToSkipUnbunching instead.")]
-        public static bool NowIsEligibleForInstantDeparture(ushort vehicleID, ref Vehicle vehicleData)
-        {
-            return NowHasPotentialToSkipUnbunching(vehicleID, ref vehicleData);
-        }
 
         // if true, then this mod will intervene in handling instant departures etc.
         public static bool NowHasPotentialToSkipUnbunching(ushort vehicleID, ref Vehicle vehicleData)
@@ -58,16 +48,9 @@ namespace ExpressBusServices
             return !StopIsConsideredAsTerminus(approachingStop, transportLineID);
         }
 
-        [Obsolete("Pleasse refactor to use StopIsConsideredTerminus instead.")]
-        public static bool StopIsTerminus(ushort stop)
-        {
-            // none are terminus; however this will be overridden by the TLM extension mod
-            return false;
-        }
-
         public static bool StopIsConsideredAsTerminus(ushort stopID, ushort transportLineID)
         {
-            // both IPT2 and TLM will override this, to make the things more streamlined
+            // IPT2 will override this, to make the things more streamlined
             // return true if this should be considered a terminus
             // buses will unbunch when at terminus
 
@@ -75,6 +58,7 @@ namespace ExpressBusServices
             ushort firstStopID = transportManager.m_lines.m_buffer[transportLineID].GetLastStop();
 
             // architecture reversal
+            // we will actively read TLM info
             bool isTerminus = firstStopID != 0 && stopID != 0 && stopID == firstStopID;
             if (ReversePatch_TLMPlugin_StopIsTerminus.PatchIsSuccessful_HasTLM)
             {
@@ -105,292 +89,6 @@ namespace ExpressBusServices
         {
             ItemClass itemClass = vehicleData.Info.m_class;
             return itemClass.m_service != ItemClass.Service.PublicTransport || itemClass.m_subService != ItemClass.SubService.PublicTransportTrolleybus;
-        }
-
-        [Obsolete("Refactor to use GetRubberbandingUnbunchingForVehicle instead.")]
-        public static bool RecheckUnbunchingCanLeave(ushort vehicleID, ref Vehicle vehicleData)
-        {
-            // mainly for IPT2; there is probably some side effect that is caused by how the IPT2 plugin is influencing the work of IPT2 itself
-            // this aims to remedy that.
-            // this is also a place to further extend the unbunching checking, so that we can implement the so-called rapid deployment feature.
-            bool canLeave = Singleton<TransportManager>.instance.m_lines.m_buffer[vehicleData.m_transportLine].CanLeaveStop(vehicleData.m_targetBuilding, vehicleData.m_waitCounter >> 4);
-            // todo recalculate with a different waiting time when the budget is not at 100%.
-            if (VehicleLineProgressNeedToCatchUp(vehicleID, ref vehicleData))
-            {
-                return true;
-            }
-            return canLeave;
-        }
-
-        [Obsolete("Refactor to use GetRubberbandingUnbunchingForVehicle instead.")]
-        public static bool RecheckUnbunchingShouldStay(ushort vehicleID, ref Vehicle vehicleData)
-        {
-            if (vehicleData.m_waitCounter >= 250)
-            {
-                // technical limit: we must leave them go, otherwise they flip over and appear as if they have just arrived
-                return false;
-            }
-            return VehicleLineProgressNeedToChill(vehicleID, ref vehicleData);
-        }
-
-        [Obsolete]
-        private static bool VehicleLineProgressNeedToCatchUp(ushort vehicleID, ref Vehicle vehicleData)
-        {
-            ushort transportLine = vehicleData.m_transportLine;
-            if (transportLine == 0)
-            {
-                return false;
-            }
-
-            /*
-             * Objectievs:
-             * 1. Locate the vehicle in the line
-             * 2. Locate the previous vehicle in the line (thus calculating the progress)
-             * 3. Count number of vehicles in the line
-             */
-            List<VehicleLineProgress> progressList = VehicleLineProgress.GetProgressList(transportLine);
-            if (progressList.Count < 2)
-            {
-                // invalid operation: too few buses, no need to unbunch, just catch up is ok
-                return true;
-            }
-
-            // print the list for reference
-            /*
-            StringBuilder builder2 = new StringBuilder("Progresses:\n");
-            foreach (VehicleLineProgress prog in progressList)
-            {
-                builder2.AppendLine(prog.percentProgress.ToString());
-            }
-            Debug.Log(builder2.ToString());
-            */
-
-            // find this vehicle and its "previous" vehicle
-            int indexOfThis = 0;
-            int indexOfNext = 0;
-            for (int i = 0; i < progressList.Count; i++)
-            {
-                if (progressList[i].vehicleID == vehicleID)
-                {
-                    indexOfThis = i;
-                    indexOfNext = i + 1;
-                    break;
-                }
-            }
-            // must exists
-            if (indexOfNext >= progressList.Count)
-            {
-                // wrap around
-                indexOfNext = 0;
-            }
-
-            // calculate expected distance
-            // this can potentially be exposed as a config for unbunch strength
-            float unbunchingBuffer = 0.2f;
-            float idealDistance = (1 + unbunchingBuffer) / progressList.Count;
-
-            // check expected distance
-            float distanceToNext = progressList[indexOfNext].percentProgress - progressList[indexOfThis].percentProgress;
-            if (distanceToNext < 0)
-            {
-                // wrap around
-                distanceToNext += 1;
-            }
-
-            // decide: is the distance too large?
-            /*
-            String message = "Distance compare " + distanceToNext + " " + idealDistance;
-            if (distanceToNext > idealDistance)
-            {
-                message += " GO";
-            }
-            Debug.Log(message);
-            */
-            if (distanceToNext > idealDistance)
-            {
-                return true;
-            }
-
-            // second layer:
-            // the shouldChill has released control when number of waiting vehicles exceed 3
-            // when there are more than enough vehicles waiting at the stop, reduce the waiting time and check again.
-            if (progressList.Count < 3)
-            {
-                return false;
-            }
-            float selfPercentProgress = progressList[indexOfThis].percentProgress;
-            float proximityPercentDist = UnbunchingProximityPercentDist;
-            int waitingVehicles = 0;
-            int loopingIndex = indexOfThis;
-            int iterationCount = 0;
-            while (true)
-            {
-                if (loopingIndex == 0)
-                {
-                    loopingIndex = progressList.Count;
-                }
-                loopingIndex--;
-                VehicleLineProgress currentProgress = progressList[loopingIndex];
-                if (currentProgress.vehicleID == vehicleID)
-                {
-                    // we somehow reached ourselves!
-                    break;
-                }
-                float percentProgress = progressList[loopingIndex].percentProgress;
-                float currentPercentDistance = selfPercentProgress - percentProgress;
-                if (currentPercentDistance < 0)
-                {
-                    currentPercentDistance += 1;
-                }
-                if (currentPercentDistance >= proximityPercentDist)
-                {
-                    // out of range
-                    break;
-                }
-                waitingVehicles++;
-                if (++iterationCount >= 16384)
-                {
-                    // huh? bad list?
-                    break;
-                }
-            }
-            // for each extra vehicle after the 3rd one, decrease uniformly such that the minimum amount of time waiting is at 16 (1.33x boarding time)
-            int fasterWaitingTime = Mathf.Max(64 - (Mathf.Max(waitingVehicles - 3, 0)) * 6, 16);
-            // Debug.Log($"Faster waiting time of vehicle {vehicleID} is {fasterWaitingTime}");
-            return vehicleData.m_waitCounter > fasterWaitingTime;
-        }
-
-        [Obsolete]
-        private static bool VehicleLineProgressNeedToChill(ushort vehicleID, ref Vehicle vehicleData)
-        {
-            ushort transportLine = vehicleData.m_transportLine;
-            if (transportLine == 0)
-            {
-                return false;
-            }
-
-            /*
-             * Objectievs:
-             * 1. Locate the vehicle in the line
-             * 2. Locate the previous vehicle in the line (thus calculating the progress)
-             * 3. Count number of vehicles in the line
-             */
-            List<VehicleLineProgress> progressList = VehicleLineProgress.GetProgressList(transportLine);
-            if (progressList.Count < 2)
-            {
-                // invalid operation: too few buses, no need to chill, just catch up is ok
-                return false;
-            }
-
-            // print the list for reference
-            /*
-            StringBuilder builder2 = new StringBuilder("Progresses:\n");
-            foreach (VehicleLineProgress prog in progressList)
-            {
-                builder2.AppendLine(prog.percentProgress.ToString());
-            }
-            Debug.Log(builder2.ToString());
-            */
-
-            // find this vehicle and its "previous" vehicle
-            int indexOfThis = 0;
-            int indexOfNext = 0;
-            for (int i = 0; i < progressList.Count; i++)
-            {
-                if (progressList[i].vehicleID == vehicleID)
-                {
-                    indexOfThis = i;
-                    indexOfNext = i + 1;
-                    break;
-                }
-            }
-            // must exists
-            if (indexOfNext >= progressList.Count)
-            {
-                // wrap around
-                indexOfNext = 0;
-            }
-
-            // check if it is overcrowded: if overcrowded, then use the vanilla method of unbunching
-            // we check those within 2 progress percent, whether there are more than 3 buses waiting (including self)
-            if (progressList.Count > 3)
-            {
-                float overcrowdProgressDistance = UnbunchingProximityPercentDist;
-                int indexOfQueueing = indexOfThis;
-                int crowdedCount = 0;
-                VehicleLineProgress selfProgress = progressList[indexOfThis];
-                while (true)
-                {
-                    VehicleLineProgress queueing = progressList[indexOfQueueing];
-                    float progressDistance = selfProgress.percentProgress - queueing.percentProgress;
-                    if (progressDistance < 0)
-                    {
-                        progressDistance += 1;
-                    }
-                    if (progressDistance > overcrowdProgressDistance)
-                    {
-                        // went out of range, and there aren't enough buses
-                        break;
-                    }
-                    crowdedCount++;
-                    if (crowdedCount > 3)
-                    {
-                        // too many buses near here; don't wait!
-                        return false;
-                    }
-                    // check next
-                    if (indexOfQueueing == 0)
-                    {
-                        indexOfQueueing = progressList.Count;
-                    }
-                    indexOfQueueing--;
-                }
-            }
-
-            // calculate expected distance
-            // this can potentially be exposed as a config for unbunch strength
-            /*
-             * note: because we are dealing with minimum unbunching distance, we CANNOT set any hard limits
-             * the reason is obvious: what if there is a traffic jam? if we set a hard minimum limit, then we are simply back to vanilla unbunching
-             * and that is not ok
-             * instead, make use of vanilla's idea to use waiting time, and extend upon it:
-             * if the buses are too close, let the latter bus wait longer, but not wait infinitely.
-             */
-            float unbunchingThreshold = 0.2f;
-            // the way the distance is calculated is similar to the above "catchup" function
-            float checkingDistance = (1 - unbunchingThreshold) / progressList.Count;
-
-            // check expected distance
-            float distanceToNext = progressList[indexOfNext].percentProgress - progressList[indexOfThis].percentProgress;
-            if (distanceToNext < 0)
-            {
-                // wrap around
-                distanceToNext += 1;
-            }
-
-            if (distanceToNext > checkingDistance)
-            {
-                // has met the threshold. the game can decide whether can unbunch (based on waiting time)
-                return false;
-            }
-
-            // distance is below threshold
-            // we apply a hyperbolic curve to guard the waiting time.
-            float standardWaitingTime = 64;
-            float curveProgressPercent = distanceToNext / checkingDistance;
-            float curveIncrementRate = 2f;
-            float curveFactor = curveIncrementRate * 2;
-            float designatedWaitingTime = (curveFactor / curveProgressPercent - (curveFactor - 1)) * standardWaitingTime;
-
-            // decide: is the waiting time too small?
-            String message = "Waiting time compare " + vehicleData.m_waitCounter + " " + designatedWaitingTime;
-            if (vehicleData.m_waitCounter < designatedWaitingTime)
-            {
-                message += " CHILL";
-            }
-            // Debug.Log(message);
-
-            return vehicleData.m_waitCounter < designatedWaitingTime;
         }
 
         /// <summary>
@@ -429,6 +127,20 @@ namespace ExpressBusServices
                 // ???
                 return RubberbandingCommand.Default;
             }
+
+            /*
+             * note: for best vanilla correctness, there is actually this arcane "CanLeaveStop" method that checks m_averageInterval and m_trafficLightState0
+             * one of its OR conditions checks the condition (interval - state + 2) / 4 <= 0
+             * this interval fluctuates, but intuitively, more vehicles in the line results in lower average interval, and it also depends on line length
+             * this traffic light state is more arcane; it seems this is 0 for no-light junctions, 2 for red lights, and 8 for green lights
+             * it is known TMPE possibly assigns new values to this traffic light state (saw a value of 15 before)
+             *
+             * anyway, iirc this arcane condition should somehow sync with the current traffic light state (prefer to go at green lights)
+             * but this condition most of the time will not trigger, because of the following:
+             * it will be true only when interval is smaller than some variable (probably <= 15),
+             * but then this interval has to be really really small, and it's quite difficult to push this interval value below 20,
+             * so for the most part, it won't trigger and can be safely ignored.
+             */
 
             // ---
             // begin checking!

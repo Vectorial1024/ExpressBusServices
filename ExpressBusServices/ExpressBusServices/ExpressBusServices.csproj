@@ -74,8 +74,6 @@
     <Compile Include="Patch_TramLoadsPassengers.cs" />
     <Compile Include="PerformanceBoost\CachedVehicleProperties.cs" />
     <Compile Include="PerformanceBoost\VehicleUnspawnListenerPatch.cs" />
-    <Compile Include="TramPickDropLookupTable.cs" />
-    <Compile Include="BusPickDropLookupTable.cs" />
     <Compile Include="BusStopSkippingLookupTable.cs" />
     <Compile Include="CitizenRunawayTable.cs" />
     <Compile Include="EBSModConfig.cs" />
@@ -103,7 +101,6 @@
     <Compile Include="ReversePatch_VehicleAI_CanLeave.cs" />
     <Compile Include="Util\TransportVehicleUtil.cs" />
     <Compile Include="Util\VehicleDepartureUtil.cs" />
-    <Compile Include="VehicleBAInfo.cs" />
     <Compile Include="VehicleUtil.cs" />
   </ItemGroup>
   <ItemGroup>

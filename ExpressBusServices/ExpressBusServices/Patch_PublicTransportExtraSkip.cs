@@ -60,7 +60,6 @@ namespace ExpressBusServices
                 // in this case, don't do it
                 return true;
             }
-            ref TransportLine line = ref TransportManager.instance.m_lines.m_buffer[vehicleData.m_transportLine];
             if (!DepartureChecker.CanSkipNextStop(vehicleID, ref vehicleData))
             {
                 // is arriving at terminus; dont do this!

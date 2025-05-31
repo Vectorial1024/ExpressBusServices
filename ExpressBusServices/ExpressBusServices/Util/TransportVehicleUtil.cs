@@ -27,9 +27,9 @@ namespace ExpressBusServices.Util
             {
                 return false;
             }
-            List<VehicleLineProgress> progressList = VehicleLineProgress.GetProgressList(data.m_transportLine);
+            var lineProgress = VehicleLineProgress.GetTransportLineVehicleProgress(data.m_transportLine);
             // find where exists self
-            return progressList.Where(item => item.vehicleID == vehicleID).ToList().Count > 0;
+            return lineProgress.GetProgressOf(vehicleID).HasValue;
         }
 
         public static void FindFirstVehicleOfVehicleSet(ushort vehicleID, ref Vehicle data, out ushort firstVehicleID, out Vehicle firstVehicleData)

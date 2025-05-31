@@ -196,16 +196,16 @@ namespace ExpressBusServices
         {
             // includes self
             // counts how many vehicles are currently bunched at a stop
-            ushort selfVehicleID = vehicleProgress.vehicleID;
+            ushort selfVehicleID = vehicleProgress.VehicleID;
             int vehicleCount = 1;
             float detectionSpacing = UnbunchingProximityPercentDist;
-            float selfPercentProgress = vehicleProgress.percentProgress;
-            VehicleLineProgress? backVehicleProgress = lineProgress.GetProgressOfBackOf(vehicleProgress.vehicleID);
-            while (backVehicleProgress.HasValue && backVehicleProgress.Value.vehicleID != selfVehicleID)
+            float selfPercentProgress = vehicleProgress.PercentProgress;
+            VehicleLineProgress? backVehicleProgress = lineProgress.GetProgressOfBackOf(vehicleProgress.VehicleID);
+            while (backVehicleProgress.HasValue && backVehicleProgress.Value.VehicleID != selfVehicleID)
             {
                 // check spacing
                 VehicleLineProgress innerBackVehicleProgress = backVehicleProgress.Value;
-                float backSpacing = selfPercentProgress - innerBackVehicleProgress.percentProgress;
+                float backSpacing = selfPercentProgress - innerBackVehicleProgress.PercentProgress;
                 if (backSpacing < 0)
                 {
                     // wrap around
@@ -217,7 +217,7 @@ namespace ExpressBusServices
                     break;
                 }
                 vehicleCount++;
-                backVehicleProgress = lineProgress.GetProgressOfBackOf(innerBackVehicleProgress.vehicleID);
+                backVehicleProgress = lineProgress.GetProgressOfBackOf(innerBackVehicleProgress.VehicleID);
             }
             return vehicleCount;
         }
@@ -242,7 +242,7 @@ namespace ExpressBusServices
             idealSpacing = (1 + unbunchingBuffer) / lineProgress.VehiclesCount;
 
             // then, check current spacing
-            VehicleLineProgress? frontVehicleProgress = lineProgress.GetProgressOfFrontOf(vehicleProgress.vehicleID);
+            VehicleLineProgress? frontVehicleProgress = lineProgress.GetProgressOfFrontOf(vehicleProgress.VehicleID);
             if (!frontVehicleProgress.HasValue)
             {
                 // ???
@@ -250,7 +250,7 @@ namespace ExpressBusServices
                 return true;
             }
 
-            float progressSpacing = frontVehicleProgress.Value.percentProgress - vehicleProgress.percentProgress;
+            float progressSpacing = frontVehicleProgress.Value.PercentProgress - vehicleProgress.PercentProgress;
             if (progressSpacing < 0)
             {
                 // wrap around

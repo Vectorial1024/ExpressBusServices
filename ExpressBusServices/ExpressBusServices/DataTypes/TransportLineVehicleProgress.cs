@@ -25,7 +25,7 @@ namespace ExpressBusServices.DataTypes
         public TransportLineVehicleProgress(List<VehicleLineProgress> vehicleLineProgress)
         {
             // sort the list by their normalized progress and put them into an array
-            vehicleLineProgress.Sort((left, right) => left.percentProgress.CompareTo(right.percentProgress));
+            vehicleLineProgress.Sort((left, right) => left.PercentProgress.CompareTo(right.PercentProgress));
             _progressArray = vehicleLineProgress.ToArray();
 
             // also index the array-index for quick lookup
@@ -33,7 +33,7 @@ namespace ExpressBusServices.DataTypes
             for (int i = 0; i < arrSize; i++)
             {
                 VehicleLineProgress currentProgress = _progressArray[i];
-                _progressIndex.Add(currentProgress.vehicleID, i);
+                _progressIndex.Add(currentProgress.VehicleID, i);
             }
         }
 

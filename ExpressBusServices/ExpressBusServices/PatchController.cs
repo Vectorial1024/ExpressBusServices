@@ -37,7 +37,6 @@ namespace ExpressBusServices
             GetHarmonyInstance().PatchAll(Assembly.GetExecutingAssembly());
 
             VehiclePaxDeltaInfo.EnsureTableExists();
-            CitizenRunawayTable.EnsureTableExists();
             BusStopSkippingLookupTable.EnsureTableExists();
             ServiceBalancerUtil.EnsureTableExists();
 
@@ -51,7 +50,6 @@ namespace ExpressBusServices
             GetHarmonyInstance().UnpatchAll(HarmonyModID);
 
             VehiclePaxDeltaInfo.WipeTable();
-            CitizenRunawayTable.WipeTable();
             BusStopSkippingLookupTable.WipeTable();
             ServiceBalancerUtil.ResetRedeploymentRecords();
 

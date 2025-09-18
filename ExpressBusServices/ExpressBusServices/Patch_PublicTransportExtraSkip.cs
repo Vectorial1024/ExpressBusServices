@@ -38,37 +38,14 @@ namespace ExpressBusServices
         [UsedImplicitly]
         public static bool ExtraSkippingLogic(VehicleAI __instance, ushort vehicleID, ref Vehicle vehicleData)
         {
-            // FileLog.Log($"Current Express Mode: {EBSModConfig.CurrentExpressBusMode}; Do Extra Skip? ${(int)EBSModConfig.CurrentExpressBusMode < (int)EBSModConfig.ExpressMode.AGGRESSIVE}");
             if (!(__instance is BusAI || __instance is TrolleybusAI))
             {
                 // not bus or trolleybus; no
                 return true;
             }
-            if ((int)EBSModConfig.CurrentExpressBusMode < (int)EBSModConfig.ExpressMode.AGGRESSIVE)
+            if (ExtraSkippingIsDisallowed(__instance, vehicleID, ref vehicleData, out var currentStop))
             {
-                // settings not enabled; no
-                return true;
-            }
-
-            ushort currentStop = vehicleData.m_targetBuilding;
-            if (currentStop == 0 || vehicleData.m_transportLine == 0)
-            {
-                // this can happen when e.g. the depot is forced to deactivate and the vehicles are therefore forced to return to base
-                // in this case, don't do it
-                return true;
-            }
-            if (!DepartureChecker.CanSkipNextStop(vehicleID, ref vehicleData))
-            {
-                // is arriving at terminus; dont do this!
-                return true;
-            }
-            TransportLineUtil.CountPassengersWaiting(currentStop, out int residents, out int tourists);
-            var unloadPredict = TransportLineUtil.GetQuantityPassengerUnloadOnNextStop(vehicleID, ref vehicleData, out bool full, out bool empty);
-
-            if (unloadPredict > 0 || (!full && (residents + tourists) > 0))
-            {
-                // have someone dropping off OR have boardable passengers
-                // dont do it
+                // actually, cannot do extra skip, so we allow the original method to execute.
                 return true;
             }
 
@@ -118,6 +95,44 @@ namespace ExpressBusServices
                 vehicleData.m_flags &= ~Vehicle.Flags.WaitingPath;
                 vehicleData.Info.m_vehicleAI.SetTransportLine(vehicleID, ref vehicleData, 0);
             }
+            return false;
+        }
+
+        private static bool ExtraSkippingIsDisallowed(VehicleAI __instance, ushort vehicleID, ref Vehicle vehicleData, out ushort currentApproachingStop)
+        {
+            // note: we extract this to be its own method to narrow down the place that triggers the strange NullRefEx bug
+
+            currentApproachingStop = 0;
+            if ((int)EBSModConfig.CurrentExpressBusMode < (int)EBSModConfig.ExpressMode.AGGRESSIVE)
+            {
+                // settings not enabled; no
+                return true;
+            }
+
+            currentApproachingStop = vehicleData.m_targetBuilding;
+            if (currentApproachingStop == 0 || vehicleData.m_transportLine == 0)
+            {
+                // this can happen when e.g. the depot is forced to deactivate and the vehicles are therefore forced to return to base
+                // in this case, don't do it
+                return true;
+            }
+
+            if (!DepartureChecker.CanSkipNextStop(vehicleID, ref vehicleData))
+            {
+                // is arriving at terminus; dont do this!
+                return true;
+            }
+
+            TransportLineUtil.CountPassengersWaiting(currentApproachingStop, out int residents, out int tourists);
+            var unloadPredict = TransportLineUtil.GetQuantityPassengerUnloadOnNextStop(vehicleID, ref vehicleData, out bool full, out bool empty);
+            if (unloadPredict > 0 || (!full && (residents + tourists) > 0))
+            {
+                // have someone dropping off OR have boardable passengers
+                // dont do it
+                return true;
+            }
+
+            // none of the checks disallowed it
             return false;
         }
     }

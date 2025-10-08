@@ -78,8 +78,7 @@ namespace ExpressBusServices
             var dropdown = group.AddDropdown("EBS Unbunching Mode",
                 new string[] {
                     "Prudential (Legacy)",
-                    "Aggressive",
-                    "Experimental" },
+                    "Aggressive" },
                 0,
                 (index) => {
                     EBSModConfig.CurrentExpressBusMode = (EBSModConfig.ExpressMode)index;

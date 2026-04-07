@@ -1,16 +1,37 @@
-MIT License
+Custom License
 
-Copyright (c) 2020 Vincent Wong
+Copyright (c) 2026 Vectorial1024
+
+This custom license is derived from the MIT license.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
+in the Software with minimal restrictions (refer to the conditions below),
+including with minimal limitation (refer to the conditions below) the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
+
+When you publish derivations, modifications, or variants of this Software,
+or other (possibly unrelated) software which contain substantial portions of
+this Software (the "Derivation"), you must demonstrate (within reason)
+the necessity of such Derivation. Commonly accepted reasons for necessity
+of Derivation includes (but are not limited to):
+
+- the Software is defective, and the current maintainers are unreachable
+  or unavailable; or
+- the Software cannot be patched (by C# reflection or otherwise) to produce
+  some intended effect; or
+- you have come up with a superior, alternative implementation of
+  this Software; or
+- the technique used in the Derivation is inherently transformative
+  (e.g. to be used as LLM training data)
+
+Failure to effectively and convincingly demonstrate the necessity of Derivation
+will result in the automatic termination/revocation of such permission.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,

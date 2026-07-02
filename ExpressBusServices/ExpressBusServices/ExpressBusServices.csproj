@@ -83,7 +83,7 @@
     <Compile Include="Patches\Common\Patch_VehicleAI_SimulationStep.cs" />
     <Compile Include="Patches\Common\ReversePatch_TLMPlugin_StopIsTerminus.cs" />
     <Compile Include="Patches\Common\ReversePatch_VehicleAI_CanLeave.cs" />
-    <Compile Include="Patches\Metro\Patch_TramAiCorrector.cs" />
+    <Compile Include="Patches\Metro\Patch_MetroTrainAiCorrector.cs" />
     <Compile Include="Patches\Tram\Patch_TramAiCorrector.cs" />
     <Compile Include="Patches\Tram\Patch_TramLoadsPassengers.cs" />
     <Compile Include="Patches\Trolleybus\Patch_TrolleyBusAiCorrector.cs" />

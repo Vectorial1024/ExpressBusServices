@@ -18,15 +18,21 @@ namespace ExpressBusServices.Patches.Tram
         [HarmonyPrefix]
         [HarmonyPriority(Priority.LowerThanNormal)]
         [UsedImplicitly]
-        public static void HandleTramAboutToLoadPassengers(ushort vehicleID, ref Vehicle data)
+        public static bool HandleTramAboutToLoadPassengers(ushort vehicleID, ref Vehicle data)
         {
             VehiclePaxDeltaInfo.Notify_VehicleStartsLoadingPax(vehicleID, ref data);
+            if (BusStopSkippingLookupTable.BusShouldSkipPassengerLoading(vehicleID))
+            {
+                return false;
+            }
+            return true;
         }
 
         [HarmonyPostfix]
         [UsedImplicitly]
         public static void HandleTramAlreadyLoadedPassengers(ushort vehicleID, ref Vehicle data, ushort currentStop)
         {
+            BusStopSkippingLookupTable.ForgetBus(vehicleID);
             VehiclePaxDeltaInfo.Notify_VehicleFinishedLoadingPax(vehicleID, ref data);
         }
     }

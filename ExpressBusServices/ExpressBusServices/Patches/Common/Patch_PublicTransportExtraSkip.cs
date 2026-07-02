@@ -38,9 +38,10 @@ namespace ExpressBusServices.Patches.Common
         [UsedImplicitly]
         public static bool ExtraSkippingLogic(VehicleAI __instance, ushort vehicleID, ref Vehicle vehicleData)
         {
-            if (!(__instance is BusAI || __instance is TrolleybusAI))
+            if (!(__instance is BusAI || __instance is TrolleybusAI || __instance is TramAI))
             {
                 // not bus or trolleybus; no
+                // note: we are also applying the logic to trams as streetcars
                 return true;
             }
             if (ExtraSkippingIsDisallowed(__instance, vehicleID, ref vehicleData, out var currentStop))
@@ -83,6 +84,20 @@ namespace ExpressBusServices.Patches.Common
                 AccessTools.Method(typeof(TrolleybusAI), "UnloadPassengers").Invoke(trolleyAi, unloadParams);
                 AccessTools.Method(typeof(TrolleybusAI), "LoadPassengers").Invoke(trolleyAi, unloadParams);
             }
+            else if (__instance is TramAI tramAI)
+            {
+                if (!(bool) AccessTools.Method(typeof(TramAI), "StartPathFind", new Type[] { typeof(ushort), typeof(Vehicle).MakeByRefType() }).Invoke(tramAI, pathfindParams))
+                {
+                    // something bad happened; cancel
+                    vehicleData.m_targetBuilding = currentStop;
+                    return true;
+                }
+
+                vehicleData = (Vehicle)pathfindParams[1];
+                // I think this is to let it iterate their stuff
+                AccessTools.Method(typeof(TramAI), "UnloadPassengers").Invoke(tramAI, unloadParams);
+                AccessTools.Method(typeof(TramAI), "LoadPassengers").Invoke(tramAI, unloadParams);
+            }
             else
             {
                 // we should have already filtered this...?
@@ -103,10 +118,22 @@ namespace ExpressBusServices.Patches.Common
             // note: we extract this to be its own method to narrow down the place that triggers the strange NullRefEx bug
 
             currentApproachingStop = 0;
-            if ((int)EBSModConfig.CurrentExpressBusMode < (int)EBSModConfig.ExpressMode.AGGRESSIVE)
+            // per-vehicle detection; we have buses and trams
+            if (__instance is BusAI || __instance is TrolleybusAI)
             {
-                // settings not enabled; no
-                return true;
+                if ((int)EBSModConfig.CurrentExpressBusMode < (int)EBSModConfig.ExpressMode.AGGRESSIVE)
+                {
+                    // settings not enabled; no
+                    return true;
+                }
+            }
+            else if (__instance is TramAI)
+            {
+                if (EBSModConfig.CurrentExpressTramMode < EBSModConfig.ExpressTramMode.STREET_CAR)
+                {
+                    // settings not enabled; no
+                    return true;
+                }
             }
 
             currentApproachingStop = vehicleData.m_targetBuilding;

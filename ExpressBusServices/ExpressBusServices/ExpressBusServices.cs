@@ -149,8 +149,8 @@ namespace ExpressBusServices
             int selectedIndex_ExpressMetro = (int)EBSModConfig.CurrentExpressMetroMode;
             var dropdownExpressMetroMode = expressMetroGroup.AddDropdown("EMS Unbunching Mode",
                 new[] {
-                    "Any Station (Vanilla)",
-                    "Only At Terminus",
+                    "Relaxed Schedule (Vanilla)",
+                    "Tight Schedule",
                 },
                 0,
                 (index) => {

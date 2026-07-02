@@ -98,7 +98,6 @@
     <Compile Include="ModDetector.cs" />
     <Compile Include="ModSettingController.cs" />
     <Compile Include="ServiceBalancerUtil.cs" />
-    <Compile Include="TLM\Patch_Self_DetermineCanDepartWithTLM.cs" />
     <Compile Include="TransportLineUtil.cs" />
     <Compile Include="DepartureChecker.cs" />
     <Compile Include="ExpressBusServices.cs" />

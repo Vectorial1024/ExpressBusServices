@@ -225,7 +225,7 @@ namespace ExpressBusServices
             // ---
             // begin checking!
 
-            if (VehicleHasEnoughUnbunchingSpacing(selfProgress.Value, lineProgress, out float currentSpacing, out float idealSpacing))
+            if (VehicleHasEnoughUnbunchingSpacing(selfProgress.Value, lineProgress, ref vehicleData, out float currentSpacing, out float idealSpacing))
             {
                 // enough spacing already; go and catch up!
                 return vehicleData.m_waitCounter >= targetWaitCounter ? DepartureIntention.Go : DepartureIntention.Hold;
@@ -324,18 +324,25 @@ namespace ExpressBusServices
         /// </summary>
         /// <param name="vehicleProgress">The vehicle progress of the vehicle V.</param>
         /// <param name="lineProgress"></param>
+        /// <param name="vehicleData">The vehicle data instance to check for unbunching spacing, in case it actually influences other params</param>
         /// <param name="currentSpacing">The current unbunching spacing (same unit as vehicle progress) as calculated by this method.</param>
         /// <param name="idealSpacing">The idea unbunching spacing (same unit as vehicle progress) as recommended by this method.</param>
         /// <returns></returns>
         private static bool VehicleHasEnoughUnbunchingSpacing(
             VehicleLineProgress vehicleProgress,
             TransportLineVehicleProgress lineProgress,
+            ref Vehicle vehicleData,
             out float currentSpacing,
             out float idealSpacing)
         {
             // determine ideal spacing first
             // this can potentially be exposed as a config for unbunch strength
             float unbunchingBuffer = 0.2f;
+            if (VehicleIsMetro(vehicleData))
+            {
+                // metros can go fast and is usually not affected by traffic, which means they can/should maintain tighter intervals
+                unbunchingBuffer = 0.1f;
+            }
             idealSpacing = (1 + unbunchingBuffer) / lineProgress.VehiclesCount;
 
             // then, check current spacing

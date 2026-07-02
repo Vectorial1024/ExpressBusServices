@@ -52,6 +52,8 @@ namespace ExpressBusServices
             // IPT2 will override this, to make the things more streamlined
             // return true if this should be considered a terminus
             // buses will unbunch when at terminus
+            // trams will unbunch when at terminus
+            // metros will unbunch when at terminus
 
             TransportManager transportManager = Singleton<TransportManager>.instance;
             ushort firstStopID = transportManager.m_lines.m_buffer[transportLineID].GetLastStop();

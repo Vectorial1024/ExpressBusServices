@@ -28,7 +28,6 @@ namespace ExpressBusServices.Patches.Tram
         [UsedImplicitly]
         public static void HandleTramAlreadyLoadedPassengers(ushort vehicleID, ref Vehicle data, ushort currentStop)
         {
-            BusStopSkippingLookupTable.ForgetBus(vehicleID);
             VehiclePaxDeltaInfo.Notify_VehicleFinishedLoadingPax(vehicleID, ref data);
         }
     }

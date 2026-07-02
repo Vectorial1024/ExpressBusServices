@@ -121,11 +121,12 @@ namespace ExpressBusServices
             // class-specific checking
             if (VehicleIsTram(vehicleData))
             {
-                // special handling for trams
-                if (EBSModConfig.CurrentExpressTramMode == EBSModConfig.ExpressTramMode.TRAM)
+                // special handling for trams and streetcars
+                if (EBSModConfig.CurrentExpressTramMode == EBSModConfig.ExpressTramMode.TRAM || EBSModConfig.CurrentExpressTramMode == EBSModConfig.ExpressTramMode.STREET_CAR)
                 {
                     // brief stop and go
-                    // prototype is Hong Kong Tram
+                    // tram prototype is Hong Kong Tram
+                    // streetcar prototype is Toronto Streetcar
                     if (!VehiclePaxDeltaInfo.VehicleSetHasPaxDelta(vehicleID, ref vehicleData))
                     {
                         // no pax delta; go now!

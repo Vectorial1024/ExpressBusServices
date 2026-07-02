@@ -80,6 +80,12 @@ namespace ExpressBusServices
             return itemClass.m_service == ItemClass.Service.PublicTransport && itemClass.m_subService == ItemClass.SubService.PublicTransportTram;
         }
 
+        public static bool VehicleIsMetro(Vehicle vehicleData)
+        {
+            ItemClass itemClass = vehicleData.Info.m_class;
+            return itemClass.m_service == ItemClass.Service.PublicTransport && itemClass.m_subService == ItemClass.SubService.PublicTransportMetro;
+        }
+
         public static bool VehicleIsNotBus(Vehicle vehicleData)
         {
             ItemClass itemClass = vehicleData.Info.m_class;
@@ -146,6 +152,12 @@ namespace ExpressBusServices
                 }
                 // tram mode not enabled
                 return DepartureIntention.Default;
+            }
+            if (VehicleIsMetro(vehicleData))
+            {
+                // special handling for metros
+                // metros may not instant-depart; wait for standard timing
+                return vehicleData.m_waitCounter >= waitTime ? DepartureIntention.Go : DepartureIntention.Hold;
             }
 
             // this should be buses/trolleybuses

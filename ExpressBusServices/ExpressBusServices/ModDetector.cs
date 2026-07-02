@@ -8,12 +8,13 @@ namespace ExpressBusServices
     internal static class ModDetector
     {
         public static readonly ulong MODID_KLYTE45_TRANSPORT_LINES_MANAGER = 1312767991;
+        public static readonly ulong MODID_T1A2L_TRANSPORT_LINES_MANAGER = 3007903394;
 
         public static bool TransportLinesManagerIsLoaded()
         {
             // detect official release first, and then detect local/unofficial builds
             // this is assuming that the local/unofficial builds have a similar structure to the known builds.
-            if (VerifyModEnabled(MODID_KLYTE45_TRANSPORT_LINES_MANAGER))
+            if (VerifyModEnabled(MODID_KLYTE45_TRANSPORT_LINES_MANAGER) || VerifyModEnabled(MODID_T1A2L_TRANSPORT_LINES_MANAGER))
             {
                 return true;
             }

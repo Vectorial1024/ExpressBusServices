@@ -32,5 +32,22 @@
         }
 
         public static ExpressTramMode CurrentExpressTramMode { get; set; }
+
+        #region Express Railway Mode(s)
+
+        public enum ExpressRailwayMode
+        {
+            NONE = 0,
+            TIGHT,
+        }
+
+        /*
+         * important note:
+         * MetroTrainAI extends PassengerTrainAI! if want to detect in-game "trains" then need to detect accurately.
+         */
+
+        public static ExpressRailwayMode CurrentExpressMetroMode { get; set; }
+
+        #endregion
     }
 }

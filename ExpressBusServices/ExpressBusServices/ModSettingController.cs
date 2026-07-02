@@ -19,6 +19,8 @@ namespace ExpressBusServices
 
         public static readonly string tagName_ExpressTramMode = "ExpressTrams_SelectedIndex";
 
+        public static readonly string tagName_ExpressMetroMode = "ExpressMetros_SelectedIndex";
+
         public static void Touch()
         {
             // with JSON being so tedious in C# I can understand why everyone opted for XML setting files
@@ -34,8 +36,9 @@ namespace ExpressBusServices
             bool selfBalCanTargetMid = true;
             bool canUseMinibusMode = true;
 
-            // sectino break
+            // section break
             EBSModConfig.ExpressTramMode expressTramMode = EBSModConfig.ExpressTramMode.NONE;
+            var expressMetroMode = EBSModConfig.ExpressRailwayMode.NONE;
 
             if (File.Exists(pathToConfigXml))
             {
@@ -81,6 +84,12 @@ namespace ExpressBusServices
                                     expressTramMode = (EBSModConfig.ExpressTramMode)selectedIndex;
                                     // Debug.Log($"Read {EBSModConfig.CurrentExpressBusMode} from settings file.");
                                 }
+                                if (currentConfigNode.Name == tagName_ExpressMetroMode)
+                                {
+                                    string tempIndex = currentConfigNode.InnerText;
+                                    int selectedIndex = Convert.ToInt32(tempIndex);
+                                    expressMetroMode = (EBSModConfig.ExpressRailwayMode)selectedIndex;
+                                }
                             }
                         }
                     }
@@ -97,6 +106,8 @@ namespace ExpressBusServices
             EBSModConfig.CanUseMinibusMode = canUseMinibusMode;
 
             EBSModConfig.CurrentExpressTramMode = expressTramMode;
+
+            EBSModConfig.CurrentExpressMetroMode = expressMetroMode;
         }
 
         public static void WriteSettings()
@@ -107,6 +118,7 @@ namespace ExpressBusServices
             var canUseMinibusMode = EBSModConfig.CanUseMinibusMode;
             // var interpretation = IPT2UnbunchingRuleReader.CurrentRuleInterpretation;
             var expressTramMode = EBSModConfig.CurrentExpressTramMode;
+            var expressMetroMode = EBSModConfig.CurrentExpressMetroMode;
             try
             {
                 XmlWriterSettings settings = new XmlWriterSettings();
@@ -139,6 +151,10 @@ namespace ExpressBusServices
                 writer.WriteStartElement(tagName_ExpressTramMode);
                 writer.WriteString(((int)expressTramMode).ToString());
                 //Debug.Log($"Write {((int)interpretation).ToString()} to config file.");
+                writer.WriteEndElement();
+
+                writer.WriteStartElement(tagName_ExpressMetroMode);
+                writer.WriteString(((int)expressMetroMode).ToString());
                 writer.WriteEndElement();
 
                 writer.WriteEndElement();

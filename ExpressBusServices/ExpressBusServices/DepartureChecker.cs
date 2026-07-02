@@ -337,11 +337,16 @@ namespace ExpressBusServices
         {
             // determine ideal spacing first
             // this can potentially be exposed as a config for unbunch strength
+            // note that for buses etc., because they are highly sensitive to (road) traffic, we need a high unbunching buffer to offset the traffic influence.
             float unbunchingBuffer = 0.2f;
             if (VehicleIsMetro(vehicleData))
             {
-                // metros can go fast and is usually not affected by traffic, which means they can/should maintain tighter intervals
-                unbunchingBuffer = 0.1f;
+                // metros, on the other hand, are generally grade-separated.
+                // with almost zero outside influence, there is simply no need to maintain artificially high unbunching buffer.
+                // it's also true that metros really value track space, so a superfluous unbunching buffer would just block end-of-line track space,
+                // which could be used by other metro lines.
+                // granted, this assumes the player is sensible with the budget control, so as long as no "500% budget metro lines" and then we should be good.
+                unbunchingBuffer = 0;
             }
             idealSpacing = (1 + unbunchingBuffer) / lineProgress.VehiclesCount;
 

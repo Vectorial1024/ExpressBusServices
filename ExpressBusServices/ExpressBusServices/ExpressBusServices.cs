@@ -144,6 +144,25 @@ namespace ExpressBusServices
             {
                 dropdownExpressTramModeObject.selectedIndex = selectedIndex_ExpressTram;
             }
+
+            UIHelperBase expressMetroGroup = helper.AddGroup("Express Metro Services: Settings");
+            int selectedIndex_ExpressMetro = (int)EBSModConfig.CurrentExpressMetroMode;
+            var dropdownExpressMetroMode = expressMetroGroup.AddDropdown("EMS Unbunching Mode",
+                new[] {
+                    "Any Station (Vanilla)",
+                    "Only At Terminus",
+                },
+                0,
+                (index) => {
+                    EBSModConfig.CurrentExpressMetroMode = (EBSModConfig.ExpressRailwayMode)index;
+                    Debug.Log($"Express Bus Services: (express railway) received index {index}");
+                    ModSettingController.WriteSettings();
+                });
+            UIDropDown dropdownExpressMetroModeObject = dropdownExpressMetroMode as UIDropDown;
+            if (dropdownExpressMetroModeObject != null)
+            {
+                dropdownExpressMetroModeObject.selectedIndex = selectedIndex_ExpressMetro;
+            }
         }
     }
 }

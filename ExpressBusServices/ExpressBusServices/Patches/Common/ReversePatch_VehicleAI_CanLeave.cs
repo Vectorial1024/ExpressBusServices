@@ -1,7 +1,7 @@
 ﻿using System;
 using HarmonyLib;
 
-namespace ExpressBusServices
+namespace ExpressBusServices.Patches.Common
 {
 	[HarmonyPatch(typeof(VehicleAI))]
 	[HarmonyPatch(nameof(VehicleAI.CanLeave), MethodType.Normal)]

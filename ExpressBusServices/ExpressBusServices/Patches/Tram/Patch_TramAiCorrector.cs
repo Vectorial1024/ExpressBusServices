@@ -2,7 +2,7 @@
 using HarmonyLib;
 using JetBrains.Annotations;
 
-namespace ExpressBusServices
+namespace ExpressBusServices.Patches.Tram
 {
     [HarmonyPatch(typeof(TramAI))]
     [HarmonyPatch(nameof(TramAI.CanLeave), MethodType.Normal)]

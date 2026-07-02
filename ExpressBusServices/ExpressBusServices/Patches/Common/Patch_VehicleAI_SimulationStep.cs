@@ -1,9 +1,9 @@
-﻿using HarmonyLib;
-using System;
+﻿using System;
 using System.Reflection;
+using HarmonyLib;
 using JetBrains.Annotations;
 
-namespace ExpressBusServices
+namespace ExpressBusServices.Patches.Common
 {
     [HarmonyPatch]
     [UsedImplicitly]

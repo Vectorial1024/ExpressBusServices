@@ -2,7 +2,7 @@
 using HarmonyLib;
 using JetBrains.Annotations;
 
-namespace ExpressBusServices
+namespace ExpressBusServices.Patches.Common
 {
     [HarmonyPatch(typeof(TransportManager))]
     [HarmonyPatch(nameof(TransportManager.ReleaseLine), MethodType.Normal)]

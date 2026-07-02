@@ -4,7 +4,7 @@ using ExpressBusServices.Util;
 using HarmonyLib;
 using JetBrains.Annotations;
 
-namespace ExpressBusServices
+namespace ExpressBusServices.Patches.Bus
 {
     [HarmonyPatch(typeof(BusAI))]
     [HarmonyPatch(nameof(BusAI.TransportArriveAtTarget), MethodType.Normal)]

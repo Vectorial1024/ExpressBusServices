@@ -2,7 +2,7 @@
 using HarmonyLib;
 using JetBrains.Annotations;
 
-namespace ExpressBusServices
+namespace ExpressBusServices.Patches.Trolleybus
 {
     [HarmonyPatch(typeof(TrolleybusAI))]
     [HarmonyPatch("LoadPassengers", MethodType.Normal)]

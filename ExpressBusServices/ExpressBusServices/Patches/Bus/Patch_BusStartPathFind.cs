@@ -1,18 +1,18 @@
-﻿using HarmonyLib;
-using System;
+﻿using System;
 using System.Reflection;
+using HarmonyLib;
 using JetBrains.Annotations;
 
-namespace ExpressBusServices
+namespace ExpressBusServices.Patches.Bus
 {
     [HarmonyPatch]
     [UsedImplicitly]
-    public class Patch_TrolleyBusStartPathFind
+    public class Patch_BusStartPathFind
     {
         [UsedImplicitly]
         public static MethodBase TargetMethod()
         {
-            return AccessTools.Method("TrolleybusAI:StartPathFind", new Type[] { typeof(ushort), typeof(Vehicle).MakeByRefType() });
+            return AccessTools.Method("BusAI:StartPathFind", new Type[] { typeof(ushort), typeof(Vehicle).MakeByRefType() });
         }
 
         [HarmonyPrefix]

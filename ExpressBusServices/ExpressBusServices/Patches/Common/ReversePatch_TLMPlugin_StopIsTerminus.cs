@@ -3,7 +3,7 @@ using System.Reflection;
 using HarmonyLib;
 using JetBrains.Annotations;
 
-namespace ExpressBusServices
+namespace ExpressBusServices.Patches.Common
 {
 	[HarmonyPatch]
 	public class ReversePatch_TLMPlugin_StopIsTerminus

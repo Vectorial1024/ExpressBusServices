@@ -18,14 +18,10 @@ namespace ExpressBusServices.Patches.Tram
         [HarmonyPrefix]
         [HarmonyPriority(Priority.LowerThanNormal)]
         [UsedImplicitly]
-        public static bool HandleTramAboutToLoadPassengers(ushort vehicleID, ref Vehicle data)
+        public static void HandleTramAboutToLoadPassengers(ushort vehicleID, ref Vehicle data)
         {
             VehiclePaxDeltaInfo.Notify_VehicleStartsLoadingPax(vehicleID, ref data);
-            if (BusStopSkippingLookupTable.BusShouldSkipPassengerLoading(vehicleID))
-            {
-                return false;
-            }
-            return true;
+            // "skip loading" is only for redeployment; trams can never redeploy, "should skip loading" is always false, so no need to call that
         }
 
         [HarmonyPostfix]

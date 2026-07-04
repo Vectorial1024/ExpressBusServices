@@ -7,7 +7,7 @@ Unlock the peak efficiency of buses; now also improves trams!
 [h1]Quick info[/h1]
 [list]
 [*]Requires Harmony
-[*]Works with Improved Public Transport 2 (integrated support)
+[*]Works with [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3714961481]Improved Public Transport Essentials[/url] (external built-in integration)
 [*]Buses will skip stops whenever possible (NEW: can choose between different stop-skipping modes)
 [*]Buses will mostly no longer unbunch
 [*]And some other niche features for buses!
@@ -17,12 +17,10 @@ Unlock the peak efficiency of buses; now also improves trams!
 [*]除總站外，上落客後，毋須等待，即時開出 (新功能：你可以選擇如何進行飛站，請參考上面gif)
 [*]以及一啲其他細碎、同巴士相關嘅功能
 [*]亦將功能延伸至tram，並有一啲變化 (請參考gif)
-[*]亦將功能輕微延伸至metro
-[*]本mod已經有TLM以及IPT2嘅support
-[*]Sister mod for IPT2 available for even better compatibility with IPT2: [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2296003260]Express Bus Services (IPT2 Plugin)[/url]
-[*]IPT2玩家可以考慮同時安裝姊妹mod獲得更好嘅IPT2體驗: [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2296003260]Express Bus Services (IPT2 Plugin)[/url]
+[*]亦將功能輕微延伸至地鐵
+[*]本mod有 [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3714961481]Improved Public Transport Essentials[/url] 嘅外部合作支援
 [*]Sister mod for TLM available for even better compatibility with TLM:[url=https://steamcommunity.com/sharedfiles/filedetails/?id=2630529375]Express Bus Services (TLM Plugin)[/url]
-[*]IPT2玩家可以考慮同時安裝姊妹mod獲得更好嘅TLM體驗: [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2630529375]Express Bus Services (TLM Plugin)[/url]
+[*]TLM玩家可以考慮同時安裝姊妹mod獲得更好嘅TLM體驗: [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2630529375]Express Bus Services (TLM Plugin)[/url]
 [/list]
 外部參考：香港巴士大典 - 飛站 // External Link: Encyclopedia of Bus Transport in Hong Kong - Stop-Skipping [Chinese only]
 https://hkbus.fandom.com/wiki/%E9%A3%9B%E7%AB%99

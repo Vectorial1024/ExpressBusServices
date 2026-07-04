@@ -338,7 +338,7 @@ namespace ExpressBusServices
             // determine ideal spacing first
             // this can potentially be exposed as a config for unbunch strength
             // note that for buses etc., because they are highly sensitive to (road) traffic, we need a high unbunching buffer to offset the traffic influence.
-            float unbunchingBuffer = 0.2f;
+            float unbunchingBuffer = 0.1f;
             if (VehicleIsMetro(vehicleData))
             {
                 // metros, on the other hand, are generally grade-separated.

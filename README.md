@@ -9,13 +9,10 @@ Unlock the peak efficiency of buses:
 
 # Mod Status
 
-![Compatible with Financial Districts banner](https://i.imgur.com/O3ujMsj.png)
+![Compatible with Race Days banner](https://i.imgur.com/1EqyarL.png)
 
-- Compatible with Transport Line Manager (implemented compatibility; TLM can work more completely)
-- ~~Compatible with Improved Public Transport 2 (implemented compatibility; IPT2 would override things otherwise)~~
-- Mods available for this mod (yes, mod-ception):
-  - Express Bus Services (IPT2 Plug-In) https://github.com/Vectorial1024/ExpressBusServices_IPT2
-  - Express Bus Services (TLM Plug-In) https://github.com/Vectorial1024/ExpressBusServices_TLM
+- Has externally-managed integration with Improved Public Transport Essentials https://github.com/roberto-naharro/ImprovedPublicTransport
+- Has support for Transport Lines Manager via the TLM plugin https://github.com/Vectorial1024/ExpressBusServices_TLM
 - Special thanks to Klyte45 from TLM for letting me implement their "Express Bus" mode code on this side
 - **I am quite satisfied with the current state of the mod; future updates will be less frequent!**
 
@@ -35,6 +32,7 @@ Note: Intercity buses were previously affected by this mod, which does not make 
 These transportation types are covered by this mod, but contains a different set of settings:
 
 - Trams
+- Metros
 
 These transportation types will NEVER be covered by this mod because it will not make sense:
 
@@ -45,7 +43,6 @@ These transportation types will NEVER be covered by this mod because it will not
 
 These transpotation types will not be covered by this mod because they will become unrealistic:
 
-- Metros
 - Trains
 - Blimps
 - Monorails
@@ -62,6 +59,7 @@ These transpotation types will not be covered by this mod because they will beco
 - Disabled: trams behave according to "default behavior" (eg if you have TLM, it uses TLM behavior)
 - Light Rail: trams stop fully at stops, but do not unbunch at non-terminus stops
 - True Tram: equivalent to Prudential mode as described above
+- Streetcar: equivalent to Aggressive mode as described above
 
 ## Extra Stop-Skipping Options: Service Level Self-Balancing
 
@@ -78,6 +76,10 @@ When activated, minibuses will pay attention to the number of passengers boardin
 ## Extra QOL Behavior: Improved Unbunching
 
 Buses will now unbunch based on the number of vehicles on the line. This results in generally higher effectiveness of high-frequency buses, while also maintaining reasonable spacing for low-frequency buses. (Note: due to tech limitations, there is a max amount of time that buses can wait at termini, and I cannot influence that; so low-frequency buses cannot be too low-frequency if you are aiming for an even distribution of buses in the line.) 
+
+## Extra QOL Behavior: Metro Tight Schedules
+
+Metros will now unbunch only at termini stations (currently only the first station in the line as decided by the in-game data structure). This means metros will no longer dwell at intermediate stations, which incurred efficiency loss when the same platform was shared between e.g. the main line and a spur line. The spur line would likely unbunch, blocking the main line. With this change, Metro efficiency is therefore greatly improved.
 
 # Motivation
 
